@@ -2,7 +2,7 @@
 
 # Maa-Assistant-Browndust2
 
-基于 MAA (MaaAssistantArknights) 框架的 BrownDust 游戏自动化助手。
+基于 MAA (MaaAssistantArknights) 框架的 BrownDust2 游戏自动化助手。
 
 ## 项目简介
 

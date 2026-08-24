@@ -1,96 +1,132 @@
 {
-    "StartOperate":{
-        "next":[
-            "EnterOperating",
+    "StartOperate": {
+        "next": [
+            "ClickMyHouse",
             "[JumpBack]StartGame"
         ]
     },
-    "EnterOperating": {
-        "pre_delay":0,
+    "ClickMyHouse": {
         "recognition": {
             "type": "OCR",
             "param": {
-                "expected": "经营管理",
-                "threshold": 0.60,
-                "roi":[75,192,70,20]
+                "expected": "我的小屋",
+                "threshold": 0.50,
+                "roi": [70,110,78,39]
             }
         },
         "action": {
             "type": "Click",
-            "param":{
-                "target":[110,171]
+            "param": {
+                "target": [110,102]
             }
         },
-        "post_delay":3000,
+        "post_delay":4000,
+        "next": [
+            "ClickMyHouse",
+            "ClickBack",
+            "[JumpBack]StartGame"]
+    },
+    "ClickBack": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "Operate/back.png",
+                "roi": [70, 0, 75, 60],
+                "threshold": 0.50
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay":5000,
+        "next": [
+            "EnterOperating",
+            "[JumpBack]StartGame"]
+    },
+    "EnterOperating": {
+        "pre_delay":1000,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": "经营管理",
+                "threshold": 0.50,
+                "roi": [75,185,70,40]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {"target": [110,181]}
+            },
+        "max_hit":2,
+        "post_delay":5000,
         "next": [
             "GetWithOneClick",
-            "EnterOperating"
-        ]
+            "[JumpBack]StartGame",
+            "EnterOperating"]
     },
-    "GetWithOneClick":{
-        "pre_delay":0,
+    "GetWithOneClick": {
+        "pre_delay": 0,
         "recognition": {
             "type": "OCR",
             "param": {
                 "expected": "一键获得",
                 "threshold": 0.50,
-                "roi":[690,482,70,20]
+                "roi": [690,520,100,50]
             }
         },
         "action": {
             "type": "Click"
         },
-        "post_delay":2000,
+        "post_delay":5000,
         "next": [
-            "EnterRestaurant",
-            "OperateClick"
-        ]
-    },
-    "OperateClick":{
-        "action": {
-            "type": "Click",
-            "param":{
-                "target":[640,700]
-            }
-        },
-        "post_delay":2000,
-        "next":[
+            "OperateClick",
             "EnterRestaurant"
         ]
     },
-    "EnterRestaurant":{
+    "OperateClick": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": ["点击","画面","即可","返回"],
+                "threshold": 0.60,
+                "roi": [560,635,140,40]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [640,700]
+            }
+        },
+        "post_delay": 5000,
+        "next": [
+            "EnterRestaurant"
+        ]
+    },
+    "EnterRestaurant": {
         "recognition": {
             "type": "OCR",
             "param": {
                 "expected": "立刻前往",
                 "threshold": 0.40,
-                "roi":[745,240,65,20]
+                "roi": [725,180,100,40]
             }
         },
         "action": {
             "type": "Click"
         },
-        "post_delay":2000,
-        "next": [
-            "EnterRestaurant",
-            "FrequentCaller"
-        ]
+        "post_delay":10000,
+        "next": ["FrequentCaller"]
     },
-    "FrequentCaller":{
-        "recognition": {
-            "type": "OCR",
+    "FrequentCaller": {
+        "action": {
+            "type": "Click",
             "param": {
-                "expected": "常客",
-                "threshold": 0.80,
-                "roi":[96,208,100,20]
+                "target": [183,196]
             }
         },
-        "action": {
-            "type": "Click"
-        },
-        "post_delay":2000,
-        "next": [
-            "StartGame"
-        ]
+        "post_delay":3000,
+        "max_hit":2,
+        "next": ["FrequentCaller","StartGame"]
     }
 }

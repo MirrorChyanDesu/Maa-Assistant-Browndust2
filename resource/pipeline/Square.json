@@ -1,123 +1,59 @@
 {
     "StartSquare":{
         "next":[
-            "EnterGacha",
-            "GetDaily2",
-            "GetSquare",
-            "EnterGacha2",
-            "[JumpBack]StartGame"
-        ]
+            "EnterSquare1",
+            "[JumpBack]StartGame"]
     },
-    "EnterGacha":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "Square/EnterGacha.png",
-                "threshold": 0.40,
-                "roi":[540,640,60,60]
-            }
-        },
-        "action":{
-            "type":"click"
-        },
+    "EnterSquare1":{
         "pre_delay":1000,
-        "next":[
-            "EnterSquare"
-        ]
-    },
-    "EnterSquare":{
         "recognition": {
-            "type": "TemplateMatch",
+            "type": "OCR",
             "param": {
-                "template": "Square/TheSquare.png",
-                "threshold": 0.70,
-                "roi":[760,600,110,100]
-            }
-        },
-        "action":{
-            "type":"click",
-            "param":{
-                "target":[820,648]
-            }
-        },
-        "pre_delay":1000,
-        "next":[
-            "EnterSquare",
-            "GetDaily2",
-            "GetSquare",
-            "MoveSquare"
-        ]
-    },
-    "EnterGacha2":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "StartGame/Shadow.png",
+                "expected": "经营管理",
                 "threshold": 0.60,
-                "roi":[500,50,300,460]
+                "roi": [79,189,64,26]
             }
         },
-        "action":{
-            "type":"click",
-            "param":{
-                "target":[1130,645]
-            }
-        },
-        "next":[
-            "EnterSquare2",
-            "EnterSquareMove"
-        ]
-    },
-
-    "EnterSquareMove":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "PVP/EnterPVP.png",
-                "threshold": 0.50,
-                "roi":[50,300,450,255]
-            }
-        },
-        "max_hit":2,
         "action": {
-            "type": "Swipe",
-            "param": {
-                "begin": [
-                    960,
-                    460
-                ],
-                "end": [
-                    500,
-                    460
-                ],
-                "end_hold": 1000
-            }
-        },
-        "next":[
-            "EnterSquare2",
-            "EnterSquareMove"
-        ]
+            "type": "Click",
+            "param": {"target": [110,181]}
+            },
+        "max_hit":2,
+        "post_delay":5000,
+        "next":["EnterSquare2",
+                "EnterSquare1"]
     },
     "EnterSquare2":{
         "recognition": {
-            "type": "TemplateMatch",
+            "type": "OCR",
             "param": {
-                "template": "Square/TheSquare2.png",
-                "threshold": 0.50,
-                "roi":[1000,300,280,255]
+                "expected": "立刻前往",
+                "threshold": 0.40,
+                "roi": [725,180,100,40]
             }
         },
-        "action":{
-            "type":"click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":2500,
-        "next":[
-            "GetDaily2",
-            "GetSquare",
-            "MoveSquare"
-        ]
+        "post_delay":10000,
+        "next":["EnterSquare3"]
     },
-
+    "EnterSquare3":{
+        "action": {"type": "Click",
+            "param": {"target": [253,105]}
+        },
+        "post_delay":2000,
+        "next":["EnterSquare4"]
+    },
+    "EnterSquare4":{
+        "action": {"type": "Click",
+            "param": {"target": [222,644]}
+        },
+        "post_delay":10000,
+        "next":["GetDaily2",
+                "GetSquare2",
+                "MoveSquare"]
+    },
     "GetDaily2":{
         "recognition": {
             "type": "TemplateMatch",
@@ -129,17 +65,15 @@
             }
         },
         "action":{
-            "type":"click"
+            "type":"Click"
         },
         "next":[
             "GetDaily2",
-            "GetSquare",
+            "GetSquare2",
             "MoveSquare",
-            "StartGame"
         ]
     },
-
-    "GetSquare":{
+    "GetSquare2":{
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -150,12 +84,11 @@
             }
         },
         "action":{
-            "type":"click"
+            "type":"Click"
         },
         "post_delay":1000,
         "next":[
-            "GetSquare",
-            "GetDaily2",
+            "GetSquare2",
             "StartGame"
         ]
     },
@@ -163,19 +96,16 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "expected": ["每日","奖励","移动"],
+                "expected": ["每日","奖励"],
                 "threshold": 0.60,
-                "roi":[1000,190,170,100]
+                "roi":[1045,130,72,31]
             }
         },
         "action": {
-            "type": "click"
+            "type": "Click",
+            "param": {"target": [1127,151]}
         },
-        "post_delay":5000,
-        "next":[
-            "GetSquare",
-            "GetDaily2",
-            "MoveSquare"
-        ]
+        "post_delay":8000,
+        "next":["GetSquare2"]
     }
 }

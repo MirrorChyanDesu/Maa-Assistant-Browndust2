@@ -1,54 +1,63 @@
 {
     "StartCastle":{
-        "action":{
-            "type":"DoNothing"
-        },
-        "next":[
-            "EnterCastle1",
-            "EnterCastle2",
-            "[JumpBack]StartGame"
-        ]
+        "next":["EnterCastle1",
+            "[JumpBack]StartGame"]
     },
 
     "EnterCastle1":{
+        "pre_delay":1000,
         "recognition": {
-            "type": "TemplateMatch",
+            "type": "OCR",
             "param": {
-                "template": "StartGame/Shadow.png",
+                "expected": "经营管理",
                 "threshold": 0.60,
-                "roi":[500,50,300,460]
+                "roi": [75,192,70,20]
             }
         },
-        "action":{
-            "type":"click",
-            "param":{
-                "target":[1130,645]
-            }
+        "action": {"type": "Click",
+            "param": {"target": [110,171]}
         },
-        "post_delay":1500,
-        "next":[
-            "EnterCastle1",
-            "EnterCastle2"
-        ]
+        "post_delay":2000,
+        "next":["EnterCastle2"]
     },
     "EnterCastle2":{
         "recognition": {
-            "type": "TemplateMatch",
+            "type": "OCR",
             "param": {
-                "template": "EvilCastle/Castle.png",
-                "threshold": 0.50,
-                "roi":[50,300,750,280]
+                "expected": "立刻前往",
+                "threshold": 0.40,
+                "roi": [725,180,100,40]
             }
         },
-        "action":{
-            "type":"click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":2500,
-        "next":[
-            "MoveCastle",
-            "EnterCastle2"
-        ]
+        "post_delay":10000,
+        "next":["EnterCastle3"]
     },
+
+    "EnterCastle3":{
+        "action": {"type": "Click",
+            "param": {"target": [253,105]}
+        },
+        "post_delay":2000,
+        "next":["EnterCastle4"]
+    },
+    "EnterCastle4":{
+        "action": {"type": "Click",
+            "param": {"target": [616,585]}
+        },
+        "post_delay":2000,
+        "next":["EnterCastle5"]
+    },    
+
+    "EnterCastle5":{
+        "action": {"type": "Click",
+            "param": {"target": [217,646]}
+        },
+        "post_delay":10000,
+        "next":["MoveCastle"]
+    },  
     "MoveCastle":{
         "recognition": {
             "type": "TemplateMatch",

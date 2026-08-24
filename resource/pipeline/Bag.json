@@ -44,16 +44,47 @@
         "action":{
             "type":"Click"
         },
-        "next":[
-            "Analyze"
-        ]
+        "post_delay":2000,
+        "next":["Noseeequipped",
+                "Analyze"]
     },
+    "Noseeequipped":{
+        "action":{
+            "type":"Click",
+            "param":{"target":[1139,65]}
+            },
+        "post_delay":2000,
+        "next":["Noseeequipped2",
+                "Noseeequipped3"]
+    },
+    "Noseeequipped2":{
+        "recognition":{
+            "type":"TemplateMatch",
+            "param":{
+                "template":"Bag/GOU.png",
+                "roi":[585,505,43,35],
+                "threshold":0.50}},
+        "action":{
+            "type":"Click",
+            "param":{"target":[606,523]}
+            },
+        "post_delay":2000,
+        "next":["Noseeequipped3"]
+},
+    "Noseeequipped3":{
+        "action":{
+            "type":"Click",
+            "param":{"target":[1220,563]}
+            },
+        "post_delay":2000,
+        "next":["Analyze"]
+},
     "Analyze":{
         "recognition":{
             "type":"OCR",
             "param":{
-                "expected":"一键分解",
-                "roi":[1100,655,70,30],
+                "expected":"一键强化",
+                "roi":[950,655,70,30],
                 "threshold":0.60
             }
         },
@@ -88,7 +119,6 @@
             "[JumpBack]BagN",
             "[JumpBack]BagR",
             "[JumpBack]BagSR",
-            "[JumpBack]BagUR",
             "GreenTick"
         ]
     },
@@ -104,20 +134,22 @@
         },
         "action":{
             "type":"Click"
-        }
+        },
+        "post_delay":1000
     },
     "BagN":{
         "recognition":{
             "type":"TemplateMatch",
             "param":{
                 "template":"Bag/N.png",
-                "roi":[860,300,90,55],
+                "roi":[860,360,90,55],
                 "threshold":0.90
             }
         },
         "action":{
             "type":"Click"
         },
+        "post_delay":2000,
         "max_hit":1
     },
     "BagR":{
@@ -125,13 +157,14 @@
             "type":"TemplateMatch",
             "param":{
                 "template":"Bag/R.png",
-                "roi":[945,300,90,55],
+                "roi":[945,360,90,55],
                 "threshold":0.90
             }
         },
         "action":{
             "type":"Click"
         },
+        "post_delay":2000,
         "max_hit":1
     },
     "BagSR":{
@@ -139,13 +172,14 @@
             "type":"TemplateMatch",
             "param":{
                 "template":"Bag/SR.png",
-                "roi":[1028,300,90,55],
+                "roi":[1028,360,90,55],
                 "threshold":0.90
             }
         },
         "action":{
             "type":"Click"
         },
+        "post_delay":2000,
         "max_hit":1
     },
     "BagUR":{
@@ -174,18 +208,36 @@
         "action":{
             "type":"Click"
         },
-        "post_delay":500,
-        "next":[
-            "AnalysisMain",
-            "AnalysisLast"
+        "post_delay":1000,
+        "next":["ClickAnniu",
+            "AnalysisLast",
+            "StartGame"]
+    },
+    "ClickAnniu": {
+    "recognition": {
+        "type": "TemplateMatch",
+        "param": {
+            "template": "Bag/anniu.png",
+            "roi": [840, 450, 50, 40],
+            "threshold": 0.50,
+            "retry": 3
+        }
+    },
+    "action": {
+        "type": "Click"
+    },
+    "post_delay": 1000,
+    "next": [
+        "AnalysisMain",
+        "AnalysisLast"
         ]
     },
     "AnalysisMain":{
         "recognition":{
             "type":"OCR",
             "param":{
-                "expected":"分解",
-                "roi":[675,465,45,25],
+                "expected":"强化",
+                "roi":[675,540,45,25],
                 "threshold":0.60
             }
         },
@@ -201,7 +253,7 @@
         "action":{
             "type":"Click",
             "param":{
-                "target":[1131,668]
+                "target":[1132,670]
             }
         },
         "post_delay":500,
@@ -210,7 +262,6 @@
             "AnalysisLast"
         ]
     },
-
     "IntensifyChoose":{
         "recognition":{
             "type":"OCR",
@@ -238,10 +289,7 @@
             "type":"Click"
         },
         "post_delay":500,
-        "next":[
-            "Intensify",
-            "IntensifyChoose18"
-        ]
+        "next":["Intensify"]
     },
 
     
@@ -258,10 +306,7 @@
             "type":"Click"
         },
         "post_delay":500,
-        "next":[
-            "Intensify",
-            "IntensifyChoose19"
-        ]
+        "next":["Intensify"]
     },
     "IntensifyChoose20":{
         "recognition":{
@@ -276,10 +321,7 @@
             "type":"Click"
         },
         "post_delay":500,
-        "next":[
-            "Intensify",
-            "IntensifyChoose20"
-        ]
+        "next":["Intensify"]
     },
 
     "Intensify":{
@@ -294,42 +336,28 @@
         "action":{
             "type":"Click"
         },
+        "post_delay":3000,
         "next":[
             "IntensifyMain",
             "Intensify"
         ]
     },
     "IntensifyMain":{
-        "recognition":{
-            "type":"OCR",
-            "param":{
-                "expected":"精炼",
-                "roi":[1035,660,35,20],
-                "threshold":0.60
-            }
+        "action": {"type": "Click",
+            "param": {"target": [1053,670]}
         },
-        "action":{
-            "type":"Click"
-        },
-        "post_delay":4000,
-        "next":[
-            "IntensifySure",
-            "IntensifyMain"
-        ]
+        "post_delay":1000,
+        "max_hit": 2,
+        "next":["IntensifyMain",
+            "Fanhuizhuye2"]
     },
-
-    "IntensifySure":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Bag/C.png",
-                "roi":[950,490,150,80],
-                "threshold":0.80
-            }
-        },
-        "post_delay":500,
-        "next":[
-            "StartGame"
-        ]
+    "Fanhuizhuye2": {
+    "action": {
+        "type": "Click",
+        "param": {"target": [112,34]}
+    },
+        "post_delay": 2000,
+        "max_hit": 2,
+        "next": ["Fanhuizhuye2","StartGame"]
     }
 }

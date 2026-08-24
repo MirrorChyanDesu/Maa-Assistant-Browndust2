@@ -1,61 +1,63 @@
 {
     "StartPVP":{
-        "action":{
-            "type":"DoNothing"
-        },
-        "next":[
-            "EnterPVP2",
-            "EnterPVP",
-            "PVPWaiting",
-            "CorrectFirst",
-            "GetDaily",
-            "[JumpBack]StartGame"
-        ]
+        "next":["EnterPVP1",
+            "[JumpBack]StartGame"]
     },
-
-    "EnterPVP":{
+    "EnterPVP1":{
+        "pre_delay":1000,
         "recognition": {
-            "type": "TemplateMatch",
+            "type": "OCR",
             "param": {
-                "template": "StartGame/Shadow.png",
+                "expected": "经营管理",
                 "threshold": 0.60,
-                "roi":[500,50,300,460]
+                "roi": [79,189,64,26]
             }
         },
-        "action":{
-            "type":"click",
-            "param":{
-                "target":[1130,645]
-            }
-        },
-        "next":[
-            "EnterPVP2",
-            "EnterPVP"
-        ]
+        "action": {
+            "type": "Click",
+            "param": {"target": [110,181]}
+            },
+        "max_hit":2,
+        "post_delay":5000,
+        "next":["EnterPVP2",
+                "EnterPVP1"]
     },
     "EnterPVP2":{
         "recognition": {
-            "type": "TemplateMatch",
+            "type": "OCR",
             "param": {
-                "template": "PVP/EnterPVP.png",
-                "threshold": 0.50,
-                "roi":[50,300,450,255]
+                "expected": "立刻前往",
+                "threshold": 0.40,
+                "roi": [725,180,100,40]
             }
         },
-        "action":{
-            "type":"click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":2500,
-        "next":[
-            "PVPWaiting",
-            "EnterPVP2",
-            "GetDaily",
-            "MovePVP",
-            "SeasonReward",
-            "CorrectFirst"
-        ]
+        "post_delay":10000,
+        "next":["EnterPVP3"]
     },
-
+    "EnterPVP3":{
+        "action": {"type": "Click",
+            "param": {"target": [253,105]}
+        },
+        "post_delay":2000,
+        "next":["EnterPVP4"]
+    },
+    "EnterPVP4":{
+        "action": {"type": "Click",
+            "param": {"target": [616,585]}
+        },
+        "post_delay":2000,
+        "next":["EnterPVP5"]
+    },
+    "EnterPVP5":{
+        "action": {"type": "Click",
+            "param": {"target": [98,646]}
+        },
+        "post_delay":3000,
+        "next":["PVPWaiting"]
+    },    
     "SeasonReward":{
         "recognition": {
             "type": "OCR",
@@ -88,7 +90,7 @@
         "action":{
             "type":"DoNothing"
         },
-        "post_delay":2500,
+        "post_delay":3000,
         "next":[
             "PVPWaiting",
             "GetDaily",
@@ -131,6 +133,7 @@
         "action":{
             "type":"click"
         },
+        "post_delay":10000, 
         "next":[
             "MovePVP"
         ]
@@ -141,22 +144,16 @@
             "type": "TemplateMatch",
             "param": {
                 "template": "PVP/Move.png",
-                "threshold": 0.50,
-                "roi":[120,520,150,150]
+                "threshold": 0.40,
+                "roi":[120,510,150,150]
             }
         },
         "max_hit": 2,
         "action": {
             "type": "Swipe",
             "param": {
-                "begin": [
-                    192,
-                    588
-                ],
-                "end": [
-                    137,
-                    643
-                ],
+                "begin": [192,588],
+                "end": [143,630],
                 "end_hold": 1000
             }
         },
@@ -383,7 +380,7 @@
         "post_delay":5000,
         "next":[
             "Worship",
-            "FinishPVP"
+            "StartGame"
         ]
     },
 
@@ -434,12 +431,6 @@
                 ],
                 "end_hold": 200
             }
-        }
-    },
-
-    "FinishPVP":{
-        "action":{
-            "type":"DoNothing"
         }
     }
 }

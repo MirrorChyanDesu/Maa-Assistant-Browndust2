@@ -2,7 +2,6 @@
     "StartDraw":{
         "next":[
             "EnterDraw",
-            "Draw",
             "[JumpBack]StartGame"
         ]
     },
@@ -12,12 +11,7 @@
             "type": "OCR",
             "param": {
                 "expected": "抽抽乐",
-                "roi":[
-                    85,
-                    672,
-                    45,
-                    18
-                ],
+                "roi":[85,672,45,18],
                 "threshold": 0.50
             }
         },
@@ -27,126 +21,47 @@
                 "target":[108,656]
             }
         },
-        "post_delay":1500,
-        "next":[
-            "EnterDraw",
-            "Draw",
-            "DrawGoBack"
-        ]
-    },
-    "Draw":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Draw/ExclamationMark.png",
-                "roi":[115,170,30,220],
-                "threshold":0.30
-            }
-        },
-        "action":{
-            "type":"DoNothing"
-        },
-        "next":[
-            "Cloth",
-            "Equipment",
-            "DrawGoBack"
-        ]
-    },
+        "post_delay":5000,
+        "next":["EnterDraw","Cloth"]
+    },   
     "Cloth":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Draw/ExclamationMark.png",
-                "roi":[115,180,30,40],
-                "threshold":0.40
-            }
-        },
         "action":{
             "type":"Click",
-            "param":{
-                "target":[117,209]
-            }
+            "param":{"target":[116,210]}
         },
-        "post_delay":1000,
-        "next":[
-            "AllDraw",
-            "ClothDraw",
-            "ClothMove",
-            "Cloth"
-        ]
+        "post_delay":2000,
+        "max_hit":2,
+        "next":["AllDraw","Equipment"]
     },
-    "ClothMove":{
-        "action":{
-            "type":"Swipe",
-            "param":{
-                "begin":[230,460],
-                "end":[230,220],
-                "end_hold":500
-            }
-        },
-        "next":[
-            "Draw"
-        ]
-    },
-
     "Equipment":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Draw/ExclamationMark.png",
-                "roi":[115,250,30,40],
-                "threshold":0.40
-            }
-        },
         "action":{
             "type":"Click",
             "param":{
-                "target":[117,280]
+                "target":[116,285]
             }
         },
+        "post_delay":2000,
+        "max_hit":2,
         "next":[
-            "AllDraw",
-            "EquipmentDraw",
-            "EquipmentMove",
-            "Equipment"
+            "AllDraw","StartGame"
         ]
     },
-
-    "EquipmentMove":{
-        "action":{
-            "type":"Swipe",
-            "param":{
-                "begin":[230,460],
-                "end":[230,220],
-                "end_hold":500
-            }
-        },
-        "next":[
-            "Draw"
-        ]
-    },
-
     "AllDraw":{
         "recognition": {
             "type": "OCR",
             "param": {
                 "expected": ["所有","免费","抽抽乐"],
-                "roi":[
-                    180,
-                    630,
-                    120,
-                    35
-                ],
+                "roi":[180,630,120,35],
                 "threshold": 0.50
             }
         },
         "action": {
             "type": "Click"
         },
-        "post_delay":1500,
+        "post_delay":2000,
+        "max_hit":2,
         "next":[
-            "AllDrawSure",
-            "AllDraw"
+            "AllDrawSure"
         ]
     },
     "AllDrawSure":{
@@ -162,102 +77,27 @@
             "type":"Click"
             },
         "post_delay":1000,
+        "max_hit":2,
         "next":[
             "DrawSkip"
-        ]
-    },
-
-    "ClothDraw":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Draw/ExclamationMark.png",
-                "roi":[280,170,20,330],
-                "threshold":0.40
-            }
-        },
-        "action":{
-            "type":"Click"
-        },
-        "next":[
-            "DrawMain",
-            "ClothDraw"
-        ]
-    },
-    "EquipmentDraw":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Draw/ExclamationMark.png",
-                "roi":[280,170,20,330],
-                "threshold":0.40
-            }
-        },
-        "action":{
-            "type":"Click"
-        },
-        "next":[
-            "DrawMain",
-            "EquipmentDraw"
-        ]
-    },
-    "DrawMain":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Draw/OneFree.png",
-                "roi":[930,645,100,24],
-                "threshold":0.60
-            }
-        },
-        "action":{
-            "type":"Click"
-        },
-        "post_delay":1000,
-        "next":[
-            "DrawCorrect",
-            "DrawMain",
-            "Draw"
-        ]
-    },
-    "DrawCorrect":{
-        "recognition":{
-            "type":"OCR",
-            "param":{
-                "expected":"购买",
-                "roi":[680,415,60,60],
-                "threshold":0.60
-            }
-        },
-        "action":{
-            "type":"Click"
-            },
-        "post_delay":1000,
-        "next":[
-            "DrawSkip",
-            "DrawCorrect",
-            "DrawGoBack"
         ]
     },
     "DrawSkip":{
         "recognition":{
             "type":"TemplateMatch",
-            "max_hit":2,
             "param":{
                 "template":"Draw/Skip.png",
                 "roi":[1145,15,70,50],
                 "threshold":0.50
             }
         },
+        "max_hit":2,
         "action":{
             "type":"Click"
         },
-        "post_delay":1000,
-        "next":[
-            "DrawSkip",
-            "DrawGoBack"
-        ]
-    },
+        "post_delay":3000,
+        "next":["DrawGoBack"]
+    }, 
     "DrawGoBack":{
         "recognition":{
             "type":"TemplateMatch",
@@ -270,25 +110,10 @@
         "action":{
             "type":"Click"
         },
-        "post_delay":1500,
+        "post_delay":2000,
+        "max_hit":2,
         "next":[
-            "Draw",
-            "SureDraw",
-            "EnterGame",
-            "DrawGoBack"
-        ]
-    },
-    "SureDraw":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Draw/ExclamationMark2.png",
-                "roi":[115,630,25,25],
-                "threshold":0.90
-            }
-        },
-        "next":[
-            "EnterDraw"
+            "Equipment"
         ]
     }
 }

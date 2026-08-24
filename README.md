@@ -49,7 +49,7 @@
 ### 方式二：从源码编译
 ```bash
 # 克隆仓库
-git clone https://github.com/essinn-1/maa-assistant.git
+git clone https://github.com/alkaidjin/Maa-Assistant-Browndust2.git
 
 # 安装依赖
 # 具体编译步骤请参考文档

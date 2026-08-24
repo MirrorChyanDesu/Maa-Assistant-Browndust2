@@ -44,7 +44,7 @@
 ## 下载与使用
 
 ### 方式一：下载发布版本（推荐）
-访问 [Releases](https://github.com/essinn-1/maa-assistant/releases) 页面下载最新版本。
+访问 [Releases](https://github.com/alkaidjin/Maa-Assistant-Browndust2/releases) 页面下载最新版本。
 
 ### 方式二：从源码编译
 ```bash

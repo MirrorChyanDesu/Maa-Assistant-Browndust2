@@ -1,13 +1,8 @@
-  用MaaEnd改的BD2小助手（贴上本尊 github.com/MaaEnd/MaaEnd ），真的好用，离开了maaend本人都不想玩终末地了（懒得做每日）
-  这个项目是边学（学，指将看不懂的东西丢给ai）边做的，可能会出问题还请多多包涵~~~
-  话说隔壁（ github.com/sunyink/MFABD2  ）老师们的这个作品完善多了，本人之前搓这个小助手的时候没有看到（流泪），
-又（像老师们说的“拒绝给游戏打工！”）所以才试着写了这个东西~
-  不嫌弃的话可以试试用这个，虽然很多功能碍于本人技术实现不了（一个不成熟的项目~），推荐去用各大佬写的更加完善的内容~
+  用MaaEnd改的BD2小助手（贴上本尊 github.com/MaaEnd/MaaEnd ）
 
+# Maa-Assistant-Browndust2
 
-# MAA BrownDust Assistant
-
-基于 MAA (MaaAssistantArknights) 框架的 BrownDust 游戏自动化助手。
+基于 MAA (MaaAssistantArknights) 框架的 BrownDust2 游戏自动化助手。
 
 ## 项目简介
 
@@ -49,12 +44,12 @@
 ## 下载与使用
 
 ### 方式一：下载发布版本（推荐）
-访问 [Releases](https://github.com/essinn-1/maa-assistant/releases) 页面下载最新版本。
+访问 [Releases](https://github.com/alkaidjin/Maa-Assistant-Browndust2/releases) 页面下载最新版本。
 
 ### 方式二：从源码编译
 ```bash
 # 克隆仓库
-git clone https://github.com/essinn-1/maa-assistant.git
+git clone https://github.com/alkaidjin/Maa-Assistant-Browndust2.git
 
 # 安装依赖
 # 具体编译步骤请参考文档

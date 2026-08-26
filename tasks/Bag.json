@@ -4,7 +4,7 @@
             "name": "装备",
             "label": "分解装备+精炼",
             "entry": "StartBag",
-            "description": "",
+            "description": "一键强化N/R/SR未锁装备并自动分解，精炼一次指定分数的装备",
             "option":[
                 "ChooseIntensify"
             ]
@@ -13,7 +13,7 @@
     "option": {
         "ChooseIntensify":{
             "type":"select",
-            "label":"选择精炼装备等级（一定要在第一页可见）",
+            "label":"请选择精炼装备的分数（一定要在第一页可见）",
             "des":"只写了18、19、20，写起来一样的如果想自己复制一下代码",
             "default_case":"18",
             "cases":[

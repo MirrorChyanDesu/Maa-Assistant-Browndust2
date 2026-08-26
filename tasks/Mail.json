@@ -2,7 +2,7 @@
     "task": [
         {
             "name": "邮件",
-            "label": "进入邮件领取",
+            "label": "领取邮件内物品",
             "entry": "StartMail",
             "description": "",
             "controller": [

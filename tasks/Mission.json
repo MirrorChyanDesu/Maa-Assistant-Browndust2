@@ -2,7 +2,7 @@
     "task": [
         {
             "name": "领取任务奖励",
-            "label": "任务",
+            "label": "每日任务",
             "entry": "StartMission",
             "description": "",
             "controller": [

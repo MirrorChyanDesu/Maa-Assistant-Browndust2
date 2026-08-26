@@ -53,56 +53,34 @@
         },
         "action": {
             "type": "Click",
-            "param": {
-                "target": [580,570]
-            }
+            "param": {"target": [580,580]}
         },
-        "post_delay": 1000,
-        "max_hit": 5,
-        "next": [
-            "WarcraftBattleChoose",
-            "WarcraftBattleSwipe",
-            "ChallengeBattle"
-        ]
+        "post_delay":8000,
+        "max_hit":3,
+        "next": ["ChallengeBattle",
+            "WarcraftBattleSwipe"]
     },
     "WarcraftBattleChoose": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "expected": "15",
-                "threshold": 0.80,
-                "roi": [150, 660, 60, 60]
-            }
-        },
         "action": {
-            "type": "Click"
+            "type": "Click",
+            "param": {"target": [233,690]}
         },
-        "next": [
-            "WarcraftQuickBattle"
-        ]
+        "post_delay":600,
+        "max_hit":2,
+        "next": ["WarcraftBattleChoose",
+            "WarcraftQuickBattle",
+            "BackToFiendHunter"]
     },
     "WarcraftBattleSwipe": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "expected": "挑战战斗",
-                "threshold": 0.80,
-                "roi": [180, 10, 100, 50]
-            }
-        },
         "action": {
             "type": "Swipe",
-            "param": {
-                "begin": [225, 580],
-                "end": [225, 480],
-                "end_hold": 1000
-            }
-        },
-        "max_hit": 5,
-        "next": [
-            "WarcraftBattleChoose",
-            "WarcraftBattleSwipe"
-        ]
+            "param": {"begin": [225,580],
+                "end": [225,440],
+                "end_hold":1500}},
+        "max_hit":3,
+        "post_delay":1500,
+        "next": ["WarcraftBattleSwipe",
+                 "WarcraftBattleChoose"]
     },
     "WarcraftQuickBattle": {
         "recognition": {
@@ -116,9 +94,7 @@
         "action": {
             "type": "Click"
         },
-        "next": [
-            "WarcraftSetMax"
-        ]
+        "next": ["WarcraftSetMax"]
     },
     "WarcraftSetMax": {
         "recognition": {
@@ -145,13 +121,65 @@
                 "roi": [640, 530, 60, 40]
             }
         },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "StartGame"
-        ]
+        "action": {"type": "Click"},
+        "post_delay":1500,
+        "next": ["WarcraftBeginClick"]
     },
+    "WarcraftBeginClick": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": ["点击","画面","即可","返回"],
+                "threshold": 0.60,
+                "roi": [560,635,140,40]}
+        },
+        "action": {"type": "Click",
+            "param": {"target": [81,32]}},
+        "post_delay":1500,
+        "next": ["WarcraftBeginClick","BackToFiendHunter"]
+    },
+    "BackToFiendHunter": {
+        "action": {
+            "type": "Click",
+            "param": {"target": [81,32]}},
+        "post_delay":1500,
+        "next": ["FiendHunter","StartGame"]
+    },
+    "FiendHunter": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "Warcraft/FH.png",
+                "threshold": 0.40,
+                "roi":[712,536,22,22]}
+        },
+        "action": {"type": "Click",
+            "param": {"target": [701,580]}
+        },
+        "next": ["QuickFiendHunter","StartGame"]
+},
+    "QuickFiendHunter": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": "快速战斗",
+                "threshold": 0.80,
+                "roi": [819,646,77,28]}
+        },
+        "action": {"type": "Click"},
+        "next": ["FiendHunterBegin"]
+},
+    "FiendHunterBegin": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": "确认",
+                "threshold": 0.80,
+                "roi": [696,517,41,23]}
+        },
+        "action": {"type": "Click"},
+        "next": ["StartGame"]
+},
     "CorrectWarcraft": {
         "recognition": {
             "type": "OCR",

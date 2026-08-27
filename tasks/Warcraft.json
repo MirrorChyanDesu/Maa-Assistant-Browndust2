@@ -1,7 +1,7 @@
 {
     "task": [
         {
-            "name": "Warcraft",
+            "name": "赛季活动战斗",
             "label": "活动战斗5次+魔兽快速战斗",
             "entry": "StartWarcraft",
             "description": "（三星通关挑战15后开启）",

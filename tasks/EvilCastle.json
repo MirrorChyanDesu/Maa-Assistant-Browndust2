@@ -1,8 +1,8 @@
 {
     "task": [
         {
-            "name": "EvilCastle",
-            "label": "救赎之塔",
+            "name": "救赎之塔",
+            "label": "肉鸽塔（救赎之塔）",
             "entry": "StartCastle",
             "description": "快速战斗已通关的最高层"
         }

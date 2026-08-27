@@ -2,8 +2,9 @@
     "task": [
         {
             "name": "进入公会",
-            "label": "进入公会领低保",
+            "label": "公会每日低保",
             "entry": "StartSociaty",
+            "description": "包含每日任务-前往我的小屋",
             "controller": [
                 "Win32",
                 "Win32-Window",

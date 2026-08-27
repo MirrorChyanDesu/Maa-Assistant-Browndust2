@@ -2,6 +2,8 @@
     "StartGame": {
         "next": [
             "EnterGame",
+            "[JumpBack]DownloadNewver",
+            "[JumpBack]DownLoading",
             "[JumpBack]StartWaiting1",
             "[JumpBack]StartWaiting2",
             "[JumpBack]ClickContinue",
@@ -37,18 +39,11 @@
             "type": "OCR",
             "param": {
                 "expected": ".*[SＳ][TＴ][AＡ].*",
-                "roi":[
-                    780,
-                    380,
-                    280,
-                    120
-                ],
+                "roi":[780,380,280,120],
                 "threshold": 0.40
             }
         },
-        "action": {
-            "type": "Click"
-        }
+        "action": {"type": "Click"}
     },
 
     "ClickContinue2": {
@@ -56,12 +51,7 @@
             "type": "TemplateMatch",
             "param": {
                 "template": "StartGame/continue.png",
-                "roi":[
-                    780,
-                    380,
-                    280,
-                    120
-                ],
+                "roi":[780,380,280,120],
                 "threshold": 0.40
             }
         },
@@ -75,12 +65,7 @@
             "type": "OCR",
             "param": {
                 "expected": ["确认","下载","内容"],
-                "roi":[
-                    850,
-                    450,
-                    150,
-                    50
-                ],
+                "roi":[850,450,150,50],
                 "threshold": 0.50
             }
         },
@@ -91,18 +76,32 @@
             "type": "OCR",
             "param": {
                 "expected": ["游戏","启动中"],
-                "roi":[
-                    850,
-                    450,
-                    150,
-                    50
-                ],
+                "roi":[850,450,150,50],
                 "threshold": 0.50
             }
         },
         "post_delay":2000
     },
-
+    "DownloadNewver": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": ["下载"],
+                "roi":[678,500,50,24],
+                "threshold": 0.40}
+        },
+        "action": {"type": "Click"},
+        "post_delay":2000
+    },
+    "DownLoading": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": ["正在下载"],
+                "roi":[65,640,67,22],
+                "threshold": 0.40}
+        }
+    },
     "BackHome":{
         "pre_delay": 0,
         "post_delay": 2000,

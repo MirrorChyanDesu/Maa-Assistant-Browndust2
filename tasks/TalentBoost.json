@@ -2,7 +2,7 @@
     "task": [
         {
             "name": "刷购物天赋",
-            "label": "",
+            "label": "刷购物天赋",
             "entry": "StartTalent",
             "description": ""
         }

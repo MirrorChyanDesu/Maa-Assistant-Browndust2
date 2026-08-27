@@ -1,0 +1,165 @@
+{
+  "version": "1.0",
+  "instances": [
+    {
+      "id": "6nsvr5j",
+      "name": "配置 1",
+      "controllerName": "Win32",
+      "resourceName": "官服",
+      "savedDevice": {
+        "windowName": "BrownDust II"
+      },
+      "tasks": [
+        {
+          "id": "x58z51j",
+          "taskName": "自动进入游戏",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "64803bi",
+          "taskName": "每日抽卡",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "j64q1h2",
+          "taskName": "进入公会",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "xtt58x6",
+          "taskName": "狩猎场",
+          "enabled": true,
+          "optionValues": {
+            "ChooseRock": {
+              "type": "select",
+              "caseName": "WindRock"
+            }
+          }
+        },
+        {
+          "id": "dyzjnnf",
+          "taskName": "经营管理",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "dsa9gf9",
+          "taskName": "竞技场",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "0qpptbw",
+          "taskName": "广场神像奖励",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "5gu67ze",
+          "taskName": "救赎之塔",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "oylyxs5",
+          "taskName": "赛季活动战斗",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "a5typh7",
+          "taskName": "装备",
+          "enabled": true,
+          "optionValues": {
+            "ChooseIntensify": {
+              "type": "select",
+              "caseName": "18"
+            }
+          }
+        },
+        {
+          "id": "3y7hl4e",
+          "taskName": "领取任务奖励",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "am8gcji",
+          "taskName": "通行证",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "dlmq5fq",
+          "taskName": "邮件",
+          "enabled": true,
+          "optionValues": {}
+        }
+      ],
+      "preAction": {
+        "enabled": false,
+        "program": "C:\\Neowiz\\Browndust2\\Browndust2_10000001\\BrownDust II.exe",
+        "args": "",
+        "waitForExit": false
+      }
+    }
+  ],
+  "settings": {
+    "theme": "light",
+    "accentColor": "emerald",
+    "language": "system",
+    "confirmBeforeDelete": false,
+    "maxLogsPerInstance": 2000,
+    "windowSize": {
+      "width": 998,
+      "height": 859
+    },
+    "windowPosition": {
+      "x": -1178,
+      "y": 83
+    },
+    "mirrorChyan": {
+      "cdk": "",
+      "channel": "stable"
+    },
+    "showOptionPreview": true,
+    "sidePanelExpanded": true,
+    "rightPanelWidth": 320,
+    "rightPanelCollapsed": false,
+    "connectionPanelExpanded": true,
+    "screenshotPanelExpanded": false,
+    "screenshotFrameRate": "1",
+    "welcomeShownHash": "-15hu1o",
+    "devMode": false,
+    "tcpCompatMode": false,
+    "autoRunOnLaunch": false,
+    "minimizeToTray": false,
+    "onboardingCompleted": true,
+    "hotkeys": {
+      "startTasks": "[",
+      "stopTasks": "]"
+    }
+  },
+  "recentlyClosed": [],
+  "interfaceTaskSnapshot": [
+    "自动进入游戏",
+    "每日抽卡",
+    "进入公会",
+    "经营管理",
+    "竞技场",
+    "广场神像奖励",
+    "狩猎场",
+    "装备",
+    "领取任务奖励",
+    "通行证",
+    "邮件",
+    "赛季活动战斗",
+    "救赎之塔"
+  ],
+  "newTaskNames": [],
+  "customAccents": [],
+  "lastActiveInstanceId": "6nsvr5j"
+}

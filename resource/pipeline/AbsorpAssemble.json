@@ -1,0 +1,224 @@
+{
+    "StartAbsorpAssemble": {
+        "next": [
+            "EnterMainStorySevth1",
+            "[JumpBack]StartGame"
+        ]
+    },
+    "EnterMainStorySevth1": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": "经营管理",
+                "threshold": 0.60,
+                "roi": [79, 189, 64, 26]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": { "target": [110, 181] }
+        },
+        "max_hit": 2,
+        "post_delay": 5000,
+        "next": [
+            "EnterMainStorySevth2",
+            "EnterMainStorySevth1"
+        ]
+    },
+    "EnterMainStorySevth2": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": "立刻前往",
+                "threshold": 0.40,
+                "roi": [725, 180, 100, 40]
+            }
+        },
+        "action": { "type": "Click" },
+        "post_delay": 10000,
+        "next": [ "EnterMainStorySevth3" ]
+    },
+    "EnterMainStorySevth3": {
+        "action": {
+            "type": "ClickKey",
+            "param": { "key": 55 }
+        },
+        "post_delay": 2000,
+        "next": [ "EnterMainStorySevth4" ]
+    },
+    "EnterMainStorySevth4": {
+        "action": {
+            "type": "Click",
+            "param": { "target": [346, 583] }
+        },
+        "post_delay": 2000,
+        "next": [ "EnterMainStorySevth5" ]
+    },
+    "EnterMainStorySevth5": {
+        "action": {
+            "type": "Click",
+            "param": { "target": [821, 646] }
+        },
+        "post_delay": 10000,
+        "next": [ "ClickHuntingG1" ]
+    },
+    "ClickHuntingG1": {
+        "action": {
+            "type": "Click",
+            "param": { "target": [195, 73] }
+        },
+        "post_delay": 10000,
+        "next": [ "ClickHuntingG2" ]
+    },
+    "ClickHuntingG2": {
+        "action": { "type": "Click" },
+        "post_delay": 10000,
+        "next": [ "StartGame" ]
+    },
+    "TransferVillage": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "Absorb/Get.png",
+                "threshold": 0.80,
+                "roi": [910, 560, 70, 70],
+                "green_mask": true
+            }
+        },
+        "action": { "type": "Click" },
+        "post_delay": 1000,
+        "next": [ "TransferMoveLeft" ]
+    },
+    "TransferMoveLeft": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "Absorb/MoveLeft.png",
+                "threshold": 0.80,
+                "roi": [225, 320, 60, 60]
+            }
+        },
+        "action": { "type": "Click" },
+        "post_delay": 1000,
+        "next": [
+            "TransferIfSave",
+            "TransferMoveLeft"
+        ]
+    },
+    "TransferMoveRight": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "Absorb/MoveRight.png",
+                "threshold": 0.80,
+                "roi": [1000, 320, 60, 60]
+            }
+        },
+        "action": { "type": "Click" },
+        "post_delay": 1000,
+        "next": [ "TransferArray" ]
+    },
+    "TransferIfSave": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [ ".*安全.*" ],
+                "threshold": 0.60,
+                "roi": [565, 640, 65, 30]
+            }
+        },
+        "action": { "type": "DoNothing" },
+        "post_delay": 1000,
+        "next": [
+            "TransferArray",
+            "AbsordBack"
+        ]
+    },
+    "TransferArray": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "Absorb/TransferArray.png",
+                "threshold": 0.60,
+                "roi": [400, 160, 500, 400],
+                "green_mask": true
+            }
+        },
+        "action": { "type": "Click" },
+        "post_delay": 3000,
+        "next": [
+            "Exploration",
+            "Call"
+        ]
+    },
+    "AbsordBack": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "Absorb/Back.png",
+                "roi": [60, 0, 85, 60],
+                "threshold": 0.50
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": { "target": [75, 37] }
+        },
+        "post_delay": 1000,
+        "next": [ "Exploration" ]
+    },
+    "Exploration": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "Absorb/Exploration.png",
+                "roi": [990, 450, 270, 260],
+                "threshold": 0.50
+            }
+        },
+        "action": { "type": "Click" },
+        "post_delay": 1000,
+        "next": [ "Absort" ]
+    },
+    "Absort": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "Absorb/Absorb.png",
+                "roi": [990, 450, 270, 260],
+                "threshold": 0.50
+            }
+        },
+        "action": { "type": "Click" },
+        "post_delay": 1000,
+        "next": [ "TransferMove" ]
+    },
+    "Call": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "Absorb/Convene.png",
+                "roi": [990, 450, 270, 260],
+                "threshold": 0.50
+            }
+        },
+        "action": { "type": "Click" },
+        "post_delay": 1000,
+        "next": [ "Absort" ]
+    },
+    "TransferMove": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "Absorb/Get.png",
+                "threshold": 0.80,
+                "roi": [910, 560, 70, 70],
+                "green_mask": true
+            }
+        },
+        "action": { "type": "Click" },
+        "post_delay": 1000,
+        "next": []
+    },
+    "End": {}
+}

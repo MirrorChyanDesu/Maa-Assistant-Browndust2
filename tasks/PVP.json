@@ -1,10 +1,10 @@
 {
     "task": [
         {
-            "name": "PVP",
-            "label": "PVP",
+            "name": "竞技场",
+            "label": "每日免费PVP",
             "entry": "StartPVP",
-            "description": "请输入文本",
+            "description": "请自行设置自动战斗倍数",
             "option":[]
         }
     ],

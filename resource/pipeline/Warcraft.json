@@ -1,18 +1,106 @@
 {
-    "StartWarcraft": {
+    "$__mpe_config_Warcraft": {
+        "$__mpe_code": {
+            "prefix": "",
+            "coordinateMode": "absolute-v1",
+            "filePath": "F:\\BD2MAA\\resource\\pipeline\\Warcraft.json",
+            "lastSyncTime": 1788056114714,
+            "savedViewport": {
+                "x": 60,
+                "y": 351,
+                "zoom": 0.87
+            },
+            "filename": "Warcraft",
+            "version": "v1.9.1"
+        }
+    },
+    "$__mpe_external_StartGame_Warcraft": {
+        "$__mpe_code": {
+            "position": {
+                "x": 2439,
+                "y": 295
+            }
+        }
+    },
+    "ChallengeBattle": {
+        "max_hit": 3,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    535,
+                    611,
+                    82,
+                    60
+                ],
+                "expected": [
+                    "挑战战斗"
+                ],
+                "threshold": 0.7
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    575,
+                    573
+                ]
+            }
+        },
+        "post_delay": 5000,
         "next": [
-            "EnterWarcraft",
-            "EnterWarcraft2",
-            "[JumpBack]StartGame"
-        ]
+            "ChallengeBattle",
+            "自动战斗入口",
+            "WarcraftBattleSwipe"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 317,
+                "y": 112
+            }
+        }
+    },
+    "CorrectWarcraft": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    750,
+                    500,
+                    250,
+                    100
+                ],
+                "expected": ".*奖励.*",
+                "threshold": 0.7
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "$__mpe_code": {
+            "position": {
+                "x": 2434,
+                "y": 55
+            }
+        }
     },
     "EnterWarcraft": {
         "recognition": {
             "type": "OCR",
             "param": {
-                "expected": ["魔兽", "追踪者", "解锁"],
-                "roi": [1000, 300, 260, 300],
-                "threshold": 0.60
+                "roi": [
+                    1000,
+                    300,
+                    260,
+                    300
+                ],
+                "expected": [
+                    "魔兽",
+                    "追踪者",
+                    "解锁"
+                ],
+                "threshold": 0.6
             }
         },
         "action": {
@@ -20,17 +108,31 @@
         },
         "post_delay": 2000,
         "next": [
-            "ChallengeBattle",
-            "EnterWarcraft"
-        ]
+            "EnterWarcraft",
+            "是否开启自动推关"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -238,
+                "y": 621
+            }
+        }
     },
     "EnterWarcraft2": {
         "recognition": {
             "type": "OCR",
             "param": {
-                "expected": ["剧情", "解锁"],
-                "roi": [1080, 400, 80, 300],
-                "threshold": 0.60
+                "roi": [
+                    1080,
+                    400,
+                    80,
+                    300
+                ],
+                "expected": [
+                    "剧情",
+                    "解锁"
+                ],
+                "threshold": 0.6
             }
         },
         "action": {
@@ -38,71 +140,300 @@
         },
         "post_delay": 2000,
         "next": [
-            "ChallengeBattle",
-            "EnterWarcraft2"
-        ]
+            "EnterWarcraft2",
+            "是否开启自动推关"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -242,
+                "y": 273
+            }
+        }
     },
-    "ChallengeBattle": {
+    "FiendHunter": {
         "recognition": {
-            "type": "OCR",
+            "type": "TemplateMatch",
             "param": {
-                "expected": "挑战战斗",
-                "threshold": 0.60,
-                "roi": [350, 580, 500, 100]
+                "roi": [
+                    700,
+                    533,
+                    42,
+                    43
+                ],
+                "template": [
+                    "Warcraft/FH2.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.5
+                ]
             }
         },
         "action": {
             "type": "Click",
-            "param": {"target": [580,580]}
+            "param": {
+                "target": [
+                    701,
+                    580
+                ]
+            }
         },
-        "post_delay":8000,
-        "max_hit":3,
-        "next": ["ChallengeBattle",
-            "WarcraftBattleSwipe"]
+        "next": [
+            "QuickFiendHunter",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2418,
+                "y": 518
+            }
+        }
     },
-    "WarcraftBattleChoose": {
-        "action": {
-            "type": "Click",
-            "param": {"target": [233,690]}
-        },
-        "post_delay":600,
-        "max_hit":2,
-        "next": ["WarcraftBattleChoose",
-            "WarcraftQuickBattle",
-            "BackToFiendHunter"]
-    },
-    "WarcraftBattleSwipe": {
-        "action": {
-            "type": "Swipe",
-            "param": {"begin": [225,580],
-                "end": [225,440],
-                "end_hold":1000}},
-        "max_hit":3,
-        "post_delay":1000,
-        "next": ["WarcraftBattleSwipe",
-                 "WarcraftBattleChoose"]
-    },
-    "WarcraftQuickBattle": {
+    "FiendHunterBegin": {
         "recognition": {
             "type": "OCR",
             "param": {
-                "expected": "快速战斗",
-                "threshold": 0.80,
-                "roi": [740, 640, 120, 40]
+                "roi": [
+                    696,
+                    517,
+                    41,
+                    23
+                ],
+                "expected": "确认",
+                "threshold": 0.8
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": ["WarcraftSetMax"]
+        "next": [
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2971,
+                "y": 557
+            }
+        }
+    },
+    "QuickFiendHunter": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    819,
+                    646,
+                    77,
+                    28
+                ],
+                "expected": "快速战斗",
+                "threshold": 0.8
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "FiendHunterBegin"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2714,
+                "y": 561
+            }
+        }
+    },
+    "StartWarcraft": {
+        "next": [
+            "EnterWarcraft",
+            "EnterWarcraft2",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -528,
+                "y": 310
+            }
+        }
+    },
+    "WarcraftBattleChoose": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    157,
+                    670,
+                    116,
+                    45
+                ],
+                "template": [
+                    "Warcraft/152.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.7
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    233,
+                    690
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "WarcraftBattleChoose",
+            "WarcraftQuickBattle",
+            "返回活动主页2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 869,
+                "y": 412
+            }
+        }
+    },
+    "WarcraftBattleSwipe": {
+        "max_hit": 3,
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    225,
+                    580
+                ],
+                "end": [
+                    [
+                        225,
+                        440
+                    ]
+                ],
+                "end_hold": 1000
+            }
+        },
+        "next": [
+            "WarcraftBattleSwipe",
+            "WarcraftBattleChoose"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 598,
+                "y": 458
+            }
+        }
+    },
+    "WarcraftBegin": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    640,
+                    530,
+                    60,
+                    40
+                ],
+                "expected": "战斗",
+                "threshold": 0.8
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "WarcraftBeginClick"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1618,
+                "y": 569
+            }
+        }
+    },
+    "WarcraftBeginClick": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    560,
+                    635,
+                    140,
+                    40
+                ],
+                "expected": [
+                    "点击",
+                    "画面",
+                    "即可",
+                    "返回"
+                ],
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    597,
+                    500
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "WarcraftBeginClick",
+            "返回活动主页2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1875,
+                "y": 521
+            }
+        }
+    },
+    "WarcraftQuickBattle": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    740,
+                    640,
+                    120,
+                    40
+                ],
+                "expected": "快速战斗",
+                "threshold": 0.8
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "WarcraftSetMax"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1130,
+                "y": 624
+            }
+        }
     },
     "WarcraftSetMax": {
         "recognition": {
             "type": "OCR",
             "param": {
+                "roi": [
+                    750,
+                    325,
+                    60,
+                    75
+                ],
                 "expected": "MAX",
-                "threshold": 0.60,
-                "roi": [750, 325, 60, 75]
+                "threshold": 0.6
             }
         },
         "action": {
@@ -110,87 +441,323 @@
         },
         "next": [
             "WarcraftBegin"
-        ]
-    },
-    "WarcraftBegin": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "expected": "战斗",
-                "threshold": 0.80,
-                "roi": [640, 530, 60, 40]
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1373,
+                "y": 624
             }
-        },
-        "action": {"type": "Click"},
-        "post_delay":1500,
-        "next": ["WarcraftBeginClick"]
+        }
     },
-    "WarcraftBeginClick": {
+    "开始战斗": {
         "recognition": {
             "type": "OCR",
             "param": {
-                "expected": ["点击","画面","即可","返回"],
-                "threshold": 0.60,
-                "roi": [560,635,140,40]}
-        },
-        "action": {"type": "Click",
-            "param": {"target": [81,32]}},
-        "post_delay":1500,
-        "next": ["WarcraftBeginClick","BackToFiendHunter"]
-    },
-    "BackToFiendHunter": {
-        "action": {
-            "type": "Click",
-            "param": {"target": [81,32]}},
-        "post_delay":1500,
-        "next": ["FiendHunter","StartGame"]
-    },
-    "FiendHunter": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "Warcraft/FH.png",
-                "threshold": 0.40,
-                "roi":[712,536,22,22]}
-        },
-        "action": {"type": "Click",
-            "param": {"target": [701,580]}
-        },
-        "next": ["QuickFiendHunter","StartGame"]
-},
-    "QuickFiendHunter": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "expected": "快速战斗",
-                "threshold": 0.80,
-                "roi": [819,646,77,28]}
-        },
-        "action": {"type": "Click"},
-        "next": ["FiendHunterBegin"]
-},
-    "FiendHunterBegin": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "expected": "确认",
-                "threshold": 0.80,
-                "roi": [696,517,41,23]}
-        },
-        "action": {"type": "Click"},
-        "next": ["StartGame"]
-},
-    "CorrectWarcraft": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "expected": ".*奖励.*",
-                "threshold": 0.70,
-                "roi": [750,500,250,100]
+                "roi": [
+                    652,
+                    538,
+                    54,
+                    23
+                ],
+                "expected": [
+                    "战斗"
+                ]
             }
         },
         "action": {
             "type": "Click"
+        },
+        "next": [
+            "开始战斗",
+            "自动战斗保持"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1111,
+                "y": -129
+            }
+        }
+    },
+    "战斗倍率MAX": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    743,
+                    275,
+                    77,
+                    60
+                ],
+                "expected": [
+                    "MAX"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "开始战斗"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 828,
+                "y": -132
+            }
+        }
+    },
+    "是否开启自动推关": {
+        "next": [
+            "ChallengeBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 68,
+                "y": 638
+            }
+        }
+    },
+    "普通战斗推关": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    399,
+                    599,
+                    105,
+                    76
+                ],
+                "expected": [
+                    "普通战斗"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    451,
+                    573
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "自动战斗入口",
+            "返回活动主页3"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -218,
+                "y": -158
+            }
+        }
+    },
+    "自动战斗保持": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    47,
+                    607,
+                    76,
+                    35
+                ],
+                "expected": [
+                    "自动战斗"
+                ]
+            }
+        },
+        "timeout": 240000,
+        "next": [
+            "返回战斗关表"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1389,
+                "y": -123
+            }
+        }
+    },
+    "自动战斗入口": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1098,
+                    641,
+                    84,
+                    65
+                ],
+                "expected": [
+                    "自动战斗"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "战斗倍率MAX"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 573,
+                "y": -133
+            }
+        }
+    },
+    "返回战斗关表": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    951,
+                    661,
+                    135,
+                    24
+                ],
+                "expected": [
+                    "返回"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1011,
+                    674
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "返回活动主页1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1676,
+                "y": -127
+            }
+        }
+    },
+    "返回活动主页1": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    142,
+                    6,
+                    59,
+                    57
+                ],
+                "template": [
+                    "Warcraft/BACK.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    112,
+                    34
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1992,
+                "y": -130
+            }
+        }
+    },
+    "返回活动主页2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    142,
+                    6,
+                    59,
+                    57
+                ],
+                "template": [
+                    "Warcraft/BACK.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    112,
+                    34
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "FiendHunter",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2151,
+                "y": 469
+            }
+        }
+    },
+    "返回活动主页3": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    142,
+                    6,
+                    59,
+                    57
+                ],
+                "template": [
+                    "Warcraft/BACK.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    112,
+                    34
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "ChallengeBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 77,
+                "y": 111
+            }
         }
     }
 }

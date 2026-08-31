@@ -35,7 +35,19 @@
           "optionValues": {
             "ChooseRock": {
               "type": "select",
-              "caseName": "WindRock"
+              "caseName": "WaterRock"
+            },
+            "ChooseDouble": {
+              "type": "select",
+              "caseName": "AllGold"
+            },
+            "ChooseWood": {
+              "type": "select",
+              "caseName": "WoodHunt"
+            },
+            "ChooseSlime": {
+              "type": "select",
+              "caseName": "Once"
             }
           }
         },
@@ -60,14 +72,19 @@
         {
           "id": "5gu67ze",
           "taskName": "救赎之塔",
-          "enabled": true,
+          "enabled": false,
           "optionValues": {}
         },
         {
           "id": "oylyxs5",
           "taskName": "赛季活动战斗",
           "enabled": true,
-          "optionValues": {}
+          "optionValues": {
+            "开启自动战斗": {
+              "type": "select",
+              "caseName": "不开启自动战斗"
+            }
+          }
         },
         {
           "id": "a5typh7",
@@ -81,30 +98,18 @@
           }
         },
         {
-          "id": "3y7hl4e",
-          "taskName": "领取任务奖励",
+          "id": "lqe2so5",
+          "taskName": "资源吸收和召集",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "am8gcji",
-          "taskName": "通行证",
-          "enabled": true,
-          "optionValues": {}
-        },
-        {
-          "id": "dlmq5fq",
-          "taskName": "邮件",
+          "id": "fwaf3ia",
+          "taskName": "每日任务奖励",
           "enabled": true,
           "optionValues": {}
         }
-      ],
-      "preAction": {
-        "enabled": false,
-        "program": "C:\\Neowiz\\Browndust2\\Browndust2_10000001\\BrownDust II.exe",
-        "args": "",
-        "waitForExit": false
-      }
+      ]
     }
   ],
   "settings": {
@@ -114,12 +119,12 @@
     "confirmBeforeDelete": false,
     "maxLogsPerInstance": 2000,
     "windowSize": {
-      "width": 998,
-      "height": 859
+      "width": 1181,
+      "height": 890
     },
     "windowPosition": {
-      "x": -1178,
-      "y": 83
+      "x": 649,
+      "y": 245
     },
     "mirrorChyan": {
       "cdk": "",
@@ -135,12 +140,13 @@
     "welcomeShownHash": "-15hu1o",
     "devMode": false,
     "tcpCompatMode": false,
+    "autoStartInstanceId": "6nsvr5j",
     "autoRunOnLaunch": false,
     "minimizeToTray": false,
     "onboardingCompleted": true,
     "hotkeys": {
-      "startTasks": "[",
-      "stopTasks": "]"
+      "startTasks": "F10",
+      "stopTasks": "F11"
     }
   },
   "recentlyClosed": [],
@@ -153,11 +159,10 @@
     "广场神像奖励",
     "狩猎场",
     "装备",
-    "领取任务奖励",
-    "通行证",
-    "邮件",
     "赛季活动战斗",
-    "救赎之塔"
+    "救赎之塔",
+    "每日任务奖励",
+    "资源吸收和召集"
   ],
   "newTaskNames": [],
   "customAccents": [],

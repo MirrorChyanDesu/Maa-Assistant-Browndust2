@@ -1,224 +1,1535 @@
 {
-    "StartAbsorpAssemble": {
-        "next": [
-            "EnterMainStorySevth1",
-            "[JumpBack]StartGame"
-        ]
+    "$__mpe_config_AbsorpAssemble": {
+        "$__mpe_code": {
+            "prefix": "",
+            "coordinateMode": "absolute-v1",
+            "filePath": "F:\\BD2MAA\\resource\\pipeline\\AbsorpAssemble.json",
+            "lastSyncTime": 1788056912701,
+            "isModifiedExternally": false,
+            "isDeleted": true,
+            "savedViewport": {
+                "x": -183,
+                "y": 445,
+                "zoom": 0.57
+            },
+            "filename": "AbsorpAssemble",
+            "version": "v1.9.1"
+        }
     },
-    "EnterMainStorySevth1": {
+    "$__mpe_external_StartGame_AbsorpAssemble": {
+        "$__mpe_code": {
+            "position": {
+                "x": 3046,
+                "y": 952
+            }
+        }
+    },
+    "13章": {
+        "max_hit": 1,
         "recognition": {
-            "type": "OCR",
+            "type": "TemplateMatch",
             "param": {
-                "expected": "经营管理",
-                "threshold": 0.60,
-                "roi": [79, 189, 64, 26]
+                "roi": [
+                    319,
+                    609,
+                    127,
+                    82
+                ],
+                "template": [
+                    "Absorb/13RD.png"
+                ]
             }
         },
+        "pre_delay": 1000,
         "action": {
             "type": "Click",
-            "param": { "target": [110, 181] }
-        },
-        "max_hit": 2,
-        "post_delay": 5000,
-        "next": [
-            "EnterMainStorySevth2",
-            "EnterMainStorySevth1"
-        ]
-    },
-    "EnterMainStorySevth2": {
-        "recognition": {
-            "type": "OCR",
             "param": {
-                "expected": "立刻前往",
-                "threshold": 0.40,
-                "roi": [725, 180, 100, 40]
+                "target_offset": [
+                    34,
+                    12,
+                    -71,
+                    -29
+                ]
             }
-        },
-        "action": { "type": "Click" },
-        "post_delay": 10000,
-        "next": [ "EnterMainStorySevth3" ]
-    },
-    "EnterMainStorySevth3": {
-        "action": {
-            "type": "ClickKey",
-            "param": { "key": 55 }
-        },
-        "post_delay": 2000,
-        "next": [ "EnterMainStorySevth4" ]
-    },
-    "EnterMainStorySevth4": {
-        "action": {
-            "type": "Click",
-            "param": { "target": [346, 583] }
-        },
-        "post_delay": 2000,
-        "next": [ "EnterMainStorySevth5" ]
-    },
-    "EnterMainStorySevth5": {
-        "action": {
-            "type": "Click",
-            "param": { "target": [821, 646] }
         },
         "post_delay": 10000,
-        "next": [ "ClickHuntingG1" ]
-    },
-    "ClickHuntingG1": {
-        "action": {
-            "type": "Click",
-            "param": { "target": [195, 73] }
-        },
-        "post_delay": 10000,
-        "next": [ "ClickHuntingG2" ]
-    },
-    "ClickHuntingG2": {
-        "action": { "type": "Click" },
-        "post_delay": 10000,
-        "next": [ "StartGame" ]
-    },
-    "TransferVillage": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "Absorb/Get.png",
-                "threshold": 0.80,
-                "roi": [910, 560, 70, 70],
-                "green_mask": true
-            }
-        },
-        "action": { "type": "Click" },
-        "post_delay": 1000,
-        "next": [ "TransferMoveLeft" ]
-    },
-    "TransferMoveLeft": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "Absorb/MoveLeft.png",
-                "threshold": 0.80,
-                "roi": [225, 320, 60, 60]
-            }
-        },
-        "action": { "type": "Click" },
-        "post_delay": 1000,
         "next": [
-            "TransferIfSave",
-            "TransferMoveLeft"
-        ]
+            "13章",
+            "传送阵"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 220,
+                "y": 546
+            }
+        }
     },
-    "TransferMoveRight": {
+    "16章": {
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "template": "Absorb/MoveRight.png",
-                "threshold": 0.80,
-                "roi": [1000, 320, 60, 60]
-            }
-        },
-        "action": { "type": "Click" },
-        "post_delay": 1000,
-        "next": [ "TransferArray" ]
-    },
-    "TransferIfSave": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "expected": [ ".*安全.*" ],
-                "threshold": 0.60,
-                "roi": [565, 640, 65, 30]
-            }
-        },
-        "action": { "type": "DoNothing" },
-        "post_delay": 1000,
-        "next": [
-            "TransferArray",
-            "AbsordBack"
-        ]
-    },
-    "TransferArray": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "Absorb/TransferArray.png",
-                "threshold": 0.60,
-                "roi": [400, 160, 500, 400],
-                "green_mask": true
-            }
-        },
-        "action": { "type": "Click" },
-        "post_delay": 3000,
-        "next": [
-            "Exploration",
-            "Call"
-        ]
-    },
-    "AbsordBack": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "Absorb/Back.png",
-                "roi": [60, 0, 85, 60],
-                "threshold": 0.50
+                "roi": [
+                    670,
+                    599,
+                    135,
+                    96
+                ],
+                "template": [
+                    "Absorb/16th.png"
+                ]
             }
         },
         "action": {
             "type": "Click",
-            "param": { "target": [75, 37] }
+            "param": {
+                "target_offset": [
+                    37,
+                    15,
+                    -74,
+                    -32
+                ]
+            }
         },
-        "post_delay": 1000,
-        "next": [ "Exploration" ]
+        "post_delay": 10000,
+        "next": [
+            "16章",
+            "传送阵"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 228,
+                "y": 964
+            }
+        }
     },
-    "Exploration": {
+    "17章": {
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "template": "Absorb/Exploration.png",
-                "roi": [990, 450, 270, 260],
-                "threshold": 0.50
+                "roi": [
+                    795,
+                    604,
+                    129,
+                    87
+                ],
+                "template": [
+                    "Absorb/17th.png"
+                ]
             }
         },
-        "action": { "type": "Click" },
-        "post_delay": 1000,
-        "next": [ "Absort" ]
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    36,
+                    16,
+                    -72,
+                    -34
+                ]
+            }
+        },
+        "post_delay": 10000,
+        "next": [
+            "17章",
+            "传送阵"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 225,
+                "y": 1370
+            }
+        }
     },
     "Absort": {
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "template": "Absorb/Absorb.png",
-                "roi": [990, 450, 270, 260],
-                "threshold": 0.50
+                "roi": [
+                    986,
+                    459,
+                    167,
+                    236
+                ],
+                "template": [
+                    "Absorb/Absorb.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
             }
         },
-        "action": { "type": "Click" },
+        "action": {
+            "type": "Click"
+        },
         "post_delay": 1000,
-        "next": [ "TransferMove" ]
+        "next": [
+            "KillMoster",
+            "Call",
+            "传送判定"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2120,
+                "y": 107
+            }
+        }
+    },
+    "BackTown": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    77,
+                    18,
+                    26,
+                    31
+                ],
+                "template": [
+                    "Absorb/Back.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "Exploration",
+            "传送判定"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1663,
+                "y": -474
+            }
+        }
+    },
+    "KillMoster": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    986,
+                    459,
+                    167,
+                    236
+                ],
+                "template": [
+                    "Absorb/YAZHI.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "Call",
+            "传送判定"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2449,
+                "y": -169
+            }
+        }
+    },
+    "StartAbsorpAssemble": {
+        "next": [
+            "第七章1",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -1688,
+                "y": -563
+            }
+        }
+    },
+    "TransferArray": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    400,
+                    160,
+                    500,
+                    400
+                ],
+                "template": "Absorb/TransferArray.png",
+                "green_mask": true,
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 7000,
+        "next": [
+            "Exploration",
+            "Absort",
+            "KillMoster",
+            "Call",
+            "传送判定"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2002,
+                "y": -887
+            }
+        }
+    },
+    "TransferMoveLeft": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    225,
+                    320,
+                    60,
+                    60
+                ],
+                "template": "Absorb/MoveLeft.png",
+                "threshold": 0.8
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "TransferMoveLeft",
+            "TransferArray"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1674,
+                "y": -882
+            }
+        }
+    },
+    "TransferMoveRight": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1000,
+                    320,
+                    60,
+                    60
+                ],
+                "template": "Absorb/MoveRight.png",
+                "threshold": 0.8
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "TransferArray"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3773,
+                "y": -1154
+            }
+        }
+    },
+    "传送阵": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    881,
+                    534,
+                    116,
+                    113
+                ],
+                "template": [
+                    "Absorb/Get.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.55
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    940,
+                    594
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "TransferMoveLeft",
+            "BackTown"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1320,
+                "y": -876
+            }
+        }
+    },
+    "位置纠正1": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    267,
+                    151,
+                    48,
+                    32
+                ],
+                "expected": [
+                    "离开"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    290,
+                    169
+                ]
+            }
+        },
+        "post_delay": 3000,
+        "next": [
+            "位置纠正2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1052,
+                "y": -112
+            }
+        }
+    },
+    "位置纠正2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Absorb/template_move.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    194,
+                    75
+                ]
+            }
+        },
+        "post_delay": 500,
+        "next": [
+            "位置纠正3"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1302,
+                "y": -117
+            }
+        }
+    },
+    "位置纠正3": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    246,
+                    222,
+                    66,
+                    88
+                ],
+                "expected": [
+                    "狩猎场"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 7000,
+        "next": [
+            "传送阵"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1561,
+                "y": -130
+            }
+        }
+    },
+    "切外传": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    443,
+                    574,
+                    79,
+                    21
+                ],
+                "expected": [
+                    "角色游戏卡"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "火片",
+            "切外传"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -152,
+                "y": 1784
+            }
+        }
+    },
+    "十七章传送阈值": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    881,
+                    534,
+                    116,
+                    113
+                ],
+                "template": [
+                    "Absorb/Get.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    940,
+                    594
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "TransferMoveRight"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3784,
+                "y": -232
+            }
+        }
+    },
+    "十三章传送阈值": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    881,
+                    534,
+                    116,
+                    113
+                ],
+                "template": [
+                    "Absorb/Get.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.55
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    940,
+                    594
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "TransferMoveRight"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3776,
+                "y": -695
+            }
+        }
+    },
+    "十六章传送阈值": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    881,
+                    534,
+                    116,
+                    113
+                ],
+                "template": [
+                    "Absorb/Get.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    940,
+                    594
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "TransferMoveRight"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3785,
+                "y": 238
+            }
+        }
+    },
+    "右滑卡带栏两次": {
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    1000,
+                    647
+                ],
+                "end": [
+                    [
+                        338,
+                        647
+                    ]
+                ],
+                "end_hold": [
+                    200
+                ]
+            }
+        },
+        "repeat": 2,
+        "repeat_delay": 500,
+        "post_delay": 1000,
+        "next": [
+            "13章",
+            "16章",
+            "17章"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -78,
+                "y": 965
+            }
+        }
+    },
+    "战场奖励1": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    542,
+                    643,
+                    52,
+                    46
+                ],
+                "template": [
+                    "Absorb/P.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    569,
+                    665
+                ]
+            }
+        },
+        "next": [
+            "战场奖励2",
+            "战场奖励1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -905,
+                "y": -76
+            }
+        }
+    },
+    "战场奖励2": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1037,
+                    553,
+                    172,
+                    71
+                ],
+                "template": [
+                    "Absorb/CHEAK2.png"
+                ],
+                "threshold": [
+                    0.85
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1168,
+                    578,
+                    12,
+                    12
+                ]
+            }
+        },
+        "next": [
+            "战场奖励3"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -623,
+                "y": -73
+            }
+        }
+    },
+    "战场奖励3": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Absorb/CHEAK.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.81
+                ]
+            }
+        },
+        "$__mpe_code": {
+            "position": {
+                "x": -365,
+                "y": -79
+            }
+        }
+    },
+    "换卡_1": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    582,
+                    642,
+                    50,
+                    47
+                ],
+                "template": [
+                    "Absorb/P.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "第八章",
+            "换卡_1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -48,
+                "y": -265
+            }
+        }
+    },
+    "换卡_2": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    582,
+                    642,
+                    50,
+                    47
+                ],
+                "template": [
+                    "Absorb/P.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "第9章",
+            "换卡_2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -55,
+                "y": 187
+            }
+        }
+    },
+    "换卡_3": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    582,
+                    642,
+                    50,
+                    47
+                ],
+                "template": [
+                    "Absorb/P.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "换卡_3",
+            "右滑卡带栏两次"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -416,
+                "y": 558
+            }
+        }
+    },
+    "换卡_4": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    582,
+                    642,
+                    50,
+                    47
+                ],
+                "template": [
+                    "Absorb/P.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "换卡_4",
+            "右滑卡带栏两次"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -420,
+                "y": 975
+            }
+        }
+    },
+    "换卡_5": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    582,
+                    642,
+                    50,
+                    47
+                ],
+                "template": [
+                    "Absorb/P.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "换卡_5",
+            "右滑卡带栏两次"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -414,
+                "y": 1372
+            }
+        }
+    },
+    "换卡_6": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    582,
+                    642,
+                    50,
+                    47
+                ],
+                "template": [
+                    "Absorb/P.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "切外传",
+            "换卡_6"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -422,
+                "y": 1782
+            }
+        }
+    },
+    "派遣排除": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    905,
+                    553,
+                    76,
+                    82
+                ],
+                "template": [
+                    "Absorb/PQian.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.7
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "传送阵",
+            "位置纠正1",
+            "位置纠正2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 365,
+                "y": -1240
+            }
+        }
+    },
+    "火片": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    156,
+                    598,
+                    127,
+                    95
+                ],
+                "template": [
+                    "Absorb/huopian.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    39,
+                    16,
+                    -72,
+                    -33
+                ]
+            }
+        },
+        "post_delay": 10000,
+        "next": [
+            "火片",
+            "传送阵"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 227,
+                "y": 1773
+            }
+        }
+    },
+    "火片传送阈值": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    881,
+                    534,
+                    116,
+                    113
+                ],
+                "template": [
+                    "Absorb/Get.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    940,
+                    594
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "TransferMoveRight"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 4229,
+                "y": -694
+            }
+        }
+    },
+    "第9章": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1006,
+                    604,
+                    113,
+                    93
+                ],
+                "template": [
+                    "Absorb/NINTH.png"
+                ]
+            }
+        },
+        "pre_delay": 1000,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    34,
+                    15,
+                    -69,
+                    -30
+                ]
+            }
+        },
+        "post_delay": 10000,
+        "next": [
+            "第9章",
+            "传送阵",
+            "位置纠正1",
+            "位置纠正2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 214,
+                "y": 111
+            }
+        }
+    },
+    "第七章1": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    80,
+                    185,
+                    62,
+                    30
+                ],
+                "expected": [
+                    "经营管理"
+                ],
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    110,
+                    175
+                ]
+            }
+        },
+        "post_delay": 5000,
+        "next": [
+            "第七章2",
+            "第七章1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -1422,
+                "y": -929
+            }
+        }
+    },
+    "第七章2": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    745,
+                    175,
+                    73,
+                    27
+                ],
+                "expected": [
+                    "立刻前往"
+                ],
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 10000,
+        "next": [
+            "第七章2",
+            "第七章3"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -1126,
+                "y": -926
+            }
+        }
+    },
+    "第七章3": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    77,
+                    23,
+                    75,
+                    30
+                ],
+                "expected": [
+                    "格鲁菲"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    253,
+                    105
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "第七章3",
+            "第七章4"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -823,
+                "y": -915
+            }
+        }
+    },
+    "第七章4": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    296,
+                    572,
+                    101,
+                    29
+                ],
+                "expected": [
+                    "剧情游戏卡"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    340,
+                    584
+                ]
+            }
+        },
+        "post_delay": 2000,
+        "next": [
+            "第七章5"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -559,
+                "y": -909
+            }
+        }
+    },
+    "第七章5": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    699,
+                    608,
+                    245,
+                    80
+                ],
+                "template": [
+                    "Absorb/SEVENTH.png"
+                ],
+                "threshold": [
+                    0.8
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 10000,
+        "next": [
+            "派遣排除",
+            "传送阵",
+            "位置纠正1",
+            "位置纠正2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -270,
+                "y": -902
+            }
+        }
+    },
+    "第七章传送阈值": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    881,
+                    534,
+                    116,
+                    113
+                ],
+                "template": [
+                    "Absorb/Get.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    940,
+                    594
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "TransferMoveRight"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3303,
+                "y": -1173
+            }
+        }
+    },
+    "第九章传送阈值": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    881,
+                    534,
+                    116,
+                    113
+                ],
+                "template": [
+                    "Absorb/Get.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    940,
+                    594
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "TransferMoveRight"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3299,
+                "y": -247
+            }
+        }
+    },
+    "第八章": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    881,
+                    592,
+                    124,
+                    108
+                ],
+                "template": [
+                    "Absorb/EIGHTH.png"
+                ]
+            }
+        },
+        "pre_delay": 1000,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    35,
+                    12,
+                    -68,
+                    -31
+                ]
+            }
+        },
+        "post_delay": 10000,
+        "next": [
+            "第八章",
+            "传送阵",
+            "位置纠正1",
+            "位置纠正2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 205,
+                "y": -345
+            }
+        }
+    },
+    "第八章传送阈值": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    881,
+                    534,
+                    116,
+                    113
+                ],
+                "template": [
+                    "Absorb/Get.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    940,
+                    594
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "TransferMoveRight"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3305,
+                "y": -714
+            }
+        }
+    },
+    "Exploration": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    986,
+                    459,
+                    167,
+                    236
+                ],
+                "template": "Absorb/Exploration.png",
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "Absort",
+            "KillMoster",
+            "Call",
+            "传送判定"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2380,
+                "y": -895
+            }
+        }
     },
     "Call": {
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "template": "Absorb/Convene.png",
-                "roi": [990, 450, 270, 260],
-                "threshold": 0.50
+                "roi": [
+                    986,
+                    459,
+                    167,
+                    236
+                ],
+                "template": [
+                    "Absorb/Convene.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
             }
         },
-        "action": { "type": "Click" },
-        "post_delay": 1000,
-        "next": [ "Absort" ]
-    },
-    "TransferMove": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "Absorb/Get.png",
-                "threshold": 0.80,
-                "roi": [910, 560, 70, 70],
-                "green_mask": true
-            }
+        "action": {
+            "type": "Click"
         },
-        "action": { "type": "Click" },
         "post_delay": 1000,
-        "next": []
+        "next": [
+            "传送判定"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2779,
+                "y": 122
+            }
+        }
     },
-    "End": {}
+    "传送判定": {
+        "next": [
+            "第七章传送阈值",
+            "换卡_1",
+            "第八章传送阈值",
+            "换卡_2",
+            "第九章传送阈值",
+            "换卡_3",
+            "十三章传送阈值",
+            "换卡_4",
+            "十七章传送阈值",
+            "换卡_5",
+            "十六章传送阈值",
+            "换卡_6",
+            "火片传送阈值",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2512,
+                "y": 709
+            }
+        }
+    }
 }

@@ -4,7 +4,7 @@
             "name": "装备",
             "label": "分解装备+精炼",
             "entry": "StartBag",
-            "description": "一键强化N/R/SR未锁装备并自动分解，精炼一次指定分数的装备",
+            "description": "一键强化N/R/SR未锁定装备并自动分解，精炼一次指定分数的装备",
             "option":[
                 "ChooseIntensify"
             ]

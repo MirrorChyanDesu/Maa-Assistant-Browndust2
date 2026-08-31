@@ -2,7 +2,7 @@
     "interface_version": 2,
     "name": "MaaBrownDust2",
     "description": "MaaBrownDust2",
-    "version": "v2608.6",
+    "version": "v26.09.1",
     "license": "misc/LICENSE_SHORT.md",
     "welcome": "README.md",
     "icon": "misc/MaaEnd-Tiny.png",
@@ -99,11 +99,9 @@
         "tasks/Square.json",
         "tasks/HuntingArea.json",
         "tasks/Bag.json",
-        "tasks/Mission.json",
-        "tasks/Passport.json",
-        "tasks/Mail.json",
         "tasks/Warcraft.json",
         "tasks/EvilCastle.json",
-        "tasks/AbsorpAssemble.json"，
+        "tasks/Dailyrewards.json",
+        "tasks/AbsorpAssemble.json"
     ]
 }

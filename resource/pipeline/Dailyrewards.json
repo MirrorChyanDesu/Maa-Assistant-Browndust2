@@ -1,0 +1,415 @@
+{
+    "$__mpe_config_Dailyrewards": {
+        "$__mpe_code": {
+            "prefix": "",
+            "coordinateMode": "absolute-v1",
+            "lastSyncTime": 1788070051963,
+            "isModifiedExternally": false,
+            "isDeleted": false,
+            "filePath": "F:\\BD2MAA\\resource\\pipeline\\Dailyrewards.json",
+            "savedViewport": {
+                "x": -1080,
+                "y": 402,
+                "zoom": 1
+            },
+            "filename": "Dailyrewards",
+            "version": "v1.9.1"
+        }
+    },
+    "EnterMission": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    429,
+                    663,
+                    49,
+                    44
+                ],
+                "expected": "任务",
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "MissionMark",
+            "StartPassport"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -888,
+                "y": -224
+            }
+        }
+    },
+    "MissionBack": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    530,
+                    640,
+                    200,
+                    40
+                ],
+                "expected": [
+                    "点击",
+                    "画面",
+                    "即可",
+                    "返回"
+                ],
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "MissionBack",
+            "MissionMark",
+            "StartPassport"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -84,
+                "y": -236
+            }
+        }
+    },
+    "MissionMark": {
+        "max_hit": 3,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    260,
+                    70,
+                    50,
+                    150
+                ],
+                "template": "Mission/ExclamationMark.png",
+                "threshold": 0.7
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "全部获得"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -615,
+                "y": -234
+            }
+        }
+    },
+    "StartMission": {
+        "next": [
+            "EnterMission",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -1157,
+                "y": -222
+            }
+        }
+    },
+    "全部获得": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1085,
+                    660,
+                    75,
+                    20
+                ],
+                "expected": "全部获得",
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2000,
+        "next": [
+            "MissionBack"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -348,
+                "y": -232
+            }
+        }
+    },
+    "$__mpe_external_StartGame_Dailyrewards": {
+        "$__mpe_code": {
+            "position": {
+                "x": 1747,
+                "y": 226
+            }
+        }
+    },
+    "EnterPassport": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1070,
+                    180,
+                    80,
+                    40
+                ],
+                "expected": "通行证",
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2000,
+        "next": [
+            "PassportClick1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 465,
+                "y": -169
+            }
+        }
+    },
+    "PassportClick1": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1040,
+                    429,
+                    45,
+                    49
+                ],
+                "template": [
+                    "Passport/PassMission.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "PassportClick2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 871,
+                "y": -195
+            }
+        }
+    },
+    "PassportClick2": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    924,
+                    497,
+                    69,
+                    27
+                ],
+                "expected": "全部获得",
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "repeat": 2,
+        "repeat_delay": 1000,
+        "post_delay": 2000,
+        "next": [
+            "PassportClick3",
+            "ToPassport2",
+            "ToPassport3",
+            "StartMail"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1135,
+                "y": -200
+            }
+        }
+    },
+    "PassportClick3": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    530,
+                    640,
+                    200,
+                    40
+                ],
+                "expected": [
+                    "点击",
+                    "画面",
+                    "即可",
+                    "返回"
+                ],
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "PassportClick3",
+            "ToPassport2",
+            "ToPassport3",
+            "StartMail"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1405,
+                "y": -194
+            }
+        }
+    },
+    "StartPassport": {
+        "next": [
+            "EnterPassport",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 212,
+                "y": -168
+            }
+        }
+    },
+    "ToPassport2": {
+        "max_hit": 2,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    280,
+                    271
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "ToPassport2",
+            "PassportClick1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 629,
+                "y": 162
+            }
+        }
+    },
+    "ToPassport3": {
+        "max_hit": 2,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    281,
+                    337
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "ToPassport3",
+            "PassportClick1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 630,
+                "y": 460
+            }
+        }
+    },
+    "StartMail": {
+        "next": [
+            "EnterMail",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1683,
+                "y": -198
+            }
+        }
+    },
+    "EnterMail": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1043,
+                    10,
+                    59,
+                    58
+                ],
+                "template": "Mail/Mail.png",
+                "threshold": [
+                    0.7
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "AllGat"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1952,
+                "y": -204
+            }
+        }
+    },
+    "AllGat": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1091,
+                    658,
+                    68,
+                    25
+                ],
+                "expected": [
+                    "全部领取"
+                ],
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2229,
+                "y": -207
+            }
+        }
+    }
+}

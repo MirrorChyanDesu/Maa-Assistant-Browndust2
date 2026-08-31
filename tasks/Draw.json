@@ -2,9 +2,9 @@
     "task": [
         {
             "name": "每日抽卡",
-            "label": "抽卡！",
+            "label": "免费抽抽乐！！！",
             "entry": "StartDraw",
-            "description": "只点击左下角的所有免费抽抽乐",
+            "description": "只检测左下角“所有免费抽抽乐”",
             "controller": [
                 "Win32",
                 "Win32-Window",

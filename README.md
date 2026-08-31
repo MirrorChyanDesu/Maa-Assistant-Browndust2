@@ -1,8 +1,8 @@
-  用MaaEnd改的BD2小助手（贴上本尊 github.com/MaaEnd/MaaEnd ）
+用MaaEnd改的BD2小助手（贴上本尊 github.com/MaaEnd/MaaEnd ）
 
 # Maa-Assistant-Browndust2
 
-基于 MAA (MaaAssistantArknights) 框架的 BrownDust2 游戏自动化助手。
+基于 MAA (MaaAssistantArknights) 的 BrownDust2 游戏自动化助手。
 
 ## 项目简介
 

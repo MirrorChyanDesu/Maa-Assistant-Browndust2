@@ -1,0 +1,313 @@
+{
+    "$__mpe_config_EventReward": {
+        "$__mpe_code": {
+            "prefix": "",
+            "coordinateMode": "absolute-v1",
+            "lastSyncTime": 1788577494405,
+            "isModifiedExternally": false,
+            "isDeleted": false,
+            "filePath": "F:\\BD2MAA\\resource\\pipeline\\EventReward.json",
+            "savedViewport": {
+                "x": 556,
+                "y": 92,
+                "zoom": 0.49
+            },
+            "filename": "EventReward",
+            "version": "v1.9.3"
+        }
+    },
+    "$__mpe_external_StartGame_EventReward": {
+        "$__mpe_code": {
+            "position": {
+                "x": 1071,
+                "y": 120
+            }
+        }
+    },
+    "EventMain": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    142,
+                    2,
+                    105,
+                    67
+                ],
+                "template": [
+                    "Event/EventMain.png"
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "EventTip",
+            "Swievent",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 126,
+                "y": 448
+            }
+        }
+    },
+    "EventReward": {
+        "next": [
+            "InEvent",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -448,
+                "y": 379
+            }
+        }
+    },
+    "EventTip": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    327,
+                    173,
+                    30,
+                    380
+                ],
+                "template": [
+                    "Event/ERTIP.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.5
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -22,
+                    25,
+                    -13,
+                    -13
+                ]
+            }
+        },
+        "repeat": 2,
+        "repeat_delay": 2000,
+        "post_delay": 2000,
+        "next": [
+            "GetAllrewards"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 398,
+                "y": 284
+            }
+        }
+    },
+    "GetAllrewards": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    933,
+                    483,
+                    122,
+                    62
+                ],
+                "expected": [
+                    "全部",
+                    "领取",
+                    "解锁"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "repeat": 2,
+        "repeat_delay": 1000,
+        "post_delay": 2000,
+        "next": [
+            "RewardSure"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 687,
+                "y": 411
+            }
+        }
+    },
+    "InEvent": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    566,
+                    630,
+                    61,
+                    64
+                ],
+                "template": [
+                    "Event/InEvent.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2500,
+        "next": [
+            "InEvent",
+            "EventMain"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -153,
+                "y": 442
+            }
+        }
+    },
+    "RewardSure": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    561,
+                    185,
+                    160,
+                    89
+                ],
+                "template": [
+                    "Hunt/REWARD.png"
+                ]
+            }
+        },
+        "pre_delay": 1500,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    62,
+                    384,
+                    -116,
+                    -40
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "EventTip",
+            "Swievent",
+            "GoBack_ER"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 973,
+                "y": 270
+            }
+        }
+    },
+    "InEvent2": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    566,
+                    630,
+                    61,
+                    64
+                ],
+                "template": [
+                    "Event/InEvent.png"
+                ],
+                "threshold": [
+                    0.8
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2500,
+        "next": [
+            "EventMain"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1513,
+                "y": 268
+            }
+        }
+    },
+    "Swievent": {
+        "max_hit": 2,
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    282,
+                    505,
+                    0,
+                    0
+                ],
+                "end": [
+                    [
+                        282,
+                        134,
+                        0,
+                        0
+                    ]
+                ],
+                "end_hold": [
+                    1000
+                ]
+            }
+        },
+        "repeat": 2,
+        "repeat_delay": 1000,
+        "post_delay": 1000,
+        "next": [
+            "EventTip",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 394,
+                "y": 807
+            }
+        }
+    },
+    "GoBack_ER": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    84,
+                    4,
+                    68,
+                    62
+                ],
+                "template": [
+                    "StartGame/Back.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2000,
+        "next": [
+            "InEvent2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1233,
+                "y": 270
+            }
+        }
+    }
+}

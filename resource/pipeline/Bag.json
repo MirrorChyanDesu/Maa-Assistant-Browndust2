@@ -1,363 +1,675 @@
 {
-    "StartBag":{
-        "next":[
-            "EnterBag",
-            "[JumpBack]StartGame"
-        ]
+    "$__mpe_config_Bag": {
+        "$__mpe_code": {
+            "prefix": "",
+            "coordinateMode": "absolute-v1",
+            "lastSyncTime": 1788184165388,
+            "isModifiedExternally": false,
+            "isDeleted": false,
+            "filePath": "F:\\BD2MAA\\resource\\pipeline\\Bag.json",
+            "savedViewport": {
+                "x": -657,
+                "y": -58,
+                "zoom": 0.5
+            },
+            "filename": "Bag",
+            "version": "v1.9.2"
+        }
     },
-    
-    "EnterBag":{
-        "recognition":{
-            "type":"OCR",
-            "param":{
-                "expected":"背包",
-                "roi":[228,668,38,30],
-                "threshold":0.60
+    "AnalysisLast": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    612,
+                    521,
+                    53,
+                    25
+                ],
+                "expected": [
+                    "确认"
+                ]
             }
         },
-        "next":[
-            "ToBag"
-        ]
-    },
-    "ToBag":{
-        "action":{
-            "type":"Click",
-            "param":{
-                "target":[246,654]
-            }
-            },
-        "post_delay":1000,
-        "next":[
-            "ToEquipment",
-            "ToBag"
-        ]
-    },
-    "ToEquipment":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Bag/Equipment.png",
-                "roi":[90,140,50,50],
-                "threshold":0.50
-            }
+        "action": {
+            "type": "Click"
         },
-        "action":{
-            "type":"Click"
-        },
-        "post_delay":2000,
-        "next":["Noseeequipped",
-                "Analyze"]
+        "post_delay": 500,
+        "next": [
+            "IntensifyChoose",
+            "AnalysisLast"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3014,
+                "y": 843
+            }
+        }
     },
-    "Noseeequipped":{
-        "action":{
-            "type":"Click",
-            "param":{"target":[1139,65]}
-            },
-        "post_delay":2000,
-        "next":["Noseeequipped2",
-                "Noseeequipped3"]
-    },
-    "Noseeequipped2":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Bag/GOU.png",
-                "roi":[585,505,43,35],
-                "threshold":0.50}},
-        "action":{
-            "type":"Click",
-            "param":{"target":[606,523]}
-            },
-        "post_delay":2000,
-        "next":["Noseeequipped3"]
-},
-    "Noseeequipped3":{
-        "action":{
-            "type":"Click",
-            "param":{"target":[1220,563]}
-            },
-        "post_delay":2000,
-        "next":["Analyze"]
-},
-    "Analyze":{
-        "recognition":{
-            "type":"OCR",
-            "param":{
-                "expected":"一键强化",
-                "roi":[950,655,70,30],
-                "threshold":0.60
+    "AnalysisMain": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    675,
+                    540,
+                    45,
+                    25
+                ],
+                "expected": "强化",
+                "threshold": 0.6
             }
         },
-        "action":{
-            "type":"Click"
+        "action": {
+            "type": "Click"
         },
-        "next":[
+        "post_delay": 1500,
+        "next": [
+            "AnalysisLast",
+            "强化失败处理"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2731,
+                "y": 1009
+            }
+        }
+    },
+    "Analyze": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    956,
+                    657,
+                    70,
+                    26
+                ],
+                "expected": "一键强化",
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
             "BagMore",
             "Analyze"
-        ]
-    },
-    "BagMore":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Bag/More.png",
-                "roi":[1055,650,50,50],
-                "threshold":0.50
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1000,
+                "y": 337
             }
-        },
-        "action":{
-            "type":"Click"
-        },
-        "next":[
-            "BagChoose",
-            "BagMore"
-        ]
+        }
     },
-    "BagChoose":{
-        "next":[
+    "BagChoose": {
+        "next": [
             "[JumpBack]BagTick",
             "[JumpBack]BagN",
             "[JumpBack]BagR",
             "[JumpBack]BagSR",
             "GreenTick"
-        ]
-    },
-    "BagTick":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "max_hit":3,
-            "param":{
-                "template":"Bag/Tick.png",
-                "roi":[850,570,300,30],
-                "threshold":0.70
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1580,
+                "y": 335
             }
-        },
-        "action":{
-            "type":"Click"
-        },
-        "post_delay":1000
-    },
-    "BagN":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Bag/N.png",
-                "roi":[860,360,90,55],
-                "threshold":0.90
-            }
-        },
-        "action":{
-            "type":"Click"
-        },
-        "post_delay":2000,
-        "max_hit":1
-    },
-    "BagR":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Bag/R.png",
-                "roi":[945,360,90,55],
-                "threshold":0.90
-            }
-        },
-        "action":{
-            "type":"Click"
-        },
-        "post_delay":2000,
-        "max_hit":1
-    },
-    "BagSR":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Bag/SR.png",
-                "roi":[1028,360,90,55],
-                "threshold":0.90
-            }
-        },
-        "action":{
-            "type":"Click"
-        },
-        "post_delay":2000,
-        "max_hit":1
-    },
-    "BagUR":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Bag/UR.png",
-                "roi":[1111,300,90,55],
-                "threshold":0.90
-            }
-        },
-        "action":{
-            "type":"Click"
-        },
-        "max_hit":1
-    },
-    "GreenTick":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Bag/GreenTick.png",
-                "roi":[1160,645,50,50],
-                "threshold":0.60
-            }
-        },
-        "action":{
-            "type":"Click"
-        },
-        "post_delay":1000,
-        "next":["ClickAnniu",
-            "AnalysisLast",
-            "StartGame"]
-    },
-    "ClickAnniu": {
-    "recognition": {
-        "type": "TemplateMatch",
-        "param": {
-            "template": "Bag/anniu.png",
-            "roi": [840, 450, 50, 40],
-            "threshold": 0.50,
-            "retry": 3
         }
     },
-    "action": {
-        "type": "Click"
-    },
-    "post_delay": 1000,
-    "next": [
-        "AnalysisMain",
-        "AnalysisLast"
-        ]
-    },
-    "AnalysisMain":{
-        "recognition":{
-            "type":"OCR",
-            "param":{
-                "expected":"强化",
-                "roi":[675,540,45,25],
-                "threshold":0.60
+    "BagMore": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1055,
+                    650,
+                    50,
+                    50
+                ],
+                "template": "Bag/More.png",
+                "threshold": 0.5
             }
         },
-        "action":{
-            "type":"Click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":1500,
-        "next":[
-            "AnalysisLast"
-        ]
+        "next": [
+            "BagChoose",
+            "BagMore"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1276,
+                "y": 344
+            }
+        }
     },
-    "AnalysisLast":{
-        "action":{
-            "type":"Click",
-            "param":{
-                "target":[1132,670]
+    "BagN": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    860,
+                    360,
+                    90,
+                    55
+                ],
+                "template": "Bag/N.png",
+                "threshold": 0.9
             }
         },
-        "post_delay":500,
-        "next":[
-            "IntensifyChoose",
-            "AnalysisLast"
-        ]
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2000,
+        "$__mpe_code": {
+            "position": {
+                "x": 2459,
+                "y": 31
+            }
+        }
     },
-    "IntensifyChoose":{
-        "recognition":{
-            "type":"OCR",
-            "param":{
-                "expected":"一键分解",
-                "roi":[1100,655,70,30],
-                "threshold":0.60
+    "BagR": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    945,
+                    360,
+                    90,
+                    55
+                ],
+                "template": "Bag/R.png",
+                "threshold": 0.9
             }
         },
-        "next":[
-            "IntensifyChoose18"
-        ]
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2000,
+        "$__mpe_code": {
+            "position": {
+                "x": 2461,
+                "y": 386
+            }
+        }
     },
-
-    "IntensifyChoose18":{
-        "recognition":{
-            "type":"OCR",
-            "param":{
-                "expected":"18",
-                "roi":[460,80,700,600],
-                "threshold":0.60
+    "BagSR": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1028,
+                    360,
+                    90,
+                    55
+                ],
+                "template": "Bag/SR.png",
+                "threshold": 0.9
             }
         },
-        "action":{
-            "type":"Click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":500,
-        "next":["Intensify"]
+        "post_delay": 2000,
+        "$__mpe_code": {
+            "position": {
+                "x": 2701,
+                "y": 129
+            }
+        }
     },
-
-    
-    "IntensifyChoose19":{
-        "recognition":{
-            "type":"OCR",
-            "param":{
-                "expected":"19",
-                "roi":[460,80,700,600],
-                "threshold":0.60
+    "BagTick": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    850,
+                    570,
+                    300,
+                    30
+                ],
+                "template": "Bag/Tick.png",
+                "threshold": 0.7
             }
         },
-        "action":{
-            "type":"Click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":500,
-        "next":["Intensify"]
+        "post_delay": 1000,
+        "$__mpe_code": {
+            "position": {
+                "x": 2220,
+                "y": 219
+            }
+        }
     },
-    "IntensifyChoose20":{
-        "recognition":{
-            "type":"OCR",
-            "param":{
-                "expected":"20",
-                "roi":[460,80,700,600],
-                "threshold":0.60
+    "BagUR": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1111,
+                    300,
+                    90,
+                    55
+                ],
+                "template": "Bag/UR.png",
+                "threshold": 0.9
             }
         },
-        "action":{
-            "type":"Click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":500,
-        "next":["Intensify"]
+        "$__mpe_code": {
+            "position": {
+                "x": 2930,
+                "y": 126
+            }
+        }
     },
-
-    "Intensify":{
-        "recognition":{
-            "type":"OCR",
-            "param":{
-                "expected":"精炼",
-                "roi":[875,480,45,20],
-                "threshold":0.40
+    "EnterBag": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    225,
+                    668,
+                    40,
+                    26
+                ],
+                "expected": [
+                    "背包"
+                ],
+                "threshold": 0.6
             }
         },
-        "action":{
-            "type":"Click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":3000,
-        "next":[
+        "next": [
+            "ToEquipment"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 335,
+                "y": 360
+            }
+        }
+    },
+    "GreenTick": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1160,
+                    645,
+                    50,
+                    50
+                ],
+                "template": "Bag/GreenTick.png",
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "ClickAnniu",
+            "关闭强化"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2218,
+                "y": 624
+            }
+        }
+    },
+    "Intensify": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    890,
+                    479,
+                    36,
+                    21
+                ],
+                "expected": [
+                    "精炼"
+                ],
+                "threshold": 0.4
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2000,
+        "next": [
             "IntensifyMain",
             "Intensify"
-        ]
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3826,
+                "y": 848
+            }
+        }
     },
-    "IntensifyMain":{
-        "action": {"type": "Click",
-            "param": {"target": [1053,670]}
+    "IntensifyChoose": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1100,
+                    655,
+                    70,
+                    30
+                ],
+                "expected": "一键分解",
+                "threshold": 0.6
+            }
         },
-        "post_delay":1000,
-        "max_hit": 2,
-        "next":["IntensifyMain",
-            "Fanhuizhuye2"]
+        "next": [
+            "IntensifyChoose18"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3327,
+                "y": 855
+            }
+        }
     },
-    "Fanhuizhuye2": {
-    "action": {
-        "type": "Click",
-        "param": {"target": [112,34]}
+    "IntensifyChoose18": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    473,
+                    93,
+                    684,
+                    561
+                ],
+                "expected": "18",
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "Intensify"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3576,
+                "y": 848
+            }
+        }
     },
-        "post_delay": 2000,
-        "max_hit": 2,
-        "next": ["Fanhuizhuye2","StartGame"]
+    "IntensifyMain": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1031,
+                    657,
+                    45,
+                    26
+                ],
+                "expected": [
+                    "精炼"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "repeat": 2,
+        "repeat_delay": 1000,
+        "next": [
+            "IntensifyMain",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 4078,
+                "y": 847
+            }
+        }
+    },
+    "Noseeequipped": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1117,
+                    44,
+                    47,
+                    46
+                ],
+                "template": [
+                    "Bag/nosee.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1139,
+                    65
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "Noseeequipped2",
+            "Noseeequipped3"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 866,
+                "y": 629
+            }
+        }
+    },
+    "Noseeequipped2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    585,
+                    505,
+                    43,
+                    35
+                ],
+                "template": "Bag/GOU.png",
+                "threshold": 0.5
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    606,
+                    523
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "Noseeequipped2",
+            "Noseeequipped3"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1152,
+                "y": 866
+            }
+        }
+    },
+    "Noseeequipped3": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1220,
+                    563
+                ]
+            }
+        },
+        "post_delay": 1000,
+        "next": [
+            "Analyze"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1431,
+                "y": 733
+            }
+        }
+    },
+    "StartBag": {
+        "next": [
+            "EnterBag",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 47,
+                "y": 366
+            }
+        }
+    },
+    "ToEquipment": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    90,
+                    140,
+                    50,
+                    50
+                ],
+                "template": "Bag/Equipment.png"
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "Noseeequipped",
+            "Analyze"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 617,
+                "y": 362
+            }
+        }
+    },
+    "强化失败处理": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    563,
+                    540,
+                    46,
+                    25
+                ],
+                "expected": [
+                    "取消"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "关闭强化"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2998,
+                "y": 1307
+            }
+        }
+    },
+    "关闭强化": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1107,
+                    645,
+                    51,
+                    51
+                ],
+                "template": [
+                    "Bag/Close.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "IntensifyChoose"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3277,
+                "y": 1185
+            }
+        }
+    },
+    "ClickAnniu": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    840,
+                    450,
+                    50,
+                    40
+                ],
+                "template": "Bag/anniu.png",
+                "threshold": 0.5,
+                "retry": 3
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "ClickAnniu",
+            "AnalysisMain",
+            "强化失败处理"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2478,
+                "y": 833
+            }
+        }
+    },
+    "$__mpe_external_StartGame_Bag": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4364,
+                "y": 620
+            }
+        }
     }
 }

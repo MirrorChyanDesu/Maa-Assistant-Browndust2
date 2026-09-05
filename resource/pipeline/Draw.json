@@ -1,119 +1,222 @@
 {
-    "StartDraw":{
-        "next":[
-            "EnterDraw",
-            "[JumpBack]StartGame"
-        ]
+    "$__mpe_config_Draw": {
+        "$__mpe_code": {
+            "prefix": "",
+            "coordinateMode": "absolute-v1",
+            "lastSyncTime": 1788574398825,
+            "isModifiedExternally": false,
+            "isDeleted": false,
+            "filePath": "F:\\BD2MAA\\resource\\pipeline\\Draw.json",
+            "savedViewport": {
+                "x": -6,
+                "y": 501,
+                "zoom": 0.86
+            },
+            "filename": "Draw",
+            "version": "v1.9.3"
+        }
     },
-    
-    "EnterDraw":{
+    "$__mpe_external_StartGame_Draw": {
+        "$__mpe_code": {
+            "position": {
+                "x": 1725,
+                "y": -178
+            }
+        }
+    },
+    "AllDraw": {
         "recognition": {
             "type": "OCR",
             "param": {
-                "expected": "抽抽乐",
-                "roi":[85,672,45,18],
-                "threshold": 0.50
-            }
-        },
-        "action": {
-            "type": "Click",
-            "param":{
-                "target":[108,656]
-            }
-        },
-        "post_delay":5000,
-        "next":["EnterDraw","Cloth"]
-    },   
-    "Cloth":{
-        "action":{
-            "type":"Click",
-            "param":{"target":[116,210]}
-        },
-        "post_delay":2000,
-        "max_hit":2,
-        "next":["AllDraw","Equipment"]
-    },
-    "Equipment":{
-        "action":{
-            "type":"Click",
-            "param":{
-                "target":[116,285]
-            }
-        },
-        "post_delay":2000,
-        "max_hit":2,
-        "next":[
-            "AllDraw","StartGame"
-        ]
-    },
-    "AllDraw":{
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "expected": ["所有","免费","抽抽乐"],
-                "roi":[180,630,120,35],
-                "threshold": 0.50
+                "roi": [
+                    180,
+                    630,
+                    120,
+                    35
+                ],
+                "expected": [
+                    "所有",
+                    "免费",
+                    "抽抽乐"
+                ],
+                "threshold": 0.5
             }
         },
         "action": {
             "type": "Click"
         },
-        "post_delay":2000,
-        "max_hit":2,
-        "next":[
-            "AllDrawSure"
-        ]
+        "post_delay": 2000,
+        "next": [
+            "AllDrawSure",
+            "AllDraw"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 622,
+                "y": 26
+            }
+        }
     },
-    "AllDrawSure":{
-        "recognition":{
-            "type":"OCR",
-            "param":{
-                "expected":"确认",
-                "roi":[680,415,60,60],
-                "threshold":0.60
+    "AllDrawSure": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    670,
+                    418,
+                    53,
+                    27
+                ],
+                "expected": [
+                    "确认"
+                ],
+                "threshold": 0.6
             }
         },
-        "action":{
-            "type":"Click"
-            },
-        "post_delay":5000,
-        "max_hit":2,
-        "next":[
+        "action": {
+            "type": "Click"
+        },
+        "timeout": 30000,
+        "next": [
             "DrawSkip"
-        ]
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 913,
+                "y": 25
+            }
+        }
     },
-    "DrawSkip":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"Draw/Skip.png",
-                "roi":[1145,15,70,50],
-                "threshold":0.50
+    "DrawGoBack": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    70,
+                    0,
+                    75,
+                    60
+                ],
+                "template": "StartGame/Back.png",
+                "threshold": 0.5
             }
         },
-        "max_hit":2,
-        "action":{
-            "type":"Click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":3000,
-        "next":["DrawGoBack"]
-    }, 
-    "DrawGoBack":{
-        "recognition":{
-            "type":"TemplateMatch",
-            "param":{
-                "template":"StartGame/Back.png",
-                "roi":[70,0,75,60],
-                "threshold":0.50
+        "post_delay": 1500,
+        "next": [
+            "Equipment",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1486,
+                "y": -107
+            }
+        }
+    },
+    "DrawSkip": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1145,
+                    15,
+                    70,
+                    50
+                ],
+                "template": "Draw/Skip.png"
             }
         },
-        "action":{
-            "type":"Click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":2000,
-        "max_hit":2,
-        "next":[
-            "Equipment"
-        ]
+        "next": [
+            "DrawSkip",
+            "DrawGoBack"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1184,
+                "y": 26
+            }
+        }
+    },
+    "EnterDraw": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    85,
+                    672,
+                    47,
+                    19
+                ],
+                "expected": "抽抽乐",
+                "threshold": 0.5
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    108,
+                    656
+                ]
+            }
+        },
+        "post_delay": 5000,
+        "next": [
+            "EnterDraw",
+            "AllDraw",
+            "Equipment",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 339,
+                "y": -288
+            }
+        }
+    },
+    "Equipment": {
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Draw/Zhuangbei.png"
+                ],
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "repeat": 2,
+        "repeat_delay": 2000,
+        "next": [
+            "AllDraw",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 920,
+                "y": -570
+            }
+        }
+    },
+    "StartDraw": {
+        "next": [
+            "EnterDraw",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -4,
+                "y": -44
+            }
+        }
     }
 }

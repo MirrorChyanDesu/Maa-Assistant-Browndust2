@@ -1,379 +1,398 @@
 {
     "$__mpe_config_HuntingArea": {
         "$__mpe_code": {
-            "coordinateMode": "absolute-v1",
-            "filename": "HuntingArea",
             "prefix": "",
+            "coordinateMode": "absolute-v1",
+            "lastSyncTime": 1788307210066,
+            "isModifiedExternally": false,
+            "isDeleted": false,
+            "filePath": "F:\\BD2MAA\\resource\\pipeline\\HuntingArea.json",
             "savedViewport": {
-                "x": -6242,
-                "y": 281,
-                "zoom": 1
+                "x": -3262,
+                "y": 14,
+                "zoom": 0.76
             },
+            "filename": "HuntingArea",
             "version": "v1.9.2"
         }
     },
     "$__mpe_external_StartGame_HuntingArea": {
         "$__mpe_code": {
             "position": {
-                "x": 5662,
-                "y": 842
+                "x": 7264,
+                "y": 640
             }
         }
     },
     "AllGold": {
-        "$__mpe_code": {
-            "position": {
-                "x": 6463,
-                "y": 878
-            }
-        },
         "action": {
+            "type": "Click",
             "param": {
                 "target": [
                     116,
                     173
                 ]
-            },
-            "type": "Click"
+            }
         },
+        "repeat": 2,
+        "repeat_delay": 1000,
         "next": [
             "FastHunt2"
         ],
-        "repeat": 2,
-        "repeat_delay": 1000
-    },
-    "ChooseGorS": {
         "$__mpe_code": {
             "position": {
-                "x": 6179,
-                "y": 70
+                "x": 6471,
+                "y": 904
             }
-        },
+        }
+    },
+    "ChooseGorS": {
+        "post_delay": 1500,
         "next": [
             "SlimeHunt",
             "GoldHunt"
         ],
-        "post_delay": 1500
+        "$__mpe_code": {
+            "position": {
+                "x": 6156,
+                "y": 14
+            }
+        }
     },
     "ChooseWorO": {
+        "post_delay": 1500,
+        "next": [
+            "WoodHunt"
+        ],
         "$__mpe_code": {
             "position": {
                 "x": 4488,
                 "y": 340
             }
-        },
-        "next": [
-            "WoodHunt"
-        ],
-        "post_delay": 1500
+        }
     },
     "DarkRock": {
-        "$__mpe_code": {
-            "position": {
-                "x": 3393,
-                "y": 180
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "FastHunt3",
-            "DarkRock"
-        ],
-        "post_delay": 1500,
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": "暗之洞穴",
                 "roi": [
                     155,
                     275,
                     75,
                     28
                 ],
+                "expected": "暗之洞穴",
                 "threshold": 0.4
-            },
-            "type": "OCR"
-        }
-    },
-    "EnterHunt": {
-        "$__mpe_code": {
-            "position": {
-                "x": 2826,
-                "y": 104
             }
         },
         "action": {
-            "param": {
-                "target": [
-                    1172,
-                    171
-                ]
-            },
             "type": "Click"
         },
-        "max_hit": 2,
+        "post_delay": 1500,
         "next": [
-            "GetRock",
-            "EnterHunt",
-            "[JumpBack]StartGame"
+            "FastHunt3",
+            "DarkRock"
         ],
-        "post_delay": 3000,
+        "$__mpe_code": {
+            "position": {
+                "x": 3393,
+                "y": 180
+            }
+        }
+    },
+    "EnterHunt": {
+        "max_hit": 2,
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": "快速狩猎",
                 "roi": [
                     1140,
                     190,
                     65,
                     26
                 ],
+                "expected": "快速狩猎",
                 "threshold": 0.5
-            },
-            "type": "OCR"
-        }
-    },
-    "FastHunt1": {
-        "$__mpe_code": {
-            "position": {
-                "x": 5362,
-                "y": 91
             }
         },
         "action": {
-            "type": "Click"
-        },
-        "next": [
-            "FastHunt1",
-            "MainHunt1_Once"
-        ],
-        "post_delay": 1500,
-        "recognition": {
+            "type": "Click",
             "param": {
-                "expected": "快速狩猎",
+                "target": [
+                    1172,
+                    171
+                ]
+            }
+        },
+        "post_delay": 3000,
+        "next": [
+            "GetRock",
+            "EnterHunt",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2826,
+                "y": 104
+            }
+        }
+    },
+    "FastHunt1": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
                 "roi": [
                     1065,
                     645,
                     95,
                     35
                 ],
+                "expected": "快速狩猎",
                 "threshold": 0.6
-            },
-            "type": "OCR"
-        }
-    },
-    "FastHunt2": {
-        "$__mpe_code": {
-            "position": {
-                "x": 6976,
-                "y": 87
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "SetMax2",
-            "FastHunt2"
-        ],
         "post_delay": 1500,
+        "next": [
+            "FastHunt1",
+            "MainHunt1_Once"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 5347,
+                "y": 91
+            }
+        }
+    },
+    "FastHunt2": {
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": [
-                    "快速狩猎"
-                ],
                 "roi": [
                     1063,
                     646,
                     90,
                     33
                 ],
+                "expected": [
+                    "快速狩猎"
+                ],
                 "threshold": 0.6
-            },
-            "type": "OCR"
-        }
-    },
-    "FastHunt3": {
-        "$__mpe_code": {
-            "position": {
-                "x": 3699,
-                "y": 85
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "SetMax3",
-            "FastHunt3"
-        ],
         "post_delay": 1500,
+        "next": [
+            "SetMax2",
+            "FastHunt2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 6991,
+                "y": 88
+            }
+        }
+    },
+    "FastHunt3": {
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": "快速狩猎",
                 "roi": [
                     1065,
                     645,
                     95,
                     35
                 ],
+                "expected": "快速狩猎",
                 "threshold": 0.6
-            },
-            "type": "OCR"
-        }
-    },
-    "FireRock": {
-        "$__mpe_code": {
-            "position": {
-                "x": 3393,
-                "y": 283
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "FastHunt3",
-            "FireRock"
-        ],
         "post_delay": 1500,
+        "next": [
+            "SetMax3",
+            "FastHunt3"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3699,
+                "y": 85
+            }
+        }
+    },
+    "FireRock": {
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": "火之洞穴",
                 "roi": [
                     155,
                     83,
                     75,
                     28
                 ],
+                "expected": "火之洞穴",
                 "threshold": 0.4
-            },
-            "type": "OCR"
-        }
-    },
-    "GetRock": {
-        "$__mpe_code": {
-            "position": {
-                "x": 3107,
-                "y": 96
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": [
-            "WaterRock",
-            "GetRock"
-        ],
         "post_delay": 1500,
+        "next": [
+            "FastHunt3",
+            "FireRock"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3393,
+                "y": 283
+            }
+        }
+    },
+    "GetRock": {
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": [
-                    "圣石洞穴"
-                ],
                 "roi": [
                     80,
                     300,
                     75,
                     35
                 ],
+                "expected": [
+                    "圣石洞穴"
+                ],
                 "threshold": 0.6
-            },
-            "type": "OCR"
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "WaterRock",
+            "GetRock"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3107,
+                "y": 96
+            }
         }
     },
     "GoldConfirm": {
-        "$__mpe_code": {
-            "position": {
-                "x": 6727,
-                "y": 480
-            }
-        },
-        "next": [
-            "FastHunt2"
-        ],
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": [
-                    "哥布林遗迹"
-                ],
                 "roi": [
                     442,
                     350,
                     99,
                     64
+                ],
+                "expected": [
+                    "哥布林遗迹"
                 ]
-            },
-            "type": "OCR"
+            }
+        },
+        "next": [
+            "FastHunt2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 6727,
+                "y": 480
+            }
         }
     },
     "GoldHunt": {
-        "$__mpe_code": {
-            "position": {
-                "x": 6467,
-                "y": 480
-            }
-        },
-        "action": {
-            "param": {
-                "target": [
-                    116,
-                    173
-                ]
-            },
-            "type": "Click"
-        },
-        "next": [
-            "GoldConfirm"
-        ],
         "recognition": {
+            "type": "TemplateMatch",
             "param": {
+                "roi": [
+                    76,
+                    134,
+                    81,
+                    74
+                ],
                 "template": [
                     "Hunt/GoldDouble.png"
                 ],
                 "threshold": [
                     0.8
                 ]
-            },
-            "type": "TemplateMatch"
-        },
-        "repeat": 2,
-        "repeat_delay": 1000
-    },
-    "LightRock": {
-        "$__mpe_code": {
-            "position": {
-                "x": 3392,
-                "y": 382
             }
         },
         "action": {
-            "type": "Click"
-        },
-        "next": [
-            "FastHunt3",
-            "LightRock"
-        ],
-        "post_delay": 1500,
-        "recognition": {
+            "type": "Click",
             "param": {
-                "expected": "光之洞穴",
+                "target": [
+                    116,
+                    173
+                ]
+            }
+        },
+        "repeat": 2,
+        "repeat_delay": 1000,
+        "next": [
+            "GoldConfirm"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 6466,
+                "y": 434
+            }
+        }
+    },
+    "LightRock": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
                 "roi": [
                     155,
                     230,
                     75,
                     28
                 ],
+                "expected": "光之洞穴",
                 "threshold": 0.4
-            },
-            "type": "OCR"
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "FastHunt3",
+            "LightRock"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3392,
+                "y": 382
+            }
         }
     },
     "MainHunt1_Max": {
-        "$__mpe_code": {
-            "position": {
-                "x": 5661,
-                "y": 384
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    743,
+                    300,
+                    80,
+                    80
+                ],
+                "expected": [
+                    "MAX"
+                ],
+                "threshold": 0.6
             }
         },
         "action": {
@@ -382,190 +401,340 @@
         "next": [
             "MainHunt1_Max_2"
         ],
-        "recognition": {
-            "param": {
-                "expected": [
-                    "MAX"
-                ],
-                "roi": [
-                    743,
-                    300,
-                    80,
-                    80
-                ],
-                "threshold": 0.6
-            },
-            "type": "OCR"
+        "$__mpe_code": {
+            "position": {
+                "x": 5637,
+                "y": 294
+            }
         }
     },
     "MainHunt1_Max_2": {
-        "$__mpe_code": {
-            "position": {
-                "x": 5910,
-                "y": 382
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "领取狩猎奖励_4",
-            "StartGame"
-        ],
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": "狩猎",
                 "roi": [
                     655,
                     505,
                     40,
                     25
                 ],
+                "expected": "狩猎",
                 "threshold": 0.6
-            },
-            "type": "OCR"
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "REWARD_4",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 5892,
+                "y": 329
+            }
         }
     },
     "MainHunt1_Once": {
-        "$__mpe_code": {
-            "position": {
-                "x": 5635,
-                "y": 30
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "领取狩猎奖励_3",
-            "ChooseGorS"
-        ],
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": "狩猎",
                 "roi": [
                     655,
                     505,
                     40,
                     25
                 ],
+                "expected": "狩猎",
                 "threshold": 0.6
-            },
-            "type": "OCR"
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "REWARD",
+            "ChooseGorS"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 5627,
+                "y": 19
+            }
         }
     },
     "MainHunt2": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    650,
+                    500,
+                    50,
+                    50
+                ],
+                "expected": "狩猎",
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "REWARD_3",
+            "StartGame"
+        ],
         "$__mpe_code": {
             "position": {
                 "x": 7497,
                 "y": 82
             }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "领取狩猎奖励_2",
-            "StartGame"
-        ],
-        "post_delay": 1500,
+        }
+    },
+    "MainHunt3": {
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": "狩猎",
                 "roi": [
                     650,
                     500,
                     50,
                     50
                 ],
+                "expected": "狩猎",
                 "threshold": 0.6
-            },
-            "type": "OCR"
-        }
-    },
-    "MainHunt3": {
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "REWARD_2",
+            "ChooseWorO"
+        ],
         "$__mpe_code": {
             "position": {
                 "x": 4237,
                 "y": 91
             }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "领取狩猎奖励_1",
-            "ChooseWorO"
-        ],
-        "post_delay": 1000,
-        "recognition": {
-            "param": {
-                "expected": "狩猎",
-                "roi": [
-                    650,
-                    500,
-                    50,
-                    50
-                ],
-                "threshold": 0.6
-            },
-            "type": "OCR"
         }
     },
     "OreHunt": {
-        "$__mpe_code": {
-            "position": {
-                "x": 4782,
-                "y": 389
-            }
-        },
         "action": {
+            "type": "Click",
             "param": {
                 "target": [
                     318,
                     36
                 ]
-            },
-            "type": "Click"
+            }
         },
+        "repeat": 2,
+        "repeat_delay": 1000,
+        "post_delay": 1000,
         "next": [
             "OreHunt2"
         ],
-        "post_delay": 1000,
-        "repeat": 2,
-        "repeat_delay": 1000
-    },
-    "OreHunt2": {
         "$__mpe_code": {
             "position": {
-                "x": 5072,
-                "y": 331
+                "x": 4778,
+                "y": 387
             }
-        },
-        "next": [
-            "FastHunt1"
-        ],
+        }
+    },
+    "OreHunt2": {
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": [
-                    "蜥蜴人"
-                ],
                 "roi": [
                     166,
                     7,
                     108,
                     51
                 ],
+                "expected": [
+                    "蜥蜴人"
+                ],
                 "threshold": 0.6
-            },
-            "type": "OCR"
+            }
+        },
+        "next": [
+            "FastHunt1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 5072,
+                "y": 331
+            }
+        }
+    },
+    "REWARD": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    567,
+                    179,
+                    154,
+                    97
+                ],
+                "template": [
+                    "Hunt/REWARD.png"
+                ]
+            }
+        },
+        "pre_delay": 1500,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    61,
+                    288,
+                    -116,
+                    -40
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "ChooseGorS"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 5886,
+                "y": -64
+            }
+        }
+    },
+    "REWARD_2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    567,
+                    179,
+                    154,
+                    97
+                ],
+                "template": [
+                    "Hunt/REWARD.png"
+                ]
+            }
+        },
+        "pre_delay": 1500,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    61,
+                    288,
+                    -116,
+                    -40
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "ChooseWorO"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 4491,
+                "y": -100
+            }
+        }
+    },
+    "REWARD_3": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    567,
+                    179,
+                    154,
+                    97
+                ],
+                "template": [
+                    "Hunt/REWARD.png"
+                ]
+            }
+        },
+        "pre_delay": 1500,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    61,
+                    288,
+                    -116,
+                    -40
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 7806,
+                "y": 57
+            }
+        }
+    },
+    "REWARD_4": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    567,
+                    179,
+                    154,
+                    97
+                ],
+                "template": [
+                    "Hunt/REWARD.png"
+                ]
+            }
+        },
+        "pre_delay": 1500,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    61,
+                    288,
+                    -116,
+                    -40
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 6171,
+                "y": 367
+            }
         }
     },
     "SetMax2": {
-        "$__mpe_code": {
-            "position": {
-                "x": 7240,
-                "y": 85
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    740,
+                    300,
+                    80,
+                    80
+                ],
+                "expected": "MAX",
+                "threshold": 0.6
             }
         },
         "action": {
@@ -574,360 +743,263 @@
         "next": [
             "MainHunt2"
         ],
+        "$__mpe_code": {
+            "position": {
+                "x": 7240,
+                "y": 85
+            }
+        }
+    },
+    "SetMax3": {
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": "MAX",
                 "roi": [
                     740,
                     300,
                     80,
                     80
                 ],
+                "expected": "MAX",
                 "threshold": 0.6
-            },
-            "type": "OCR"
-        }
-    },
-    "SetMax3": {
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "MainHunt3"
+        ],
         "$__mpe_code": {
             "position": {
                 "x": 3965,
                 "y": 89
             }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "MainHunt3"
-        ],
-        "post_delay": 1500,
-        "recognition": {
-            "param": {
-                "expected": "MAX",
-                "roi": [
-                    740,
-                    300,
-                    80,
-                    80
-                ],
-                "threshold": 0.6
-            },
-            "type": "OCR"
         }
     },
     "SlimeConfirm": {
-        "$__mpe_code": {
-            "position": {
-                "x": 6725,
-                "y": 87
-            }
-        },
-        "next": [
-            "FastHunt2"
-        ],
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": [
-                    "史莱姆王国"
-                ],
                 "roi": [
                     582,
                     347,
                     102,
                     64
+                ],
+                "expected": [
+                    "史莱姆王国"
                 ]
-            },
-            "type": "OCR"
+            }
+        },
+        "next": [
+            "FastHunt2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 6725,
+                "y": 87
+            }
         }
     },
     "SlimeHunt": {
-        "$__mpe_code": {
-            "position": {
-                "x": 6464,
-                "y": 69
-            }
-        },
-        "action": {
-            "param": {
-                "target": [
-                    116,
-                    237
-                ]
-            },
-            "type": "Click"
-        },
-        "next": [
-            "SlimeConfirm"
-        ],
         "recognition": {
+            "type": "TemplateMatch",
             "param": {
+                "roi": [
+                    80,
+                    198,
+                    78,
+                    73
+                ],
                 "template": [
                     "Hunt/slimedouble.png"
                 ],
                 "threshold": [
                     0.8
                 ]
-            },
-            "type": "TemplateMatch"
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    116,
+                    237
+                ]
+            }
         },
         "repeat": 2,
-        "repeat_delay": 1000
+        "repeat_delay": 1000,
+        "next": [
+            "SlimeConfirm"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 6461,
+                "y": -4
+            }
+        }
     },
     "StartHunt": {
+        "next": [
+            "EnterHunt",
+            "[JumpBack]StartGame"
+        ],
         "$__mpe_code": {
             "position": {
                 "x": 2531,
                 "y": 102
             }
-        },
-        "next": [
-            "EnterHunt",
-            "[JumpBack]StartGame"
-        ]
+        }
     },
     "WaterRock": {
-        "$__mpe_code": {
-            "position": {
-                "x": 3393,
-                "y": 482
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "FastHunt3",
-            "WaterRock"
-        ],
-        "post_delay": 1500,
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": "水之洞穴",
                 "roi": [
                     155,
                     131,
                     75,
                     28
                 ],
+                "expected": "水之洞穴",
                 "threshold": 0.4
-            },
-            "type": "OCR"
-        }
-    },
-    "WindRock": {
-        "$__mpe_code": {
-            "position": {
-                "x": 3392,
-                "y": 89
             }
         },
         "action": {
             "type": "Click"
         },
+        "post_delay": 1500,
         "next": [
             "FastHunt3",
-            "WindRock"
+            "WaterRock"
         ],
-        "post_delay": 1500,
+        "$__mpe_code": {
+            "position": {
+                "x": 3393,
+                "y": 482
+            }
+        }
+    },
+    "WindRock": {
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": "风之洞穴",
                 "roi": [
                     155,
                     180,
                     75,
                     25
                 ],
+                "expected": "风之洞穴",
                 "threshold": 0.4
-            },
-            "type": "OCR"
-        }
-    },
-    "WoodHunt": {
-        "$__mpe_code": {
-            "position": {
-                "x": 4783,
-                "y": 57
             }
         },
         "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "FastHunt3",
+            "WindRock"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3392,
+                "y": 89
+            }
+        }
+    },
+    "WoodHunt": {
+        "action": {
+            "type": "Click",
             "param": {
                 "target": [
                     1080,
                     66
                 ]
-            },
-            "type": "Click"
+            }
         },
+        "repeat": 2,
+        "repeat_delay": 1000,
+        "post_delay": 1000,
         "next": [
             "WoodHunt2",
             "WoodHunt"
         ],
-        "post_delay": 1000,
-        "repeat": 2,
-        "repeat_delay": 1000
-    },
-    "WoodHunt2": {
         "$__mpe_code": {
             "position": {
-                "x": 5063,
-                "y": 80
+                "x": 4783,
+                "y": 57
             }
-        },
-        "next": [
-            "FastHunt1"
-        ],
+        }
+    },
+    "WoodHunt2": {
         "recognition": {
+            "type": "OCR",
             "param": {
-                "expected": [
-                    "守山人"
-                ],
                 "roi": [
                     175,
                     12,
                     77,
                     42
                 ],
+                "expected": [
+                    "守山人"
+                ],
                 "threshold": 0.6
-            },
-            "type": "OCR"
-        }
-    },
-    "领取狩猎奖励_1": {
-        "$__mpe_code": {
-            "position": {
-                "x": 4512,
-                "y": -56
             }
         },
-        "action": {
-            "type": "Click"
-        },
         "next": [
-            "领取狩猎奖励_1",
-            "ChooseWorO"
+            "FastHunt1"
         ],
-        "post_delay": 1000,
-        "recognition": {
-            "param": {
-                "expected": [
-                    "点击",
-                    "画面",
-                    "即可",
-                    "返回"
-                ],
-                "roi": [
-                    560,
-                    640,
-                    142,
-                    38
-                ],
-                "threshold": 0.6
-            },
-            "type": "OCR"
-        }
-    },
-    "领取狩猎奖励_2": {
         "$__mpe_code": {
             "position": {
-                "x": 7769,
-                "y": 78
+                "x": 5063,
+                "y": 80
             }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "领取狩猎奖励_2",
-            "StartGame"
-        ],
-        "post_delay": 1000,
-        "recognition": {
-            "param": {
-                "expected": [
-                    "点击",
-                    "画面",
-                    "即可",
-                    "返回"
-                ],
-                "roi": [
-                    560,
-                    640,
-                    142,
-                    38
-                ],
-                "threshold": 0.6
-            },
-            "type": "OCR"
         }
     },
-    "领取狩猎奖励_3": {
-        "$__mpe_code": {
-            "position": {
-                "x": 5902,
-                "y": 3
+    "GoldHunt_2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    76,
+                    134,
+                    81,
+                    74
+                ],
+                "template": [
+                    "Hunt/GoldDouble.png"
+                ],
+                "threshold": [
+                    0.8
+                ]
             }
         },
-        "action": {
-            "type": "Click"
-        },
         "next": [
-            "领取狩猎奖励_3",
-            "ChooseGorS"
+            "MainHunt1_Once"
         ],
-        "post_delay": 1000,
-        "recognition": {
-            "param": {
-                "expected": [
-                    "点击",
-                    "画面",
-                    "即可",
-                    "返回"
-                ],
-                "roi": [
-                    560,
-                    640,
-                    142,
-                    38
-                ],
-                "threshold": 0.6
-            },
-            "type": "OCR"
+        "$__mpe_code": {
+            "position": {
+                "x": 5346,
+                "y": 644
+            }
         }
     },
-    "领取狩猎奖励_4": {
+    "YESorNOGoldUP": {
+        "next": [
+            "GoldHunt_2",
+            "MainHunt1_Max"
+        ],
         "$__mpe_code": {
             "position": {
-                "x": 6174,
-                "y": 381
+                "x": 5075,
+                "y": 600
             }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "领取狩猎奖励_4",
-            "StartGame"
-        ],
-        "post_delay": 1000,
-        "recognition": {
-            "param": {
-                "expected": [
-                    "点击",
-                    "画面",
-                    "即可",
-                    "返回"
-                ],
-                "roi": [
-                    560,
-                    640,
-                    142,
-                    38
-                ],
-                "threshold": 0.6
-            },
-            "type": "OCR"
         }
     }
 }

@@ -2,40 +2,37 @@
   "version": "1.0",
   "instances": [
     {
-      "id": "6nsvr5j",
+      "id": "mw7sr1u",
       "name": "配置 1",
       "controllerName": "Win32",
       "resourceName": "官服",
-      "savedDevice": {
-        "windowName": "BrownDust II"
-      },
       "tasks": [
         {
-          "id": "x58z51j",
+          "id": "puh4z1c",
           "taskName": "自动进入游戏",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "64803bi",
+          "id": "dyj6eam",
           "taskName": "每日抽卡",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "j64q1h2",
+          "id": "j4cmui5",
           "taskName": "进入公会",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "xtt58x6",
+          "id": "0c4gcf3",
           "taskName": "狩猎场",
           "enabled": true,
           "optionValues": {
             "ChooseRock": {
               "type": "select",
-              "caseName": "WaterRock"
+              "caseName": "FireRock"
             },
             "ChooseDouble": {
               "type": "select",
@@ -47,36 +44,35 @@
             },
             "ChooseSlime": {
               "type": "select",
-              "caseName": "Once"
+              "caseName": "YESorNOGoldUP"
             }
           }
         },
         {
-          "id": "dyzjnnf",
+          "id": "lfkx50v",
           "taskName": "经营管理",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "dsa9gf9",
+          "id": "7duibzt",
           "taskName": "竞技场",
           "enabled": true,
-          "optionValues": {}
+          "optionValues": {
+            "设置鸡尾酒倍数": {
+              "type": "select",
+              "caseName": "40倍"
+            }
+          }
         },
         {
-          "id": "0qpptbw",
+          "id": "8332as8",
           "taskName": "广场神像奖励",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "5gu67ze",
-          "taskName": "救赎之塔",
-          "enabled": false,
-          "optionValues": {}
-        },
-        {
-          "id": "oylyxs5",
+          "id": "rs1rtm8",
           "taskName": "赛季活动战斗",
           "enabled": true,
           "optionValues": {
@@ -87,26 +83,27 @@
           }
         },
         {
-          "id": "a5typh7",
+          "id": "ugok7uw",
           "taskName": "装备",
-          "enabled": true,
-          "optionValues": {
-            "ChooseIntensify": {
-              "type": "select",
-              "caseName": "18"
-            }
-          }
-        },
-        {
-          "id": "lqe2so5",
-          "taskName": "资源吸收和召集",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "fwaf3ia",
+          "id": "fwk93v7",
+          "taskName": "救赎之塔",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "8yb7sdz",
           "taskName": "每日任务奖励",
           "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "63rkymh",
+          "taskName": "资源吸收和召集",
+          "enabled": false,
           "optionValues": {}
         }
       ]
@@ -119,12 +116,12 @@
     "confirmBeforeDelete": false,
     "maxLogsPerInstance": 2000,
     "windowSize": {
-      "width": 1181,
-      "height": 890
+      "width": 1184,
+      "height": 1008
     },
     "windowPosition": {
-      "x": 649,
-      "y": 245
+      "x": 93,
+      "y": 258
     },
     "mirrorChyan": {
       "cdk": "",
@@ -136,11 +133,11 @@
     "rightPanelCollapsed": false,
     "connectionPanelExpanded": true,
     "screenshotPanelExpanded": false,
-    "screenshotFrameRate": "1",
-    "welcomeShownHash": "-15hu1o",
+    "screenshotFrameRate": "5",
+    "welcomeShownHash": "qlls0k",
     "devMode": false,
     "tcpCompatMode": false,
-    "autoStartInstanceId": "6nsvr5j",
+    "autoStartInstanceId": "mw7sr1u",
     "autoRunOnLaunch": false,
     "minimizeToTray": false,
     "onboardingCompleted": true,
@@ -166,5 +163,5 @@
   ],
   "newTaskNames": [],
   "customAccents": [],
-  "lastActiveInstanceId": "6nsvr5j"
+  "lastActiveInstanceId": "mw7sr1u"
 }

@@ -1,64 +1,104 @@
 {
-    "StartSociaty": {
-        "next": [
-            "InSociaty1",
-            "InSociaty2",
-            "[JumpBack]StartGame"
-        ]
+    "$__mpe_config_Sociaty": {
+        "$__mpe_code": {
+            "prefix": "",
+            "coordinateMode": "absolute-v1",
+            "lastSyncTime": 1788574129822,
+            "isModifiedExternally": false,
+            "isDeleted": false,
+            "filePath": "F:\\BD2MAA\\resource\\pipeline\\Sociaty.json",
+            "savedViewport": {
+                "x": 231,
+                "y": -236,
+                "zoom": 1.5
+            },
+            "filename": "Sociaty",
+            "version": "v1.9.3"
+        }
     },
-    "InSociaty1": {
-        "pre_delay": 2000,
-        "recognition": {
-            "type": "OCR",
-            "param": {"expected": "公会",
-                "threshold": 0.50,
-                "roi": [220,115,43,30]
+    "$__mpe_external_StartGame_Sociaty": {
+        "$__mpe_code": {
+            "position": {
+                "x": 910,
+                "y": 416
             }
-        },
-        "action": {"type": "Click",
-            "param": {"target": [246, 101]}
-        },
-        "post_delay": 3000,
-        "next": [
-            "ClickSecond"
-        ]
-    },
-    "InSociaty2": {
-        "pre_delay": 2000,
-        "recognition": {
-            "type": "OCR",
-            "param": {"expected": "公会联合战",
-                "threshold": 0.50,
-                "roi": [204,119,74,21]
-            }
-        },
-        "action": {"type": "Click",
-            "param": {"target": [246, 101]}
-        },
-        "post_delay": 3000,
-        "next": [
-            "ClickSecond"
-        ]
+        }
     },
     "ClickSecond": {
-        "action": {
-            "type": "Click",
+        "recognition": {
+            "type": "TemplateMatch",
             "param": {
-                "target": [80, 360]
+                "roi": [
+                    141,
+                    2,
+                    131,
+                    69
+                ],
+                "template": [
+                    "Sociaty/GONGHUI.png"
+                ]
             }
         },
-        "post_delay": 2000,
         "next": [
-            "BackToMainMenu"
-        ]
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 580,
+                "y": 223
+            }
+        }
     },
-    "BackToMainMenu": {
+    "InSociaty": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    214,
+                    77,
+                    53,
+                    66
+                ],
+                "template": [
+                    "Sociaty/GONGHUI2.png"
+                ],
+                "green_mask": true
+            }
+        },
         "action": {
             "type": "Click",
             "param": {
-                "target": [113, 33]
+                "target": [
+                    237,
+                    99,
+                    7,
+                    5
+                ]
             }
         },
-        "post_delay": 2000
+        "post_delay": 3000,
+        "next": [
+            "ClickSecond",
+            "InSociaty"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 307,
+                "y": 220
+            }
+        }
+    },
+    "StartSociaty": {
+        "next": [
+            "InSociaty",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 6,
+                "y": 326
+            }
+        }
     }
 }

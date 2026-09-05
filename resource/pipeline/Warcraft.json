@@ -3,22 +3,24 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
+            "lastSyncTime": 1788576655750,
+            "isModifiedExternally": false,
+            "isDeleted": false,
             "filePath": "F:\\BD2MAA\\resource\\pipeline\\Warcraft.json",
-            "lastSyncTime": 1788056114714,
             "savedViewport": {
-                "x": 60,
-                "y": 351,
-                "zoom": 0.87
+                "x": -139,
+                "y": -288,
+                "zoom": 1.25
             },
             "filename": "Warcraft",
-            "version": "v1.9.1"
+            "version": "v1.9.3"
         }
     },
     "$__mpe_external_StartGame_Warcraft": {
         "$__mpe_code": {
             "position": {
-                "x": 2439,
-                "y": 295
+                "x": 2503,
+                "y": 332
             }
         }
     },
@@ -56,8 +58,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 317,
-                "y": 112
+                "x": 336,
+                "y": 114
             }
         }
     },
@@ -80,8 +82,8 @@
         },
         "$__mpe_code": {
             "position": {
-                "x": 2434,
-                "y": 55
+                "x": 2291,
+                "y": -147
             }
         }
     },
@@ -113,7 +115,7 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": -238,
+                "x": -241,
                 "y": 621
             }
         }
@@ -165,7 +167,7 @@
                 ],
                 "green_mask": true,
                 "threshold": [
-                    0.5
+                    0.4
                 ]
             }
         },
@@ -178,6 +180,7 @@
                 ]
             }
         },
+        "post_delay": 3500,
         "next": [
             "QuickFiendHunter",
             "StartGame"
@@ -185,7 +188,7 @@
         "$__mpe_code": {
             "position": {
                 "x": 2418,
-                "y": 518
+                "y": 469
             }
         }
     },
@@ -200,7 +203,7 @@
                     23
                 ],
                 "expected": "确认",
-                "threshold": 0.8
+                "threshold": 0.7
             }
         },
         "action": {
@@ -221,25 +224,29 @@
             "type": "OCR",
             "param": {
                 "roi": [
-                    819,
-                    646,
-                    77,
-                    28
+                    814,
+                    645,
+                    81,
+                    30
                 ],
-                "expected": "快速战斗",
+                "expected": [
+                    "快速",
+                    "战斗"
+                ],
                 "threshold": 0.8
             }
         },
         "action": {
             "type": "Click"
         },
+        "post_delay": 1500,
         "next": [
             "FiendHunterBegin"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2714,
-                "y": 561
+                "x": 2700,
+                "y": 560
             }
         }
     },
@@ -251,8 +258,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": -528,
-                "y": 310
+                "x": -519,
+                "y": 312
             }
         }
     },
@@ -299,7 +306,7 @@
         }
     },
     "WarcraftBattleSwipe": {
-        "max_hit": 3,
+        "max_hit": 2,
         "action": {
             "type": "Swipe",
             "param": {
@@ -417,8 +424,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1130,
-                "y": 624
+                "x": 1129,
+                "y": 409
             }
         }
     },
@@ -444,8 +451,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1373,
-                "y": 624
+                "x": 1380,
+                "y": 572
             }
         }
     },
@@ -574,8 +581,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1389,
-                "y": -123
+                "x": 1384,
+                "y": -137
             }
         }
     },
@@ -633,12 +640,13 @@
         },
         "post_delay": 1000,
         "next": [
+            "WarcraftQuickBattle",
             "返回活动主页1"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1676,
-                "y": -127
+                "x": 1666,
+                "y": -143
             }
         }
     },
@@ -676,8 +684,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1992,
-                "y": -130
+                "x": 1968,
+                "y": -144
             }
         }
     },
@@ -755,7 +763,7 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 77,
+                "x": 72,
                 "y": 111
             }
         }

@@ -79,33 +79,39 @@
             "cases":[
                 {
                     "name":"Once",
-                    "label":"刷一次材料",
+                    "label":"米饭只刷一次装备材料",
                     "pipeline_override":{
                         "FastHunt1":{
                             "next":["MainHunt1_Once"]}}},
                 {
                     "name":"Max",
-                    "label":"全刷材料",
+                    "label":"米饭全刷装备材料",
                     "pipeline_override":{
                         "FastHunt1":{
-                            "next":["MainHunt1_Max"]}}}
+                            "next":["MainHunt1_Max"]}}},
+                {
+                    "name":"YESorNOGoldUP",
+                    "label":"米饭刷加成金币本，无加成时全刷材料",
+                    "pipeline_override":{
+                        "FastHunt1":{
+                            "next":["YESorNOGoldUP"]}}}
                     ]
                      },
          "ChooseDouble":{
             "type":"select",
             "label":"是否刷史莱姆",
             "des":"",
-            "default_case":"Double",
+            "default_case":"AllGold",
             "cases":[
                 {
                     "name":"Double",
                     "label":"掉落提升时刷史莱姆",
                     "pipeline_override":{
                         "ChooseGorS":{
-                            "next":["SlimeHunt",GoldHunt]}}},
+                            "next":["SlimeHunt","GoldHunt"]}}},
                 {
                     "name":"AllGold",
-                    "label":"只刷金币",
+                    "label":"不刷史莱姆",
                     "pipeline_override":{
                         "ChooseGorS":{
                             "next":["AllGold"]}}}

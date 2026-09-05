@@ -3,17 +3,17 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "filePath": "F:\\BD2MAA\\resource\\pipeline\\AbsorpAssemble.json",
-            "lastSyncTime": 1788056912701,
+            "lastSyncTime": 1788578179775,
             "isModifiedExternally": false,
-            "isDeleted": true,
+            "isDeleted": false,
+            "filePath": "F:\\BD2MAA\\resource\\pipeline\\AbsorpAssemble.json",
             "savedViewport": {
-                "x": -183,
-                "y": 445,
-                "zoom": 0.57
+                "x": 1373,
+                "y": 399,
+                "zoom": 0.87
             },
             "filename": "AbsorpAssemble",
-            "version": "v1.9.1"
+            "version": "v1.9.3"
         }
     },
     "$__mpe_external_StartGame_AbsorpAssemble": {
@@ -164,7 +164,7 @@
         "action": {
             "type": "Click"
         },
-        "post_delay": 1000,
+        "post_delay": 3000,
         "next": [
             "KillMoster",
             "Call",
@@ -172,8 +172,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2120,
-                "y": 107
+                "x": 2075,
+                "y": -311
             }
         }
     },
@@ -207,6 +207,102 @@
             }
         }
     },
+    "Call": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    986,
+                    459,
+                    167,
+                    236
+                ],
+                "template": [
+                    "Absorb/Convene.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 3000,
+        "next": [
+            "传送判定"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2708,
+                "y": -327
+            }
+        }
+    },
+    "Exploration": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    986,
+                    459,
+                    167,
+                    236
+                ],
+                "template": "Absorb/Exploration.png",
+                "threshold": [
+                    0.6
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 3000,
+        "next": [
+            "Absort",
+            "KillMoster",
+            "Call",
+            "传送判定"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2380,
+                "y": -895
+            }
+        }
+    },
+    "GetDaily_2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    905,
+                    537,
+                    75,
+                    119
+                ],
+                "template": "PVP/GetDaily.png",
+                "green_mask": true
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 10000,
+        "next": [
+            "传送阵",
+            "位置纠正1",
+            "位置纠正2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 373,
+                "y": -1158
+            }
+        }
+    },
     "KillMoster": {
         "recognition": {
             "type": "TemplateMatch",
@@ -229,15 +325,15 @@
         "action": {
             "type": "Click"
         },
-        "post_delay": 1000,
+        "post_delay": 3000,
         "next": [
             "Call",
             "传送判定"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2449,
-                "y": -169
+                "x": 2387,
+                "y": -466
             }
         }
     },
@@ -271,7 +367,7 @@
         "action": {
             "type": "Click"
         },
-        "post_delay": 7000,
+        "post_delay": 8000,
         "next": [
             "Exploration",
             "Absort",
@@ -339,6 +435,30 @@
             "position": {
                 "x": 3773,
                 "y": -1154
+            }
+        }
+    },
+    "传送判定": {
+        "next": [
+            "第七章传送阈值",
+            "换卡_1",
+            "第八章传送阈值",
+            "换卡_2",
+            "第九章传送阈值",
+            "换卡_3",
+            "十三章传送阈值",
+            "换卡_4",
+            "十七章传送阈值",
+            "换卡_5",
+            "十六章传送阈值",
+            "换卡_6",
+            "火片传送阈值",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2512,
+                "y": 709
             }
         }
     },
@@ -661,102 +781,6 @@
             }
         }
     },
-    "战场奖励1": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    542,
-                    643,
-                    52,
-                    46
-                ],
-                "template": [
-                    "Absorb/P.png"
-                ],
-                "green_mask": true
-            }
-        },
-        "action": {
-            "type": "Click",
-            "param": {
-                "target": [
-                    569,
-                    665
-                ]
-            }
-        },
-        "next": [
-            "战场奖励2",
-            "战场奖励1"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": -905,
-                "y": -76
-            }
-        }
-    },
-    "战场奖励2": {
-        "max_hit": 1,
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    1037,
-                    553,
-                    172,
-                    71
-                ],
-                "template": [
-                    "Absorb/CHEAK2.png"
-                ],
-                "threshold": [
-                    0.85
-                ]
-            }
-        },
-        "action": {
-            "type": "Click",
-            "param": {
-                "target": [
-                    1168,
-                    578,
-                    12,
-                    12
-                ]
-            }
-        },
-        "next": [
-            "战场奖励3"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": -623,
-                "y": -73
-            }
-        }
-    },
-    "战场奖励3": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": [
-                    "Absorb/CHEAK.png"
-                ],
-                "green_mask": true,
-                "threshold": [
-                    0.81
-                ]
-            }
-        },
-        "$__mpe_code": {
-            "position": {
-                "x": -365,
-                "y": -79
-            }
-        }
-    },
     "换卡_1": {
         "max_hit": 1,
         "recognition": {
@@ -947,41 +971,6 @@
             }
         }
     },
-    "派遣排除": {
-        "max_hit": 1,
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    905,
-                    553,
-                    76,
-                    82
-                ],
-                "template": [
-                    "Absorb/PQian.png"
-                ],
-                "green_mask": true,
-                "threshold": [
-                    0.7
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "传送阵",
-            "位置纠正1",
-            "位置纠正2"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 365,
-                "y": -1240
-            }
-        }
-    },
     "火片": {
         "max_hit": 1,
         "recognition": {
@@ -1120,6 +1109,7 @@
                 "threshold": 0.6
             }
         },
+        "pre_delay": 1500,
         "action": {
             "type": "Click",
             "param": {
@@ -1129,7 +1119,7 @@
                 ]
             }
         },
-        "post_delay": 5000,
+        "post_delay": 2500,
         "next": [
             "第七章2",
             "第七章1"
@@ -1268,7 +1258,7 @@
         },
         "post_delay": 10000,
         "next": [
-            "派遣排除",
+            "GetDaily_2",
             "传送阵",
             "位置纠正1",
             "位置纠正2"
@@ -1439,96 +1429,6 @@
             "position": {
                 "x": 3305,
                 "y": -714
-            }
-        }
-    },
-    "Exploration": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    986,
-                    459,
-                    167,
-                    236
-                ],
-                "template": "Absorb/Exploration.png",
-                "threshold": [
-                    0.6
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_delay": 1000,
-        "next": [
-            "Absort",
-            "KillMoster",
-            "Call",
-            "传送判定"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 2380,
-                "y": -895
-            }
-        }
-    },
-    "Call": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    986,
-                    459,
-                    167,
-                    236
-                ],
-                "template": [
-                    "Absorb/Convene.png"
-                ],
-                "green_mask": true,
-                "threshold": [
-                    0.6
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_delay": 1000,
-        "next": [
-            "传送判定"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 2779,
-                "y": 122
-            }
-        }
-    },
-    "传送判定": {
-        "next": [
-            "第七章传送阈值",
-            "换卡_1",
-            "第八章传送阈值",
-            "换卡_2",
-            "第九章传送阈值",
-            "换卡_3",
-            "十三章传送阈值",
-            "换卡_4",
-            "十七章传送阈值",
-            "换卡_5",
-            "十六章传送阈值",
-            "换卡_6",
-            "火片传送阈值",
-            "StartGame"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 2512,
-                "y": 709
             }
         }
     }

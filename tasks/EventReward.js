@@ -1,9 +1,9 @@
 {
     "task": [
         {
-            "name": "每日抽卡",
-            "label": "免费抽抽乐！！！",
-            "entry": "StartDraw",
+            "name": "活动奖励",
+            "label": "活动奖励领取",
+            "entry": "EventReward",
             "description": "",
             "controller": [
                 "Win32",

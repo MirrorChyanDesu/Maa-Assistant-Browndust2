@@ -1,73 +1,414 @@
 {
-    "StartCastle":{
-        "next":["EnterCastle1",
-            "[JumpBack]StartGame"]
+    "$__mpe_config_EvilCastle": {
+        "$__mpe_code": {
+            "prefix": "",
+            "coordinateMode": "absolute-v1",
+            "lastSyncTime": 1788492174021,
+            "isModifiedExternally": false,
+            "isDeleted": false,
+            "filePath": "F:\\BD2MAA\\resource\\pipeline\\EvilCastle.json",
+            "savedViewport": {
+                "x": 48,
+                "y": -7204,
+                "zoom": 1.84
+            },
+            "filename": "EvilCastle",
+            "version": "v1.9.2"
+        }
     },
-
-    "EnterCastle1":{
-        "pre_delay":1000,
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "expected": "经营管理",
-                "threshold": 0.60,
-                "roi": [75,192,70,20]
+    "$__mpe_external_StartGame_EvilCastle": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4492,
+                "y": 3863
             }
-        },
-        "action": {"type": "Click",
-            "param": {"target": [110,171]}
-        },
-        "post_delay":2000,
-        "next":["EnterCastle2"]
+        }
     },
-    "EnterCastle2":{
+    "CHooseCrad_EC": {
         "recognition": {
-            "type": "OCR",
+            "type": "TemplateMatch",
             "param": {
-                "expected": "立刻前往",
-                "threshold": 0.40,
-                "roi": [725,180,100,40]
+                "roi": [
+                    217,
+                    72,
+                    71,
+                    61
+                ],
+                "template": [
+                    "Absorb/P.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
             }
         },
         "action": {
             "type": "Click"
         },
-        "post_delay":10000,
-        "next":["EnterCastle3"]
+        "post_delay": 1500,
+        "next": [
+            "FightGameCard_EC",
+            "CHooseCrad_EC"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 943,
+                "y": 3983
+            }
+        }
     },
-
-    "EnterCastle3":{
-        "action": {"type": "Click",
-            "param": {"target": [253,105]}
-        },
-        "post_delay":2000,
-        "next":["EnterCastle4"]
-    },
-    "EnterCastle4":{
-        "action": {"type": "Click",
-            "param": {"target": [616,585]}
-        },
-        "post_delay":2000,
-        "next":["EnterCastle5"]
-    },    
-
-    "EnterCastle5":{
-        "action": {"type": "Click",
-            "param": {"target": [217,646]}
-        },
-        "post_delay":10000,
-        "next":["MoveCastle"]
-    },  
-    "MoveCastle":{
+    "CastleBattle": {
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "template": "EvilCastle/Move.png",
-                "threshold": 0.50,
-                "roi":[120,520,150,150]
+                "roi": [
+                    643,
+                    497,
+                    104,
+                    74
+                ],
+                "template": [
+                    "EvilCastle/FIGHT.png"
+                ]
             }
         },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    670,
+                    535,
+                    24,
+                    7
+                ]
+            }
+        },
+        "post_delay": 2000,
+        "next": [
+            "CastleCorrect",
+            "CastleBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3827,
+                "y": 3731
+            }
+        }
+    },
+    "CastleCorrect": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    790,
+                    615,
+                    130,
+                    40
+                ],
+                "expected": [
+                    "点击",
+                    "画面",
+                    "继续"
+                ],
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2000,
+        "next": [
+            "CastleCorrect",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 4145,
+                "y": 3731
+            }
+        }
+    },
+    "CastleFreeNO": {
+        "next": [
+            "CastleSetFree"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3212,
+                "y": 3539
+            }
+        }
+    },
+    "CastleFreeYes": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    800,
+                    275,
+                    70,
+                    35
+                ],
+                "template": "EvilCastle/FreeYes.png",
+                "threshold": 0.9
+            }
+        },
+        "next": [
+            "CastleSetMax"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3212,
+                "y": 3763
+            }
+        }
+    },
+    "CastleSetFree": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    800,
+                    275,
+                    70,
+                    35
+                ],
+                "template": "EvilCastle/FreeNo.png",
+                "threshold": 0.5
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "CastleFreeYes",
+            "CastleFreeNO"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2892,
+                "y": 3644
+            }
+        }
+    },
+    "CastleSetMax": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    750,
+                    345,
+                    70,
+                    40
+                ],
+                "template": "MAX",
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "CastleBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3532,
+                "y": 3762
+            }
+        }
+    },
+    "EnterOperating_EC": {
         "max_hit": 2,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    75,
+                    185,
+                    70,
+                    40
+                ],
+                "expected": [
+                    "经营",
+                    "管理"
+                ],
+                "threshold": 0.5
+            }
+        },
+        "pre_delay": 1500,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    110,
+                    181
+                ]
+            }
+        },
+        "post_delay": 2500,
+        "next": [
+            "EnterRestaurant_EC",
+            "EnterOperating_EC"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 299,
+                "y": 3963
+            }
+        }
+    },
+    "EnterPVP_EC": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    48,
+                    602,
+                    224,
+                    91
+                ],
+                "template": [
+                    "EvilCastle/EC.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    32,
+                    18,
+                    -57,
+                    -30
+                ]
+            }
+        },
+        "repeat": 2,
+        "repeat_delay": 1500,
+        "next": [
+            "MoveCastle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1581,
+                "y": 3996
+            }
+        }
+    },
+    "EnterRestaurant_EC": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    738,
+                    159,
+                    84,
+                    55
+                ],
+                "expected": [
+                    "立刻前往",
+                    "立刻",
+                    "前往"
+                ],
+                "threshold": 0.4
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 10000,
+        "next": [
+            "CHooseCrad_EC",
+            "EnterRestaurant_EC"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 618,
+                "y": 3986
+            }
+        }
+    },
+    "EnterTower": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    550,
+                    400,
+                    150,
+                    50
+                ],
+                "expected": "救赎之塔",
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "EnterTower",
+            "TowerChooseLevel"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 3242
+            }
+        }
+    },
+    "FightGameCard_EC": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    566,
+                    567,
+                    98,
+                    33
+                ],
+                "expected": [
+                    "游戏卡带",
+                    "玩法游戏",
+                    "战斗玩法",
+                    "战斗"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "repeat": 2,
+        "repeat_delay": 1500,
+        "next": [
+            "EnterPVP_EC",
+            "FightGameCard_EC"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1260,
+                "y": 4002
+            }
+        }
+    },
+    "MoveCastle": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    120,
+                    520,
+                    150,
+                    150
+                ],
+                "template": "EvilCastle/Move.png",
+                "threshold": 0.5
+            }
+        },
         "action": {
             "type": "Swipe",
             "param": {
@@ -76,28 +417,40 @@
                     588
                 ],
                 "end": [
-                    192,
-                    533
+                    [
+                        192,
+                        533
+                    ]
                 ],
                 "end_hold": 2000
             }
         },
-        "next":[
+        "next": [
             "EnterTower",
             "MoveCastle2"
-        ]
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1932,
+                "y": 3607
+            }
+        }
     },
-
-    "MoveCastle2":{
+    "MoveCastle2": {
+        "max_hit": 2,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
+                "roi": [
+                    120,
+                    520,
+                    150,
+                    150
+                ],
                 "template": "EvilCastle/Move2.png",
-                "threshold": 0.50,
-                "roi":[120,520,150,150]
+                "threshold": 0.5
             }
         },
-        "max_hit": 2,
         "action": {
             "type": "Swipe",
             "param": {
@@ -106,39 +459,38 @@
                     588
                 ],
                 "end": [
-                    192,
-                    643
+                    [
+                        192,
+                        643
+                    ]
                 ],
                 "end_hold": 1000
             }
         },
-        "next":[
+        "next": [
             "MoveCastle"
-        ]
-    },
-
-    "EnterTower":{
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "expected": "救赎之塔",
-                "threshold": 0.60,
-                "roi":[550,400,150,50]
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 3640
             }
-        },
-        "action":{
-            "type":"click"
-        },
-        "post_delay":1500,
-        "next":[
-            "EnterTower",
-            "TowerChooseLevel"
-        ]
+        }
     },
-
-
-    "TowerChooseLevel":{
-        "next":[
+    "StartCastle": {
+        "next": [
+            "EnterOperating_EC",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 12,
+                "y": 3755
+            }
+        }
+    },
+    "TowerChooseLevel": {
+        "next": [
             "TowerLevel10",
             "TowerLevel9",
             "TowerLevel8",
@@ -149,283 +501,310 @@
             "TowerLevel3",
             "TowerLevel2",
             "TowerLevel1"
-        ]
-    },
-
-    "TowerLevel1":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "EvilCastle/TowerTick.png",
-                "threshold": 0.50,
-                "roi":[215,85,35,30]
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1932,
+                "y": 1628
             }
-        },
-        "action":{
-            "type":"click"
-        },
-        "next":[
-            "TowerFastBattle"
-        ]
+        }
     },
-    "TowerLevel2":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "EvilCastle/TowerTick.png",
-                "threshold": 0.50,
-                "roi":[215,150,35,30]
-            }
-        },
-        "action":{
-            "type":"click"
-        },
-        "next":[
-            "TowerFastBattle"
-        ]
-    },
-    "TowerLevel3":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "EvilCastle/TowerTick.png",
-                "threshold": 0.50,
-                "roi":[215,215,35,30]
-            }
-        },
-        "action":{
-            "type":"click"
-        },
-        "next":[
-            "TowerFastBattle"
-        ]
-    },
-    "TowerLevel4":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "EvilCastle/TowerTick.png",
-                "threshold": 0.50,
-                "roi":[215,285,35,30]
-            }
-        },
-        "action":{
-            "type":"click"
-        },
-        "next":[
-            "TowerFastBattle"
-        ]
-    },
-    "TowerLevel5":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "EvilCastle/TowerTick.png",
-                "threshold": 0.50,
-                "roi":[215,350,35,30]
-            }
-        },
-        "action":{
-            "type":"click"
-        },
-        "next":[
-            "TowerFastBattle"
-        ]
-    },
-    "TowerLevel6":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "EvilCastle/TowerTick.png",
-                "threshold": 0.50,
-                "roi":[215,410,35,30]
-            }
-        },
-        "action":{
-            "type":"click"
-        },
-        "next":[
-            "TowerFastBattle"
-        ]
-    },
-    "TowerLevel7":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "EvilCastle/TowerTick.png",
-                "threshold": 0.50,
-                "roi":[215,475,35,30]
-            }
-        },
-        "action":{
-            "type":"click"
-        },
-        "next":[
-            "TowerFastBattle"
-        ]
-    },
-    "TowerLevel8":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "EvilCastle/TowerTick.png",
-                "threshold": 0.50,
-                "roi":[215,545,35,30]
-            }
-        },
-        "action":{
-            "type":"click"
-        },
-        "next":[
-            "TowerFastBattle"
-        ]
-    },
-    "TowerLevel9":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "EvilCastle/TowerTick.png",
-                "threshold": 0.50,
-                "roi":[215,610,35,30]
-            }
-        },
-        "action":{
-            "type":"click"
-        },
-        "next":[
-            "TowerFastBattle"
-        ]
-    },
-    "TowerLevel10":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "EvilCastle/TowerTick.png",
-                "threshold": 0.50,
-                "roi":[215,675,50,30]
-            }
-        },
-        "action":{
-            "type":"click"
-        },
-        "next":[
-            "TowerFastBattle"
-        ]
-    },
-
-
-
-
-    "TowerFastBattle":{
+    "TowerFastBattle": {
         "recognition": {
             "type": "OCR",
             "param": {
+                "roi": [
+                    910,
+                    640,
+                    100,
+                    30
+                ],
                 "expected": "快速战斗",
-                "threshold": 0.60,
-                "roi":[910,640,100,30]
+                "threshold": 0.6
             }
         },
-        "action":{
-            "type":"click"
+        "action": {
+            "type": "Click"
         },
-        "next":[
+        "next": [
             "CastleSetFree",
             "TowerFastBattle"
-        ]
-    },
-    "CastleSetFree":{
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "template": "EvilCastle/FreeNo.png",
-                "threshold": 0.50,
-                "roi":[800,275,70,35]
-            }
-        },
-        "action":{
-            "type":"click"
-        },
-        "next":[
-            "CastleFreeYes",
-            "CastleFreeNO"
         ],
-        "post_delay":1500
+        "$__mpe_code": {
+            "position": {
+                "x": 2572,
+                "y": 1600
+            }
+        }
     },
-    "CastleFreeYes":{
+    "TowerLevel1": {
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "template": "EvilCastle/FreeYes.png",
-                "threshold": 0.90,
-                "roi":[800,275,70,35]
+                "roi": [
+                    215,
+                    85,
+                    35,
+                    30
+                ],
+                "template": "EvilCastle/TowerTick.png",
+                "threshold": 0.5
             }
         },
-        "action":{
-            "type":"DoNothing"
+        "action": {
+            "type": "Click"
         },
-        "next":[
-            "CastleSetMax"
-        ]
+        "next": [
+            "TowerFastBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 2910
+            }
+        }
     },
-    "CastleFreeNO":{
-        "action":{
-            "type":"DoNothing"
-        },
-        "next":[
-            "CastleSetFree"
-        ]
-    },
-
-    "CastleSetMax":{
+    "TowerLevel10": {
         "recognition": {
-            "type": "OCR",
+            "type": "TemplateMatch",
             "param": {
-                "template": "MAX",
-                "threshold": 0.60,
-                "roi":[750,345,70,40]
+                "roi": [
+                    215,
+                    675,
+                    50,
+                    30
+                ],
+                "template": "EvilCastle/TowerTick.png",
+                "threshold": 0.5
             }
         },
-        "action":{
-            "type":"click"
+        "action": {
+            "type": "Click"
         },
-        "next":[
-            "CastleBattle"
-        ]
+        "next": [
+            "TowerFastBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 12
+            }
+        }
     },
-    "CastleBattle":{
+    "TowerLevel2": {
         "recognition": {
-            "type": "OCR",
+            "type": "TemplateMatch",
             "param": {
-                "expected": "3",
-                "threshold": 0.60,
-                "roi":[690,520,50,50]
+                "roi": [
+                    215,
+                    150,
+                    35,
+                    30
+                ],
+                "template": "EvilCastle/TowerTick.png",
+                "threshold": 0.5
             }
         },
-        "action":{
-            "type":"click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":2000,
-        "next":[
-            "CastleCorrect",
-            "CastleBattle"
-        ]
+        "next": [
+            "TowerFastBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 2588
+            }
+        }
     },
-    "CastleCorrect":{
+    "TowerLevel3": {
         "recognition": {
-            "type": "OCR",
+            "type": "TemplateMatch",
             "param": {
-                "expected": ["点击","画面","继续"],
-                "threshold": 0.60,
-                "roi":[790,615,130,40]
+                "roi": [
+                    215,
+                    215,
+                    35,
+                    30
+                ],
+                "template": "EvilCastle/TowerTick.png",
+                "threshold": 0.5
             }
         },
-        "action":{
-            "type":"click"
+        "action": {
+            "type": "Click"
         },
-        "post_delay":2000,
-        "next":[
-            "CastleCorrect",
-            "StartGame"
-        ]
+        "next": [
+            "TowerFastBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 2266
+            }
+        }
+    },
+    "TowerLevel4": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    215,
+                    285,
+                    35,
+                    30
+                ],
+                "template": "EvilCastle/TowerTick.png",
+                "threshold": 0.5
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "TowerFastBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 1944
+            }
+        }
+    },
+    "TowerLevel5": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    215,
+                    350,
+                    35,
+                    30
+                ],
+                "template": "EvilCastle/TowerTick.png",
+                "threshold": 0.5
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "TowerFastBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 1622
+            }
+        }
+    },
+    "TowerLevel6": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    215,
+                    410,
+                    35,
+                    30
+                ],
+                "template": "EvilCastle/TowerTick.png",
+                "threshold": 0.5
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "TowerFastBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 1300
+            }
+        }
+    },
+    "TowerLevel7": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    215,
+                    475,
+                    35,
+                    30
+                ],
+                "template": "EvilCastle/TowerTick.png",
+                "threshold": 0.5
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "TowerFastBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 978
+            }
+        }
+    },
+    "TowerLevel8": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    215,
+                    545,
+                    35,
+                    30
+                ],
+                "template": "EvilCastle/TowerTick.png",
+                "threshold": 0.5
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "TowerFastBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 656
+            }
+        }
+    },
+    "TowerLevel9": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    215,
+                    610,
+                    35,
+                    30
+                ],
+                "template": "EvilCastle/TowerTick.png",
+                "threshold": 0.5
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "TowerFastBattle"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2252,
+                "y": 334
+            }
+        }
     }
 }

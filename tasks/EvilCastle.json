@@ -4,7 +4,7 @@
             "name": "救赎之塔",
             "label": "肉鸽塔（救赎之塔）",
             "entry": "StartCastle",
-            "description": "快速战斗已通关的最高层"
+            "description": "需要通关任意一层救赎之塔，开启快速战斗后才可以自动刷取黑曜石"
         }
     ],
     "option": {}

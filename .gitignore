@@ -21,9 +21,8 @@ cache/
 # 系统文件
 .DS_Store
 Thumbs.db
-cache/
 
-# 用户配置
+# 用户配置（MXU 首次启动会自动生成；不要入仓，否则会冲掉每个用户的真实实例）
 config/mxu-MaaBrownDust2.json
 
 # 大模型文件（如果用 Git LFS 或单独下载）

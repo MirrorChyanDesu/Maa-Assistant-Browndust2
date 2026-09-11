@@ -455,12 +455,36 @@ function Invoke-LogCleanup {
     } catch { }
 }
 
+function Repair-LauncherShortcut {
+    # ---- 重建根目录的「MaaBd2.lnk」快捷方式 ----
+    # 原因：发布 zip 里不打包 MaaBd2.lnk（不同用户的安装路径不同，写死路径的 lnk 在别人机器上
+    #       是失效的）。新用户首次启动 launcher.bat 时，按当前 $BASE 自动生成；老用户的旧 lnk
+    #       如果指向 launcher.bat 也直接覆盖重建——保证永远指向正确的 launcher.bat 与图标。
+    # 与 Apply-ExeIcon 的区别：后者只 patch mxu.exe 的图标指纹，不重建快捷方式。
+    try {
+        if (-not (Test-Path $BASE)) { return }
+        $ws  = New-Object -ComObject WScript.Shell -ErrorAction SilentlyContinue
+        if (-not $ws) { return }
+        $lnk = Join-Path $BASE 'MaaBd2.lnk'
+        $bat = Join-Path $BASE 'launcher.bat'
+        $ico = Join-Path $BASE 'mxu.ico'
+        $s   = $ws.CreateShortcut($lnk)
+        $s.TargetPath       = $bat
+        $s.WorkingDirectory = $BASE
+        $s.WindowStyle      = 1   # 1=正常窗口（避免 PowerShell 弹黑色控制台）
+        if (Test-Path -LiteralPath $ico) { $s.IconLocation = "$ico,0" }
+        $s.Description      = 'BD2MAA launcher (auto-update + log cleanup)'
+        $s.Save()
+    } catch { }
+}
+
 function Launch-Mxu {
     if (-not (Test-Path $MXU)) { return }
 
-    Protect-Marker    # 隐藏 MXU 写出的乱码标记（用户不可见 + 不入 git）
-    Apply-ExeIcon     # MXU 自更新后自动恢复程序图标
-    Invoke-LogCleanup # 清理 debug/ 下超过保留天数的日志与调试截图
+    Protect-Marker          # 隐藏 MXU 写出的乱码标记（用户不可见 + 不入 git）
+    Apply-ExeIcon           # MXU 自更新后自动恢复程序图标
+    Repair-LauncherShortcut # 重建 MaaBd2.lnk（zip 不打包，按当前 $BASE 自动生成；幂等）
+    Invoke-LogCleanup       # 清理 debug/ 下超过保留天数的日志与调试截图
 
     # 直接 CreateProcess 启动 mxu.exe（工作目录 = 仓库根目录）。
     # 注意：WMI / Win32_Process.Create 明确不用——它会以 LocalSystem 身份拉起游戏客户端，危险。

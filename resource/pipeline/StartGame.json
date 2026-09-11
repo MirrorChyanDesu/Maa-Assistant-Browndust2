@@ -3,14 +3,14 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1788573838412,
+            "lastSyncTime": 1789034433188,
             "isModifiedExternally": false,
             "isDeleted": false,
             "filePath": "F:\\BD2MAA\\resource\\pipeline\\StartGame.json",
             "savedViewport": {
-                "x": -3271,
-                "y": -6381,
-                "zoom": 2
+                "x": 468,
+                "y": -5575,
+                "zoom": 1.15
             },
             "filename": "StartGame",
             "version": "v1.9.3"
@@ -170,10 +170,11 @@
                 "threshold": 0.4
             }
         },
+        "post_delay": 45000,
         "$__mpe_code": {
             "position": {
-                "x": 334,
-                "y": 5093
+                "x": 333,
+                "y": 5078
             }
         }
     },
@@ -245,8 +246,8 @@
         "post_delay": 2000,
         "$__mpe_code": {
             "position": {
-                "x": 1942,
-                "y": 3202
+                "x": 2035,
+                "y": 3199
             }
         }
     },
@@ -311,18 +312,16 @@
                 "end_hold": 1000
             }
         },
+        "repeat": 2,
+        "repeat_delay": 1000,
         "next": [
             "UseShadow1",
-            "UseShadow2",
-            "UseShadow3",
-            "UseShadow4",
-            "UseShadow5",
             "ImageMove"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1210,
-                "y": 3485
+                "x": 1205,
+                "y": 3457
             }
         }
     },
@@ -425,6 +424,64 @@
             }
         }
     },
+    "ResetControlSure": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    662,
+                    380,
+                    67,
+                    52
+                ],
+                "expected": [
+                    "确认"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "ToImage"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 953,
+                "y": 3831
+            }
+        }
+    },
+    "Reset_Control": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1098,
+                    374,
+                    80,
+                    56
+                ],
+                "expected": [
+                    "初始化"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "ResetControlSure"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 622,
+                "y": 3831
+            }
+        }
+    },
     "Setting": {
         "recognition": {
             "type": "OCR",
@@ -443,12 +500,13 @@
             "type": "Click"
         },
         "next": [
+            "Reset_Control",
             "ToImage"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 662,
-                "y": 3550
+                "x": 623,
+                "y": 3549
             }
         }
     },
@@ -523,15 +581,16 @@
             "type": "OCR",
             "param": {
                 "roi": [
-                    850,
-                    450,
-                    150,
-                    50
+                    840,
+                    448,
+                    157,
+                    54
                 ],
                 "expected": [
+                    "正在",
                     "确认",
                     "下载",
-                    "内容"
+                    "容量"
                 ],
                 "threshold": 0.5
             }
@@ -592,8 +651,38 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 933,
-                "y": 3549
+                "x": 958,
+                "y": 3546
+            }
+        }
+    },
+    "UseQuickKey": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    534,
+                    179,
+                    83,
+                    56
+                ],
+                "expected": [
+                    "使用",
+                    "快捷键"
+                ],
+                "threshold": 0.5
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "GoBack"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1769,
+                "y": 3574
             }
         }
     },
@@ -602,10 +691,10 @@
             "type": "OCR",
             "param": {
                 "roi": [
-                    530,
-                    300,
-                    80,
-                    50
+                    529,
+                    91,
+                    100,
+                    61
                 ],
                 "expected": "使用",
                 "threshold": 0.5
@@ -615,120 +704,13 @@
             "type": "Click"
         },
         "next": [
+            "UseQuickKey",
             "GoBack"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1622,
-                "y": 3228
-            }
-        }
-    },
-    "UseShadow2": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    530,
-                    350,
-                    80,
-                    50
-                ],
-                "expected": "使用",
-                "threshold": 0.5
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "GoBack"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 1622,
-                "y": 3550
-            }
-        }
-    },
-    "UseShadow3": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    530,
-                    400,
-                    80,
-                    50
-                ],
-                "expected": "使用",
-                "threshold": 0.5
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "GoBack"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 1622,
-                "y": 3872
-            }
-        }
-    },
-    "UseShadow4": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    530,
-                    450,
-                    80,
-                    50
-                ],
-                "expected": "使用",
-                "threshold": 0.5
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "GoBack"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 1622,
-                "y": 4194
-            }
-        }
-    },
-    "UseShadow5": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    530,
-                    500,
-                    80,
-                    50
-                ],
-                "expected": "使用",
-                "threshold": 0.5
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "GoBack"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 1627,
-                "y": 2924
+                "x": 1482,
+                "y": 3573
             }
         }
     },

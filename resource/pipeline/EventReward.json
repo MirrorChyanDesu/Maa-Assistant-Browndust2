@@ -3,14 +3,14 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1788577494405,
+            "lastSyncTime": 1789042824843,
             "isModifiedExternally": false,
             "isDeleted": false,
             "filePath": "F:\\BD2MAA\\resource\\pipeline\\EventReward.json",
             "savedViewport": {
-                "x": 556,
-                "y": 92,
-                "zoom": 0.49
+                "x": 366,
+                "y": -534,
+                "zoom": 0.99
             },
             "filename": "EventReward",
             "version": "v1.9.3"
@@ -19,8 +19,8 @@
     "$__mpe_external_StartGame_EventReward": {
         "$__mpe_code": {
             "position": {
-                "x": 1071,
-                "y": 120
+                "x": 1314,
+                "y": 121
             }
         }
     },
@@ -42,13 +42,12 @@
         "post_delay": 1500,
         "next": [
             "EventTip",
-            "Swievent",
             "StartGame"
         ],
         "$__mpe_code": {
             "position": {
                 "x": 126,
-                "y": 448
+                "y": 556
             }
         }
     },
@@ -79,7 +78,7 @@
                 ],
                 "green_mask": true,
                 "threshold": [
-                    0.5
+                    0.3
                 ]
             }
         },
@@ -98,12 +97,13 @@
         "repeat_delay": 2000,
         "post_delay": 2000,
         "next": [
-            "GetAllrewards"
+            "GetAllrewards",
+            "StartGame"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 398,
-                "y": 284
+                "x": 430,
+                "y": 655
             }
         }
     },
@@ -128,15 +128,46 @@
             "type": "Click"
         },
         "repeat": 2,
-        "repeat_delay": 1000,
+        "repeat_delay": 200,
         "post_delay": 2000,
         "next": [
-            "RewardSure"
+            "RewardSure",
+            "EventTip",
+            "StartGame"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 687,
-                "y": 411
+                "x": 722,
+                "y": 824
+            }
+        }
+    },
+    "GoBack_ER": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    84,
+                    4,
+                    68,
+                    62
+                ],
+                "template": [
+                    "StartGame/Back.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2000,
+        "next": [
+            "InEvent"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 709,
+                "y": 261
             }
         }
     },
@@ -200,113 +231,12 @@
         "post_delay": 1500,
         "next": [
             "EventTip",
-            "Swievent",
             "GoBack_ER"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 973,
-                "y": 270
-            }
-        }
-    },
-    "InEvent2": {
-        "max_hit": 1,
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    566,
-                    630,
-                    61,
-                    64
-                ],
-                "template": [
-                    "Event/InEvent.png"
-                ],
-                "threshold": [
-                    0.8
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_delay": 2500,
-        "next": [
-            "EventMain"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 1513,
-                "y": 268
-            }
-        }
-    },
-    "Swievent": {
-        "max_hit": 2,
-        "action": {
-            "type": "Swipe",
-            "param": {
-                "begin": [
-                    282,
-                    505,
-                    0,
-                    0
-                ],
-                "end": [
-                    [
-                        282,
-                        134,
-                        0,
-                        0
-                    ]
-                ],
-                "end_hold": [
-                    1000
-                ]
-            }
-        },
-        "repeat": 2,
-        "repeat_delay": 1000,
-        "post_delay": 1000,
-        "next": [
-            "EventTip",
-            "StartGame"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 394,
-                "y": 807
-            }
-        }
-    },
-    "GoBack_ER": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    84,
-                    4,
-                    68,
-                    62
-                ],
-                "template": [
-                    "StartGame/Back.png"
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_delay": 2000,
-        "next": [
-            "InEvent2"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 1233,
-                "y": 270
+                "x": 1009,
+                "y": 633
             }
         }
     }

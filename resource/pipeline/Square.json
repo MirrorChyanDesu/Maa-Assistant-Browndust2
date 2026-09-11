@@ -3,14 +3,14 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1788575075194,
+            "lastSyncTime": 1789035232000,
             "isModifiedExternally": false,
             "isDeleted": false,
             "filePath": "F:\\BD2MAA\\resource\\pipeline\\Square.json",
             "savedViewport": {
-                "x": 293,
-                "y": 112,
-                "zoom": 0.57
+                "x": -1166,
+                "y": -180,
+                "zoom": 0.99
             },
             "filename": "Square",
             "version": "v1.9.3"
@@ -122,12 +122,13 @@
         "post_delay": 10000,
         "next": [
             "CHooseCrad_2",
+            "[JumpBack]魔兽赛季奖励确认",
             "EnterRestaurant_3"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1027,
-                "y": 594
+                "x": 1000,
+                "y": 592
             }
         }
     },
@@ -157,7 +158,7 @@
                 ]
             }
         },
-        "timeout": 20000,
+        "timeout": 15000,
         "next": [
             "MoveSquare"
         ],
@@ -230,6 +231,37 @@
             }
         }
     },
+    "Liveplay": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    700,
+                    570,
+                    99,
+                    25
+                ],
+                "expected": [
+                    "生活",
+                    "玩法",
+                    "游戏",
+                    "卡带"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "EnterSquare"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1227,
+                "y": 94
+            }
+        }
+    },
     "MoveSquare": {
         "recognition": {
             "type": "TemplateMatch",
@@ -238,12 +270,15 @@
                     1022,
                     125,
                     45,
-                    57
+                    100
                 ],
                 "template": [
                     "Square/DAYgift.png"
                 ],
-                "green_mask": true
+                "green_mask": true,
+                "threshold": [
+                    0.6
+                ]
             }
         },
         "action": {
@@ -257,7 +292,7 @@
                 ]
             }
         },
-        "post_delay": 6000,
+        "post_delay": 7500,
         "next": [
             "GetSquare",
             "GetDaily2"
@@ -317,34 +352,39 @@
             }
         }
     },
-    "Liveplay": {
+    "魔兽赛季奖励确认": {
         "recognition": {
             "type": "OCR",
             "param": {
                 "roi": [
-                    700,
-                    570,
-                    99,
-                    25
+                    725,
+                    180,
+                    254,
+                    52
                 ],
                 "expected": [
-                    "生活",
-                    "玩法",
-                    "游戏",
-                    "卡带"
+                    "魔兽",
+                    "追踪",
+                    "赛季",
+                    "奖励"
                 ]
             }
         },
         "action": {
-            "type": "Click"
+            "type": "Click",
+            "param": {
+                "target": [
+                    836,
+                    556,
+                    20,
+                    8
+                ]
+            }
         },
-        "next": [
-            "EnterSquare"
-        ],
         "$__mpe_code": {
             "position": {
-                "x": 1227,
-                "y": 94
+                "x": 1286,
+                "y": 1063
             }
         }
     }

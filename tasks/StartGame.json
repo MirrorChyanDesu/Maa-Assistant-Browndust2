@@ -1,10 +1,10 @@
 {
     "task": [
         {
-            "name": "自动进入游戏",
-            "label": "自动进入游戏",
+            "name": "进入游戏",
+            "label": "进入游戏-必选",
             "entry": "StartGame",
-            "description": "Touch To Start"
+            "description": "推荐无条件开启并前置此任务进入游戏"
         }
     ],
     "option": {}

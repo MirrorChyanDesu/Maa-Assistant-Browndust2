@@ -1,10 +1,10 @@
 {
     "task": [
         {
-            "name": "竞技场",
-            "label": "每日免费PVP",
+            "name": "镜中之战PVP",
+            "label": "镜中之战PVP",
             "entry": "StartPVP",
-            "description": "",
+            "description": "使用每日免费鸡尾酒",
             "option":["设置鸡尾酒倍数"]
         }
     ],

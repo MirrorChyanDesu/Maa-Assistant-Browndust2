@@ -1,8 +1,8 @@
 {
     "task": [
         {
-            "name": "每日抽卡",
-            "label": "免费抽抽乐！！！",
+            "name": "每日免费抽抽乐",
+            "label": "每日免费抽抽乐",
             "entry": "StartDraw",
             "description": "",
             "controller": [

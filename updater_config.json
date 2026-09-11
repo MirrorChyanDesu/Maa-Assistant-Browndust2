@@ -1,0 +1,10 @@
+{
+    "repo": "alkaidjin/Maa-Assistant-Browndust2",
+    "check_interval_hours": 6,
+    "asset_keywords_include": ["MABd2"],
+    "asset_keywords_exclude": ["source code", "src", "debug", "linux", "macos", "darwin"],
+    "download_dir": "updates",
+    "log_retention_days": 7,
+    "log_compact": true,
+    "log_compact_keep_recognition": false
+}

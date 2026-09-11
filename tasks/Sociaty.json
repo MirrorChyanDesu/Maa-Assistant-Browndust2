@@ -1,8 +1,8 @@
 {
     "task": [
         {
-            "name": "进入公会",
-            "label": "每日公会低保",
+            "name": "领取公会低保",
+            "label": "领取公会低保",
             "entry": "StartSociaty",
             "description": "包含每日任务-前往我的小屋",
             "controller": [

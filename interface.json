@@ -2,12 +2,12 @@
     "interface_version": 2,
     "name": "MaaBrownDust2",
     "description": "MaaBrownDust2",
-    "version": "v26.09.2",
+    "version": "v26.09.3",
     "license": "misc/LICENSE_SHORT.md",
     "welcome": "README.md",
     "icon": "misc/MaaEnd-Tiny.png",
     "github": "https://github.com/alkaidjin/Maa-Assistant-Browndust2",
-    "mirrorchyan_rid": "#掉我怕有bug,不敢删",
+    "mirrorchyan_rid": "#无",
     "mirrorchyan_multiplatform": true,
     "languages": {
         "zh_cn": "misc/locales/zh_cn.json",
@@ -101,8 +101,13 @@
         "tasks/Bag.json",
         "tasks/Warcraft.json",
         "tasks/EvilCastle.json",
+        "tasks/EventReward.json",
         "tasks/Dailyrewards.json",
-        "tasks/AbsorpAssemble.json",
-        "tasks/EventReward.json"
-    ]
+        "tasks/AbsorpAssemble.json"
+],
+    "x_launch": {
+        "launcher": "launcher.bat",
+        "auto_update": "软件启动时通过 launcher.bat 检测 GitHub 新版本并弹窗提示，支持一键下载（仅下载、不覆盖本地 config/resource 配置）",
+        "note": "为保证用户获得新版本自动检测与更新弹窗，请引导用户使用 launcher.bat 而非直接双击 mxu.exe；x_ 前缀字段为扩展约定，MXU 会忽略未知字段。"
+    }
 }

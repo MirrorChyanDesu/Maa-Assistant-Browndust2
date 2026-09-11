@@ -3,17 +3,25 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1788184165388,
+            "lastSyncTime": 1788949035527,
             "isModifiedExternally": false,
             "isDeleted": false,
             "filePath": "F:\\BD2MAA\\resource\\pipeline\\Bag.json",
             "savedViewport": {
-                "x": -657,
-                "y": -58,
-                "zoom": 0.5
+                "x": -5322,
+                "y": -1087,
+                "zoom": 1.5
             },
             "filename": "Bag",
-            "version": "v1.9.2"
+            "version": "v1.9.3"
+        }
+    },
+    "$__mpe_external_StartGame_Bag": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4364,
+                "y": 620
+            }
         }
     },
     "AnalysisLast": {
@@ -274,6 +282,37 @@
             }
         }
     },
+    "ClickAnniu": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    840,
+                    450,
+                    50,
+                    40
+                ],
+                "template": "Bag/anniu.png",
+                "threshold": 0.5,
+                "retry": 3
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "ClickAnniu",
+            "AnalysisMain",
+            "强化失败处理"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2478,
+                "y": 833
+            }
+        }
+    },
     "EnterBag": {
         "recognition": {
             "type": "OCR",
@@ -334,22 +373,32 @@
     },
     "Intensify": {
         "recognition": {
-            "type": "OCR",
+            "type": "TemplateMatch",
             "param": {
                 "roi": [
-                    890,
-                    479,
-                    36,
-                    21
+                    868,
+                    461,
+                    95,
+                    58
                 ],
-                "expected": [
-                    "精炼"
+                "template": [
+                    "Bag/JINGLIAN.png"
                 ],
-                "threshold": 0.4
+                "threshold": [
+                    0.8
+                ]
             }
         },
         "action": {
-            "type": "Click"
+            "type": "Click",
+            "param": {
+                "target": [
+                    898,
+                    486,
+                    21,
+                    10
+                ]
+            }
         },
         "post_delay": 2000,
         "next": [
@@ -419,13 +468,14 @@
             "type": "OCR",
             "param": {
                 "roi": [
-                    1031,
-                    657,
-                    45,
-                    26
+                    1019,
+                    643,
+                    66,
+                    52
                 ],
                 "expected": [
-                    "精炼"
+                    "精",
+                    "炼"
                 ]
             }
         },
@@ -577,34 +627,6 @@
             }
         }
     },
-    "强化失败处理": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    563,
-                    540,
-                    46,
-                    25
-                ],
-                "expected": [
-                    "取消"
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "next": [
-            "关闭强化"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 2998,
-                "y": 1307
-            }
-        }
-    },
     "关闭强化": {
         "recognition": {
             "type": "TemplateMatch",
@@ -633,42 +655,31 @@
             }
         }
     },
-    "ClickAnniu": {
+    "强化失败处理": {
         "recognition": {
-            "type": "TemplateMatch",
+            "type": "OCR",
             "param": {
                 "roi": [
-                    840,
-                    450,
-                    50,
-                    40
+                    563,
+                    540,
+                    46,
+                    25
                 ],
-                "template": "Bag/anniu.png",
-                "threshold": 0.5,
-                "retry": 3
+                "expected": [
+                    "取消"
+                ]
             }
         },
         "action": {
             "type": "Click"
         },
-        "post_delay": 1500,
         "next": [
-            "ClickAnniu",
-            "AnalysisMain",
-            "强化失败处理"
+            "关闭强化"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2478,
-                "y": 833
-            }
-        }
-    },
-    "$__mpe_external_StartGame_Bag": {
-        "$__mpe_code": {
-            "position": {
-                "x": 4364,
-                "y": 620
+                "x": 2998,
+                "y": 1307
             }
         }
     }

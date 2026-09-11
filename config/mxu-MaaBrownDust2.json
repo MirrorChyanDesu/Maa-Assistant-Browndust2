@@ -2,31 +2,54 @@
   "version": "1.0",
   "instances": [
     {
-      "id": "mw7sr1u",
+      "id": "jhbrc43",
       "name": "配置 1",
       "controllerName": "Win32",
       "resourceName": "官服",
       "tasks": [
         {
-          "id": "puh4z1c",
-          "taskName": "自动进入游戏",
+          "id": "q84ltlx",
+          "taskName": "进入游戏",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "dyj6eam",
-          "taskName": "每日抽卡",
+          "id": "5c6ls8s",
+          "taskName": "每日免费抽抽乐",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "j4cmui5",
-          "taskName": "进入公会",
+          "id": "vvvml1h",
+          "taskName": "领取公会低保",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "0c4gcf3",
+          "id": "4yozs3p",
+          "taskName": "经营管理",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "flphlna",
+          "taskName": "镜中之战PVP",
+          "enabled": true,
+          "optionValues": {
+            "设置鸡尾酒倍数": {
+              "type": "select",
+              "caseName": "40倍"
+            }
+          }
+        },
+        {
+          "id": "amyakse",
+          "taskName": "广场女神像奖励",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "9rw8fwt",
           "taskName": "狩猎场",
           "enabled": true,
           "optionValues": {
@@ -44,35 +67,18 @@
             },
             "ChooseSlime": {
               "type": "select",
-              "caseName": "YESorNOGoldUP"
+              "caseName": "Once"
             }
           }
         },
         {
-          "id": "lfkx50v",
-          "taskName": "经营管理",
+          "id": "k656amk",
+          "taskName": "装备",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "7duibzt",
-          "taskName": "竞技场",
-          "enabled": true,
-          "optionValues": {
-            "设置鸡尾酒倍数": {
-              "type": "select",
-              "caseName": "40倍"
-            }
-          }
-        },
-        {
-          "id": "8332as8",
-          "taskName": "广场神像奖励",
-          "enabled": true,
-          "optionValues": {}
-        },
-        {
-          "id": "rs1rtm8",
+          "id": "ixjy9c7",
           "taskName": "赛季活动战斗",
           "enabled": true,
           "optionValues": {
@@ -83,27 +89,27 @@
           }
         },
         {
-          "id": "ugok7uw",
-          "taskName": "装备",
-          "enabled": true,
-          "optionValues": {}
-        },
-        {
-          "id": "fwk93v7",
+          "id": "m2w1cab",
           "taskName": "救赎之塔",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "8yb7sdz",
+          "id": "jotfuiy",
+          "taskName": "活动奖励",
+          "enabled": true,
+          "optionValues": {}
+        },
+        {
+          "id": "64er0wa",
           "taskName": "每日任务奖励",
           "enabled": true,
           "optionValues": {}
         },
         {
-          "id": "63rkymh",
+          "id": "84hw2ox",
           "taskName": "资源吸收和召集",
-          "enabled": false,
+          "enabled": true,
           "optionValues": {}
         }
       ]
@@ -116,12 +122,12 @@
     "confirmBeforeDelete": false,
     "maxLogsPerInstance": 2000,
     "windowSize": {
-      "width": 1184,
-      "height": 1008
+      "width": 1000,
+      "height": 1006
     },
     "windowPosition": {
-      "x": 93,
-      "y": 258
+      "x": -1003,
+      "y": 10
     },
     "mirrorChyan": {
       "cdk": "",
@@ -132,12 +138,11 @@
     "rightPanelWidth": 320,
     "rightPanelCollapsed": false,
     "connectionPanelExpanded": true,
-    "screenshotPanelExpanded": false,
-    "screenshotFrameRate": "5",
-    "welcomeShownHash": "qlls0k",
+    "screenshotPanelExpanded": true,
+    "screenshotFrameRate": "1",
+    "welcomeShownHash": "-yg7p39",
     "devMode": false,
     "tcpCompatMode": false,
-    "autoStartInstanceId": "mw7sr1u",
     "autoRunOnLaunch": false,
     "minimizeToTray": false,
     "onboardingCompleted": true,
@@ -148,20 +153,21 @@
   },
   "recentlyClosed": [],
   "interfaceTaskSnapshot": [
-    "自动进入游戏",
-    "每日抽卡",
-    "进入公会",
+    "进入游戏",
+    "每日免费抽抽乐",
+    "领取公会低保",
     "经营管理",
-    "竞技场",
-    "广场神像奖励",
+    "镜中之战PVP",
+    "广场女神像奖励",
     "狩猎场",
     "装备",
     "赛季活动战斗",
     "救赎之塔",
+    "活动奖励",
     "每日任务奖励",
     "资源吸收和召集"
   ],
   "newTaskNames": [],
   "customAccents": [],
-  "lastActiveInstanceId": "mw7sr1u"
+  "lastActiveInstanceId": "jhbrc43"
 }

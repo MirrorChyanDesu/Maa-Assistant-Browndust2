@@ -24,7 +24,7 @@ Thumbs.db
 cache/
 
 # 用户配置
-config/mxu-MaaBrownDust.json
+config/mxu-MaaBrownDust2.json
 
 # 大模型文件（如果用 Git LFS 或单独下载）
 resource/model/ocr/
@@ -34,3 +34,20 @@ resource/model/ocr/
 *.pdb
 *.tmp
 config/mxu-MaaBrownDust.json
+
+# Python 字节码缓存
+__pycache__/
+*.pyc
+
+# 更新器运行时产物
+updater_cache.json
+updates/
+
+# Agent 工作区记忆（不属于软件本身）
+.workbuddy/
+
+# MXU 启动时的临时运行标记（中文“启动”经系统 GBK 编码后变成乱码，0 字节，退出时自动删除）
+鑚姩
+
+# local, machine-specific files (shortcuts created by tools/apply_icon.ps1)
+*.lnk

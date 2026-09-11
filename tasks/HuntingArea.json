@@ -1,9 +1,9 @@
 {
     "task": [
         {"name": "狩猎场",
-            "label": "狩猎场",
+            "label": "快速狩猎",
             "entry": "StartHunt",
-            "description": "",
+            "description": "按自选刷取策略消耗每日免费米饭和每日免费火把",
             "option":["ChooseRock","ChooseDouble","ChooseWood","ChooseSlime"]
          }
              ],

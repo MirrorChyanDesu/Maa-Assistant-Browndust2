@@ -4,7 +4,7 @@
             "name": "经营管理",
             "label": "领取经营管理和石头",
             "entry": "StartOperate",
-            "description": "餐厅、钓鱼、领地助手收菜并进入餐厅收取常客石头",
+            "description": "餐厅、钓鱼、领地助手收菜并进入餐厅收取顾客圣石",
             "controller": [
                 "Win32",
                 "Win32-Window",

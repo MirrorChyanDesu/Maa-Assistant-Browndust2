@@ -43,10 +43,24 @@ $DEFAULTS = @{
     check_interval_hours   = 6
     asset_keywords_include = @('MABd2', 'win', 'BD2', 'Browndust')
     asset_keywords_exclude = @('source code', 'src', 'debug', 'linux', 'macos', 'darwin')
-    protected_dirs         = @('config')   # 更新时这些目录的“已有文件”不覆盖
+    protected_dirs         = @('config')   # 更新时这些目录的"已有文件"不覆盖
     download_dir           = 'updates'
     log_retention_days     = 7             # debug/ 日志与调试截图的保留天数
     open_folder_after      = $false
+    # 国内访问 GitHub Releases 普遍被严重限速（实测有时仅 10~30 KB/s）。
+    # 这份列表是**自动重试链**：原 URL 永远放在最后一个做兜底，前面按顺序尝试镜像前缀。
+    # 镜像 = "https://<前缀>/" + 原 URL 去掉 https://。用户在 updater_config.json 里
+    # 可以替换/追加，常见的格式：
+    #   - https://gh-proxy.com、https://ghfast.top、https://mirror.ghproxy.com
+    #   - https://ghps.cc（实测在工具环境已验证 OK）
+    # 公司/家用 HTTP 代理或自建 OSS 反代也填在这里，例如 "https://cdn.your-corp.com/gh"。
+    # 留空数组 [] 可关闭镜像、只用官方源（适合海外用户或网速不慢时）。
+    mirror_url_prefixes    = @(
+        'https://ghps.cc',
+        'https://ghfast.top',
+        'https://gh-proxy.com',
+        'https://mirror.ghproxy.com'
+    )
 }
 
 $cfg = @{} + $DEFAULTS
@@ -222,28 +236,92 @@ function Show-UpdateDialog($release, $current) {
 # ----------------------------------------------------------------------------
 # UI：下载进度窗口（前台显示），返回 $null 成功 / 错误信息
 # ----------------------------------------------------------------------------
-function Start-Download($url, $dest, $totalBytes) {
+
+# 给一条 GitHub 原 URL 按配置生成候选下载列表：镜像前缀在先，原 URL 兜底放最后。
+# 镜像 = "<prefix>" + "/" + 原 URL 去掉 https://。空白前缀自动跳过。
+function ConvertTo-DownloadUrls($origUrl, $cfgRef) {
+    $origUrl = [string]$origUrl
+    if ([string]::IsNullOrWhiteSpace($origUrl)) { return @() }
+
+    $prefixes = @()
+    if ($cfgRef.ContainsKey('mirror_url_prefixes')) {
+        try { $prefixes = @($cfgRef['mirror_url_prefixes']) } catch { $prefixes = @() }
+    }
+
+    $trimmed = ''
+    try {
+        $u = [Uri]$origUrl
+        $trimmed = $u.Host + $u.AbsolutePath  # e.g. github.com/alkaidjin/.../releases/.../MABd2.zip
+    } catch {
+        $i = $origUrl.IndexOf('://')
+        $trimmed = if ($i -ge 0) { $origUrl.Substring($i + 3) } else { $origUrl }
+    }
+    $trimmed = $trimmed.TrimStart('/')
+
+    $list = @()
+    foreach ($p in $prefixes) {
+        $pp = ([string]$p).Trim().TrimEnd('/')
+        if ([string]::IsNullOrWhiteSpace($pp)) { continue }
+        # 自动补 https://（用户填 bare host 也行）
+        if ($pp -notmatch '^https?://') { $pp = "https://$pp" }
+        $list += "$pp/$trimmed"
+    }
+    # 永远把官方放在最后做终极兜底
+    $list += $origUrl
+    return $list
+}
+
+# 把 URL 显示成简短可读文字（用于进度窗）
+function Shorten-Url($u) {
+    try {
+        $uri = [Uri]$u
+        $host = $uri.Host
+        $path = $uri.AbsolutePath
+        # 把常见镜像 host 缩写
+        switch -Regex ($host) {
+            '^ghps\.cc$'      { return 'ghps.cc' }
+            '^ghfast\.top$'   { return 'ghfast.top' }
+            '^gh-proxy\.com$' { return 'gh-proxy.com' }
+            '^ghproxy\.net$'  { return 'ghproxy.net' }
+            '^mirror\.ghproxy\.com$' { return 'mirror.ghproxy.com' }
+            default {
+                if ($path.Length -gt 30) { $path = '...' + $path.Substring($path.Length - 30) }
+                return "$host$path"
+            }
+        }
+    } catch { return $u }
+}
+
+# 一次下载尝试：弹出进度窗做单次下载；返回 $null = 成功 / 错误字符串 = 失败
+function Start-DownloadOne($url, $dest, $totalBytes) {
     $form = New-Object System.Windows.Forms.Form
     $form.Text = 'BD2MAA 更新中'
-    $form.Size = New-Object System.Drawing.Size(460, 150)
+    $form.Size = New-Object System.Drawing.Size(460, 170)
     $form.StartPosition = 'CenterScreen'
     $form.FormBorderStyle = 'FixedDialog'
     $form.ControlBox = $false
 
     $label = New-Object System.Windows.Forms.Label
-    $label.Location = New-Object System.Drawing.Point(16, 16)
+    $label.Location = New-Object System.Drawing.Point(16, 12)
     $label.Size = New-Object System.Drawing.Size(420, 36)
     $label.Text = '正在下载新版本，请稍候…'
     $form.Controls.Add($label)
 
+    $src = New-Object System.Windows.Forms.Label
+    $src.Location = New-Object System.Drawing.Point(16, 44)
+    $src.Size = New-Object System.Drawing.Size(420, 18)
+    $src.ForeColor = [System.Drawing.Color]::FromArgb(96, 96, 96)
+    $src.Text = ('源：' + (Shorten-Url $url))
+    $form.Controls.Add($src)
+
     $bar = New-Object System.Windows.Forms.ProgressBar
-    $bar.Location = New-Object System.Drawing.Point(16, 56)
+    $bar.Location = New-Object System.Drawing.Point(16, 66)
     $bar.Size = New-Object System.Drawing.Size(420, 22)
     $bar.Style = 'Continuous'
     $form.Controls.Add($bar)
 
     $status = New-Object System.Windows.Forms.Label
-    $status.Location = New-Object System.Drawing.Point(16, 88)
+    $status.Location = New-Object System.Drawing.Point(16, 100)
     $status.Size = New-Object System.Drawing.Size(420, 24)
     $form.Controls.Add($status)
 
@@ -277,12 +355,36 @@ function Start-Download($url, $dest, $totalBytes) {
     }) | Out-Null
     $timer.Start()
 
-    $web.DownloadFileAsync($url, $dest)
-    [System.Windows.Forms.Application]::Run($form)
-    $timer.Stop(); $timer.Dispose()
+    try {
+        $web.DownloadFileAsync($url, $dest)
+        [System.Windows.Forms.Application]::Run($form)
+    } finally {
+        $timer.Stop(); $timer.Dispose()
+        try { $web.CancelAsync() } catch { }
+    }
 
     if ($global:dlError) { return $global:dlError }
     return $null
+}
+
+# 下载入口：接受 URL 数组（一个接一个试），返回 $null 成功 / 错误信息失败
+function Start-Download($urls, $dest, $totalBytes) {
+    if ($urls -is [string]) { $urls = @($urls) }
+    $list = @($urls | Where-Object { $_ })
+    if ($list.Count -eq 0) { return '无可用下载源（请检查 mirror_url_prefixes 配置）' }
+
+    $lastErr = ''
+    for ($i = 0; $i -lt $list.Count; $i++) {
+        $u = $list[$i]
+        # 切下一个源前先清残留，避免 .new 的竞争
+        if (Test-Path -LiteralPath $dest) { Remove-Item -LiteralPath $dest -Force -ErrorAction SilentlyContinue }
+        $err = Start-DownloadOne $u $dest $totalBytes
+        if (-not $err) { return $null }
+        $lastErr = $err
+        # 最后一源（官方）失败就不必继续
+        if ($i -eq ($list.Count - 1)) { break }
+    }
+    return $lastErr
 }
 
 # ----------------------------------------------------------------------------
@@ -566,7 +668,9 @@ try {
     New-Item -ItemType Directory -Path $ddir -Force | Out-Null
     $dest = Join-Path $ddir $asset.name
 
-    $err = Start-Download $asset.browser_download_url $dest ([int]($asset.size))
+    # 生成候选下载 URL：配置的镜像前缀按顺序尝试，官方原 URL 放最后兜底
+    $urls = ConvertTo-DownloadUrls $asset.browser_download_url $cfg
+    $err = Start-Download $urls $dest ([int]($asset.size))
     if ($err) {
         [System.Windows.Forms.MessageBox]::Show(
             ("下载失败：{0}`n请前往发布页手动下载。" -f $err), "更新失败", 'OK', 'Error')

@@ -1,25 +1,29 @@
 # -*- coding: utf-8 -*-
 """
-BD2MAA 发布包构建工具（通用版）
+BD2MAA 发布包构建工具
 
 用法：
-    python tools/build_release_zip.py                 # 版本号取自 HEAD 的 interface.json
-    python tools/build_release_zip.py v26.09.5        # 显式指定版本号
-    python tools/build_release_zip.py --out D:\\x.zip  # 指定输出路径
+    python tools/build_release_zip.py                 # 无参 → 交互式询问版本号
+    python tools/build_release_zip.py v26.09.6        # 显式指定版本号
+    python tools/build_release_zip.py --dry-run       # 只打印要做什么，不动磁盘也不出包
+    python tools/build_release_zip.py --no-bump       # 不改 interface.json，按磁盘当前版本打包
+    python tools/build_release_zip.py --out D:\\x.zip  # 指定输出 zip 路径
     python tools/build_release_zip.py --verify        # 只校验已有 zip
-    python tools/build_release_zip.py --no-verify     # 只构建不校验
 
-必须保持的约定：
-  1. 直接读磁盘 → **未提交的改动也会进包**（所以发版前先确认工作区状态）
-  2. 包内 interface.json 的 version 强制写成目标版本号；**本地文件不动**
-     （本地常驻旧版本号，方便继续测试更新流程）
-  3. 排除 config/ → MXU 首次启动自动生成默认实例，避免覆盖用户已有配置
-  4. 排除 MaaBd2.lnk → 写死路径的快捷方式在别人机器上无效，首次启动自动重建
-  5. 排除 updater_cache.json / cache / debug / updates → 运行期产物
-  6. 中文文件名必须带 UTF-8 标志位（0x800），否则 Windows 解压乱码
-  7. zip 内条目用固定时间戳 → 同一天重复构建得到完全相同的字节（可复现）
+约定：
+  1. **默认会把 interface.json 的 version 字段改为目标版本号**，再开始打包。
+     这样 git 提交记录里自带版本号变更，发版 PR 语义清晰。
+  2. 直接读磁盘 → **未提交的改动也会进包**（所以发版前先确认工作区状态）。
+  3. 排除 config/ → MXU 首次启动自动生成默认实例，避免覆盖用户已有配置。
+  4. 排除 MaaBd2.lnk → 写死路径的快捷方式在别人机器上无效，首次启动自动重建。
+  5. 排除 updater_cache.json / cache / debug / updates / tools/build_release_zip.py 自身。
+  6. 中文文件名必须带 UTF-8 标志位（0x800），否则 Windows 解压乱码。
+  7. zip 内条目用固定时间戳 → 同一天重复构建得到完全相同的字节（可复现）。
+
+需要修改的"版本号文件"只有 interface.json。version.json 放的是依赖版本（maafw/mxu），
+updater_config.json 是用户配置；都不参与本工具。
 """
-import os, sys, json, time, zipfile, hashlib, argparse, subprocess
+import os, sys, json, time, re, zipfile, hashlib, argparse, subprocess
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -35,6 +39,8 @@ REQUIRED_FILES = [
 ]
 REQUIRED_DIRS = ['agent/', 'maafw/', 'misc/', 'tasks/', 'resource/', 'tools/']
 
+VERSION_RE = re.compile(r'^v\d+\.\d+\.\d+$')
+
 
 def log(msg):
     sys.stdout.write(str(msg) + '\n')
@@ -42,13 +48,80 @@ def log(msg):
 
 
 def head_version(base):
-    """读 HEAD 版 interface.json 的版本号（仓库里的发布标记）"""
+    """HEAD 中 interface.json 的版本号（仓库里最近一次发布的标记）"""
     try:
         raw = subprocess.check_output(
             ['git', '-C', base, 'show', 'HEAD:interface.json'], stderr=subprocess.DEVNULL)
         return json.loads(raw.decode('utf-8-sig')).get('version')
     except Exception:
         return None
+
+
+def disk_version(base):
+    """磁盘上 interface.json 当前的版本号（工作区）"""
+    try:
+        with open(os.path.join(base, 'interface.json'), 'rb') as f:
+            raw = f.read()
+        return json.loads(raw.decode('utf-8-sig')).get('version')
+    except Exception:
+        return None
+
+
+def bump_interface(base, new_version):
+    """就地更新 interface.json 的 version 字段，保留编码 / BOM / 缩进 / 换行。
+       返回 (old, new)；已是目标版本时 old == new 且磁盘不写。"""
+    path = os.path.join(base, 'interface.json')
+    with open(path, 'rb') as f:
+        data = f.read()
+    marker = b'"version": "'
+    i = data.find(marker)
+    if i < 0:
+        raise RuntimeError('interface.json 找不到 "version" 字段')
+    j = data.find(b'"', i + len(marker))
+    old = data[i + len(marker):j].decode('utf-8')
+    if old == new_version:
+        return old, new_version     # 已是目标版本，不写盘
+    new_data = data[:i + len(marker)] + new_version.encode('utf-8') + data[j:]
+    with open(path, 'wb') as f:
+        f.write(new_data)
+    return old, new_version
+
+
+def prompt_version(current, head_v):
+    """交互式询问版本号（仅在 stdin 是 TTY 时调用）。
+       无效输入会循环追问；空回车返回 None（视为取消）。"""
+    cur = current or '?'
+    while True:
+        if head_v and head_v != current:
+            sys.stdout.write('[?] 当前: %s  (HEAD 上次发布: %s)\n' % (cur, head_v))
+        else:
+            sys.stdout.write('[?] 当前: %s\n' % cur)
+        sys.stdout.write('[?] 目标版本号 (例 v26.09.6，回车取消): ')
+        sys.stdout.flush()
+        try:
+            line = sys.stdin.readline()
+        except (EOFError, KeyboardInterrupt):
+            return None
+        line = line.strip()
+        if not line:
+            return None
+        v = line if line.startswith('v') else 'v' + line
+        if VERSION_RE.match(v):
+            return v
+        sys.stdout.write('[!] 格式不对，应为 v<主>.<次>.<修订>，例如 v26.09.6\n')
+
+
+def confirm(msg):
+    """仅在 stdin 是 TTY 时询问 y/N；非交互环境默认 True（CI / 管道场景）。"""
+    if not sys.stdin.isatty():
+        return True
+    sys.stdout.write('[?] %s [y/N] ' % msg)
+    sys.stdout.flush()
+    try:
+        ans = sys.stdin.readline().strip().lower()
+    except (EOFError, KeyboardInterrupt):
+        return False
+    return ans in ('y', 'yes')
 
 
 def collect(base):
@@ -71,21 +144,9 @@ def collect(base):
 
 
 def build(base, out_path, version):
+    """按磁盘状态打包。版本号已在上游通过 bump_interface 写进 interface.json。"""
     files = collect(base)
     log('[1] 待打包文件 = %d' % len(files))
-
-    # 包内 interface.json：字节级替换版本号，保留原编码/BOM
-    with open(os.path.join(base, 'interface.json'), 'rb') as f:
-        wdata = f.read()
-    marker = b'"version": "'
-    i = wdata.find(marker)
-    if i < 0:
-        log('[!] 在 interface.json 中找不到 version 字段')
-        packed = wdata
-    else:
-        j = wdata.find(b'"', i + len(marker))
-        packed = wdata[:i + len(marker)] + version.encode() + wdata[j:]
-        log('[2] 包内 interface.json version -> %s（本地文件不动）' % version)
 
     if os.path.exists(out_path):
         os.remove(out_path)
@@ -96,7 +157,7 @@ def build(base, out_path, version):
     t0 = time.time()
     with zipfile.ZipFile(out_path, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as z:
         for full, rel in files:
-            data = packed if rel == 'interface.json' else open(full, 'rb').read()
+            data = open(full, 'rb').read()
             zi = zipfile.ZipInfo(rel, date_time=dt)
             zi.compress_type = zipfile.ZIP_DEFLATED
             zi.external_attr = 0o644 << 16
@@ -104,7 +165,7 @@ def build(base, out_path, version):
             raw += len(data)
 
     size = os.path.getsize(out_path)
-    log('[3] 原始 %d 字节 -> zip %d 字节 (%.2f MiB)  用时 %.1fs'
+    log('[2] 原始 %d 字节 -> zip %d 字节 (%.2f MiB)  用时 %.1fs'
         % (raw, size, size / 1048576.0, time.time() - t0))
     return out_path
 
@@ -157,28 +218,88 @@ def verify(path, version):
 
 def main():
     ap = argparse.ArgumentParser(add_help=True)
-    ap.add_argument('version', nargs='?', help='目标版本号，如 v26.09.5；默认取 HEAD interface.json')
+    ap.add_argument('version', nargs='?', help='目标版本号，如 v26.09.6；不传则交互询问')
     ap.add_argument('--out', help='输出 zip 路径，默认 updates/MABd2<version>.zip')
     ap.add_argument('--verify', action='store_true', help='只校验已有 zip')
     ap.add_argument('--no-verify', action='store_true', help='只构建不校验')
+    ap.add_argument('--no-bump', action='store_true', help='不改 interface.json，按磁盘当前版本打包')
+    ap.add_argument('--dry-run', action='store_true', help='只打印发布计划，不动磁盘也不出包')
     args = ap.parse_args()
 
-    version = args.version or head_version(BASE)
+    head_v = head_version(BASE)
+    cur_v = disk_version(BASE)
+
+    # ---- 1. 版本号解析 ----
+    version = args.version
     if not version:
-        log('无法确定版本号：请显式传入，例如 v26.09.5')
-        return 2
+        if sys.stdin.isatty():
+            version = prompt_version(cur_v, head_v)
+            if not version:
+                log('已取消（无输入）')
+                return 1
+        else:
+            log('无版本号且 stdin 非 TTY，无法交互询问。请显式传入，例如 v26.09.6')
+            return 2
+
     if not version.startswith('v'):
         version = 'v' + version
+    if not VERSION_RE.match(version):
+        log('版本号格式不对：%r（应为 v<主>.<次>.<修订>，例 v26.09.6）' % version)
+        return 2
 
     out = args.out or os.path.join(BASE, 'updates', 'MABd2%s.zip' % version)
 
+    # ---- 2. 打印发布计划 ----
+    log('=== 发布计划 ===')
+    log('  目标版本: %s' % version)
+    log('  HEAD   :  %s' % (head_v or '?'))
+    log('  磁盘    :  %s' % (cur_v or '?'))
+    log('  输出    :  %s' % out)
+    will_bump = (not args.no_bump) and (cur_v != version)
+    if will_bump:
+        log('  将改    :  interface.json  %s -> %s' % (cur_v, version))
+    elif args.no_bump:
+        log('  将改    :  interface.json  不动（--no-bump）')
+    else:
+        log('  将改    :  interface.json  不动（已是 %s）' % version)
+
+    if args.dry_run:
+        log('[dry-run] 已打印计划，未执行任何写入')
+        return 0
+
+    # ---- 3. 只校验 ----
     if args.verify:
+        if not os.path.exists(out):
+            log('找不到 zip：%s' % out)
+            return 2
         return 0 if verify(out, version) else 1
 
+    # ---- 4. 改动前确认 ----
+    if will_bump and not confirm('将 interface.json 从 %s 改为 %s 并开始打包？' % (cur_v, version)):
+        log('已取消')
+        return 1
+
+    # ---- 5. 写盘 ----
+    if will_bump:
+        old, new = bump_interface(BASE, version)
+        log('[0] interface.json: %s -> %s' % (old, new))
+    else:
+        log('[0] interface.json: 保持 %s' % version)
+
+    # ---- 6. 打包 + 校验 ----
     build(BASE, out, version)
     if not args.no_verify:
-        return 0 if verify(out, version) else 1
-    return 0
+        ok = verify(out, version)
+    else:
+        ok = True
+
+    if ok:
+        log('')
+        log('下一步：')
+        log('  git add -A && git commit -m "%s" && git push' % version)
+        log('  把 %s 上传到 GitHub Release 的 assets（**不要改文件名**）' % os.path.basename(out))
+        return 0
+    return 1
 
 
 if __name__ == '__main__':

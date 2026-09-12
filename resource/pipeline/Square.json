@@ -3,17 +3,17 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1789035232000,
+            "lastSyncTime": 1789175183017,
             "isModifiedExternally": false,
             "isDeleted": false,
             "filePath": "F:\\BD2MAA\\resource\\pipeline\\Square.json",
             "savedViewport": {
-                "x": -1166,
-                "y": -180,
-                "zoom": 0.99
+                "x": -1013,
+                "y": -149,
+                "zoom": 1
             },
             "filename": "Square",
-            "version": "v1.9.3"
+            "version": "v1.10.0"
         }
     },
     "$__mpe_external_StartGame_Square": {
@@ -284,11 +284,11 @@
         "action": {
             "type": "Click",
             "param": {
-                "target": [
-                    1088,
-                    151,
-                    8,
-                    3
+                "target_offset": [
+                    54,
+                    20,
+                    -16,
+                    -39
                 ]
             }
         },

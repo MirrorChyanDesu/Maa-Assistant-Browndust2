@@ -1,0 +1,285 @@
+{
+    "$__mpe_config_WarcraftShop": {
+        "$__mpe_code": {
+            "prefix": "",
+            "filePath": "F:\\BD2MAA\\resource\\pipeline\\WarcraftShop.json",
+            "lastSyncTime": 1789147835961,
+            "coordinateMode": "absolute-v1",
+            "savedViewport": {
+                "x": -1425,
+                "y": -30,
+                "zoom": 0.53
+            },
+            "filename": "WarcraftShop",
+            "version": "v1.10.0"
+        }
+    },
+    "WarcraftShop": {
+        "next": [
+            "EnterWarcraft_3",
+            "EnterWarcraft_4",
+            "[JumpBack]StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3314,
+                "y": 232
+            }
+        }
+    },
+    "$__mpe_external_StartGame_WarcraftShop": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4214,
+                "y": 53
+            }
+        }
+    },
+    "EnterWarcraft_3": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1024,
+                    343,
+                    198,
+                    262
+                ],
+                "expected": [
+                    "魔兽",
+                    "追踪者",
+                    "解锁"
+                ],
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2000,
+        "next": [
+            "EnterWarcraft_4",
+            "EnterWarcraft_3",
+            "InWarcraftShop"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3656,
+                "y": 536
+            }
+        }
+    },
+    "EnterWarcraft_4": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1064,
+                    400,
+                    109,
+                    218
+                ],
+                "expected": [
+                    "剧情",
+                    "解锁"
+                ],
+                "threshold": 0.6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 2000,
+        "next": [
+            "EnterWarcraft_4",
+            "EnterWarcraft_3",
+            "InWarcraftShop"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3656,
+                "y": 198
+            }
+        }
+    },
+    "InWarcraftShop": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    767,
+                    622,
+                    94,
+                    37
+                ],
+                "expected": [
+                    "活动",
+                    "商店"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "InWarcraftShop",
+            "[JumpBack]抽抽乐券",
+            "[JumpBack]狂暴火种",
+            "[JumpBack]女神之泪",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 3970,
+                "y": 459
+            }
+        }
+    },
+    "抽抽乐券": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    389,
+                    76,
+                    334,
+                    106
+                ],
+                "template": [
+                    "SHOP/DrawCard_1.png"
+                ],
+                "threshold": [
+                    0.8
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "SetBuyMax"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 4546,
+                "y": -125
+            }
+        }
+    },
+    "SetBuyMax": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    574,
+                    463,
+                    56,
+                    39
+                ],
+                "expected": [
+                    "MAX"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "BuyIt"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 4995,
+                "y": 229
+            }
+        }
+    },
+    "BuyIt": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    835,
+                    474,
+                    86,
+                    33
+                ],
+                "expected": [
+                    "购买"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "$__mpe_code": {
+            "position": {
+                "x": 5273,
+                "y": 233
+            }
+        }
+    },
+    "狂暴火种": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    499,
+                    72,
+                    334,
+                    106
+                ],
+                "template": [
+                    "SHOP/FireSeed_1.png"
+                ],
+                "threshold": [
+                    0.8
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "SetBuyMax"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 4550,
+                "y": 182
+            }
+        }
+    },
+    "女神之泪": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    722,
+                    73,
+                    446,
+                    101
+                ],
+                "template": [
+                    "SHOP/FgodTear.png"
+                ],
+                "threshold": [
+                    0.8
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "SetBuyMax"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 4552,
+                "y": 489
+            }
+        }
+    }
+}

@@ -26,6 +26,14 @@ Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
+# ZIP 校验用到的程序集：**加载失败也必须能继续启动**（用 try/catch 兜住，
+# 并在 Test-ValidZip 里自动降级为"字节数 + PK 魔数"两级校验）。
+$script:ZipArchiveAvailable = $false
+try {
+    Add-Type -AssemblyName System.IO.Compression -ErrorAction Stop
+    $script:ZipArchiveAvailable = $true
+} catch { $script:ZipArchiveAvailable = $false }
+
 # ----------------------------------------------------------------------------
 # 路径
 # ----------------------------------------------------------------------------
@@ -49,17 +57,20 @@ $DEFAULTS = @{
     open_folder_after      = $false
     # 国内访问 GitHub Releases 普遍被严重限速（实测有时仅 10~30 KB/s）。
     # 这份列表是**自动重试链**：原 URL 永远放在最后一个做兜底，前面按顺序尝试镜像前缀。
-    # 镜像 = "https://<前缀>/" + 原 URL 去掉 https://。用户在 updater_config.json 里
-    # 可以替换/追加，常见的格式：
-    #   - https://gh-proxy.com、https://ghfast.top、https://mirror.ghproxy.com
-    #   - https://ghps.cc（实测在工具环境已验证 OK）
-    # 公司/家用 HTTP 代理或自建 OSS 反代也填在这里，例如 "https://cdn.your-corp.com/gh"。
-    # 留空数组 [] 可关闭镜像、只用官方源（适合海外用户或网速不慢时）。
+    # 镜像 = "https://<前缀>/" + 原 URL 去掉 https://。
+    #
+    # 2026-09-11 实测（对 release 资产直链）：
+    #   - ghps.cc            ❌ 已失效。返回 HTTP 206 + 4181 字节的 text/html 错误页，
+    #                           而 WebClient 不报错 → 半截 HTML 会被误当成 zip 下载成功，
+    #                           直到解压才炸（"找不到中央目录结尾记录"）。已从默认列表移除。
+    #   - mirror.ghproxy.com ❌ 连接超时，已移除。
+    #   - ghfast.top         ✅ 返回正确 zip（PK\x03\x04，字节数与 asset 一致）
+    #   - gh-proxy.com       ✅ 同上
+    # 用户仍可在 updater_config.json 里替换/追加（公司 HTTP 代理、自建 OSS 反代等，格式同上），
+    # 例如 "https://cdn.your-corp.com/gh"。留空数组 [] 可关闭镜像、只用官方源。
     mirror_url_prefixes    = @(
-        'https://ghps.cc',
         'https://ghfast.top',
-        'https://gh-proxy.com',
-        'https://mirror.ghproxy.com'
+        'https://gh-proxy.com'
     )
 }
 
@@ -367,6 +378,40 @@ function Start-DownloadOne($url, $dest, $totalBytes) {
     return $null
 }
 
+# 校验下载结果是否是"完整且可解压的 zip"。
+# 为什么需要：部分 GitHub 加速镜像对失效直链会返回 HTTP 206/200 + text/html 的几 KB 错误页，
+#   WebClient 不会抛异常 —— 会被误判为"下载成功"，直到 Expand-Archive 才炸（报
+#   "找不到中央目录结尾记录"，即 ZipArchive 的 .ctor 抛 End of Central Directory not found）。
+# 三层校验：字节数 == 期望值 → PK 魔数 → 中央目录可读（Entries 非空）。
+function Test-ValidZip($path, $expectedBytes) {
+    try {
+        if (-not (Test-Path -LiteralPath $path)) { return $false }
+        $len = (Get-Item -LiteralPath $path).Length
+        if ($expectedBytes -gt 0 -and $len -ne $expectedBytes) { return $false }
+        if ($len -lt 22) { return $false }   # 空 zip 的 EOCD 也占 22 字节
+
+        $fs = [System.IO.File]::OpenRead($path)
+        try {
+            $sig = New-Object byte[] 2
+            [void]$fs.Read($sig, 0, 2)
+            if ($sig[0] -ne 0x50 -or $sig[1] -ne 0x4B) { return $false }   # 'PK'
+            # 第三层：中央目录可读（需要 System.IO.Compression 程序集）。
+            # 若该类型在当前环境不可用，就跳过这一层，只靠"字节数 + PK 魔数"——
+            # 绝不能因为类型缺失而把好文件误判成坏文件。
+            if ($script:ZipArchiveAvailable) {
+                $fs.Position = 0
+                try {
+                    $za = New-Object System.IO.Compression.ZipArchive($fs, [System.IO.Compression.ZipArchiveMode]::Read, $true)
+                    $n = $za.Entries.Count
+                    $za.Dispose()
+                    if ($n -le 0) { return $false }
+                } catch { return $false }
+            }
+        } finally { $fs.Dispose() }
+        return $true
+    } catch { return $false }
+}
+
 # 下载入口：接受 URL 数组（一个接一个试），返回 $null 成功 / 错误信息失败
 function Start-Download($urls, $dest, $totalBytes) {
     if ($urls -is [string]) { $urls = @($urls) }
@@ -379,8 +424,14 @@ function Start-Download($urls, $dest, $totalBytes) {
         # 切下一个源前先清残留，避免 .new 的竞争
         if (Test-Path -LiteralPath $dest) { Remove-Item -LiteralPath $dest -Force -ErrorAction SilentlyContinue }
         $err = Start-DownloadOne $u $dest $totalBytes
-        if (-not $err) { return $null }
+        if (-not $err) {
+            # 下载完成 ≠ 内容正确：镜像可能返回 HTML 错误页。校验通过才算成功，
+            # 否则清掉残留、记下原因、继续尝试下一个源。
+            if (Test-ValidZip $dest $totalBytes) { return $null }
+            $err = ('文件校验失败（字节数或 zip 格式不符，源可能返回了错误页）')
+        }
         $lastErr = $err
+        if (Test-Path -LiteralPath $dest) { Remove-Item -LiteralPath $dest -Force -ErrorAction SilentlyContinue }
         # 最后一源（官方）失败就不必继续
         if ($i -eq ($list.Count - 1)) { break }
     }
@@ -689,8 +740,9 @@ try {
         Copy-Update $srcRoot $BASE $cfg
         ReInject-XLaunch $BASE
     } catch {
+        # 注意：$dest 会在 finally 里被清掉，所以这里不要再让用户"手动解压该文件"。
         [System.Windows.Forms.MessageBox]::Show(
-            ("解压或覆盖失败：{0}`n请手动解压 {1} 完成更新。" -f $_.Exception.Message, $dest),
+            ("解压或覆盖失败：{0}`n`n下载的压缩包可能不完整。可重新启动 launcher.bat 再试一次（会自动切换下载源），或前往发布页手动下载：`n{1}" -f $_.Exception.Message, $release.html_url),
             "更新失败", 'OK', 'Error')
         Launch-Mxu
         return

@@ -3,17 +3,17 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1788307210066,
+            "lastSyncTime": 1789309914179,
             "isModifiedExternally": false,
             "isDeleted": false,
-            "filePath": "F:\\BD2MAA\\resource\\pipeline\\HuntingArea.json",
+            "filePath": "F:\\MABd2v26.09.5\\resource\\pipeline\\HuntingArea.json",
             "savedViewport": {
-                "x": -3262,
-                "y": 14,
-                "zoom": 0.76
+                "x": -3679,
+                "y": 149,
+                "zoom": 0.87
             },
             "filename": "HuntingArea",
-            "version": "v1.9.2"
+            "version": "v1.10.0"
         }
     },
     "$__mpe_external_StartGame_HuntingArea": {
@@ -347,6 +347,34 @@
             "position": {
                 "x": 6466,
                 "y": 434
+            }
+        }
+    },
+    "GoldHunt_2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    76,
+                    134,
+                    81,
+                    74
+                ],
+                "template": [
+                    "Hunt/GoldDouble.png"
+                ],
+                "threshold": [
+                    0.8
+                ]
+            }
+        },
+        "next": [
+            "MainHunt1_Once"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 5346,
+                "y": 644
             }
         }
     },
@@ -959,34 +987,6 @@
             "position": {
                 "x": 5063,
                 "y": 80
-            }
-        }
-    },
-    "GoldHunt_2": {
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    76,
-                    134,
-                    81,
-                    74
-                ],
-                "template": [
-                    "Hunt/GoldDouble.png"
-                ],
-                "threshold": [
-                    0.8
-                ]
-            }
-        },
-        "next": [
-            "MainHunt1_Once"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 5346,
-                "y": 644
             }
         }
     },

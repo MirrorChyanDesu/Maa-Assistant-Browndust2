@@ -3,17 +3,17 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1789036171462,
+            "lastSyncTime": 1789264986833,
             "isModifiedExternally": false,
             "isDeleted": false,
-            "filePath": "F:\\BD2MAA\\resource\\pipeline\\Warcraft.json",
+            "filePath": "F:\\MABd2v26.09.5\\resource\\pipeline\\Warcraft.json",
             "savedViewport": {
-                "x": 1004,
-                "y": 325,
-                "zoom": 0.76
+                "x": 616,
+                "y": 147,
+                "zoom": 0.5
             },
             "filename": "Warcraft",
-            "version": "v1.9.3"
+            "version": "v1.10.0"
         }
     },
     "$__mpe_external_StartGame_Warcraft": {
@@ -21,45 +21,6 @@
             "position": {
                 "x": 2503,
                 "y": 332
-            }
-        }
-    },
-    "挑战战斗推关_1": {
-        "max_hit": 3,
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    535,
-                    611,
-                    82,
-                    60
-                ],
-                "expected": [
-                    "挑战战斗"
-                ],
-                "threshold": 0.7
-            }
-        },
-        "action": {
-            "type": "Click",
-            "param": {
-                "target": [
-                    575,
-                    573
-                ]
-            }
-        },
-        "post_delay": 5000,
-        "next": [
-            "挑战战斗推关_1",
-            "自动战斗入口",
-            "WarcraftBattleSwipe"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 104,
-                "y": 358
             }
         }
     },
@@ -456,6 +417,30 @@
             }
         }
     },
+    "不开启": {
+        "next": [
+            "挑战战斗推关_1",
+            "挑战战斗推关_2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -188,
+                "y": 474
+            }
+        }
+    },
+    "开启": {
+        "next": [
+            "普通战斗推关_1",
+            "普通战斗推关_2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -445,
+                "y": -77
+            }
+        }
+    },
     "开始战斗": {
         "recognition": {
             "type": "OCR",
@@ -513,6 +498,84 @@
             }
         }
     },
+    "挑战战斗推关_1": {
+        "max_hit": 3,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    535,
+                    611,
+                    82,
+                    60
+                ],
+                "expected": [
+                    "挑战战斗"
+                ],
+                "threshold": 0.7
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    575,
+                    573
+                ]
+            }
+        },
+        "post_delay": 5000,
+        "next": [
+            "挑战战斗推关_1",
+            "自动战斗入口",
+            "WarcraftBattleSwipe"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 159,
+                "y": 334
+            }
+        }
+    },
+    "挑战战斗推关_2": {
+        "max_hit": 3,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    391,
+                    620,
+                    85,
+                    42
+                ],
+                "expected": [
+                    "挑战战斗"
+                ],
+                "threshold": 0.7
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    431,
+                    640
+                ]
+            }
+        },
+        "post_delay": 5000,
+        "next": [
+            "挑战战斗推关_2",
+            "自动战斗入口",
+            "WarcraftBattleSwipe"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 150,
+                "y": 751
+            }
+        }
+    },
     "是否开启自动推关": {
         "next": [
             "不开启"
@@ -559,6 +622,45 @@
             "position": {
                 "x": -113,
                 "y": 53
+            }
+        }
+    },
+    "普通战斗推关_2": {
+        "max_hit": 3,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    268,
+                    621,
+                    83,
+                    40
+                ],
+                "expected": [
+                    "普通战斗"
+                ],
+                "threshold": 0.7
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    309,
+                    641
+                ]
+            }
+        },
+        "post_delay": 5000,
+        "next": [
+            "普通战斗推关_2",
+            "自动战斗入口",
+            "返回活动主页3"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": -114,
+                "y": -338
             }
         }
     },
@@ -761,114 +863,13 @@
         },
         "post_delay": 1500,
         "next": [
-            "挑战战斗推关_1"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 264,
-                "y": -100
-            }
-        }
-    },
-    "不开启": {
-        "next": [
             "挑战战斗推关_1",
             "挑战战斗推关_2"
         ],
         "$__mpe_code": {
             "position": {
-                "x": -188,
-                "y": 474
-            }
-        }
-    },
-    "开启": {
-        "next": [
-            "普通战斗推关_1",
-            "普通战斗推关_2"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": -445,
-                "y": -77
-            }
-        }
-    },
-    "普通战斗推关_2": {
-        "max_hit": 3,
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    268,
-                    621,
-                    83,
-                    40
-                ],
-                "expected": [
-                    "普通战斗"
-                ],
-                "threshold": 0.7
-            }
-        },
-        "action": {
-            "type": "Click",
-            "param": {
-                "target": [
-                    309,
-                    641
-                ]
-            }
-        },
-        "post_delay": 5000,
-        "next": [
-            "普通战斗推关_2",
-            "自动战斗入口",
-            "返回活动主页3"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": -114,
-                "y": -338
-            }
-        }
-    },
-    "挑战战斗推关_2": {
-        "max_hit": 3,
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    391,
-                    620,
-                    85,
-                    42
-                ],
-                "expected": [
-                    "挑战战斗"
-                ],
-                "threshold": 0.7
-            }
-        },
-        "action": {
-            "type": "Click",
-            "param": {
-                "target": [
-                    431,
-                    640
-                ]
-            }
-        },
-        "post_delay": 5000,
-        "next": [
-            "挑战战斗推关_2",
-            "自动战斗入口",
-            "WarcraftBattleSwipe"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 104,
-                "y": 759
+                "x": 251,
+                "y": -159
             }
         }
     }

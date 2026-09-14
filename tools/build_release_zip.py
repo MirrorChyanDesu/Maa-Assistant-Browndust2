@@ -20,8 +20,10 @@ BD2MAA 发布包构建工具
   6. 中文文件名必须带 UTF-8 标志位（0x800），否则 Windows 解压乱码。
   7. zip 内条目用固定时间戳 → 同一天重复构建得到完全相同的字节（可复现）。
 
-需要修改的"版本号文件"只有 interface.json。version.json 放的是依赖版本（maafw/mxu），
-updater_config.json 是用户配置；都不参与本工具。
+需要修改的"业务版本号文件"只有 interface.json。
+- version.json 放的是依赖版本（maafw/mxu），是「包内依赖指纹」，本工具**不自动改写**——
+  升级底层 DLL / mxu.exe 后必须**人工同步**这个文件（见下方 check_version_json）。
+- updater_config.json 是用户配置，不参与本工具。
 """
 import os, sys, json, time, re, zipfile, hashlib, argparse, subprocess
 
@@ -29,13 +31,23 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 EXCLUDE_DIRS  = {'.git', '.workbuddy', 'cache', 'config', 'debug', 'updates', '_stage'}
 # 按包内相对路径匹配
-EXCLUDE_FILES = {'MaaBd2.lnk', 'updater_cache.json', 'tools/build_release_zip.py'}
+EXCLUDE_FILES = {
+    'MaaBd2.lnk', 'updater_cache.json', 'tools/build_release_zip.py',
+    # 注意事项 1/2/3/4 已合并为注意事项.pdf（v26.09.7 起）；保留原文件不打包以避免内容走样
+    '注意事项1-----使用前必看！！！.txt',
+    '注意事项2-----任务流程推荐排序.png',
+    '注意事项3——地图吸收召集的天赋技能配置图示.png',
+    '注意事项4——游戏操作设置中关于方向键的设置！！.png',
+}
 EXCLUDE_EXT   = {'.lnk', '.tmp', '.pyc'}
 
 REQUIRED_FILES = [
     'interface.json', 'updater_config.json', 'version.json', 'launcher.bat',
     'BD2MAA-Updater.ps1', 'mxu.exe', 'mxu.ico', 'mxu_icon.png', 'LICENSE', 'README.md',
-    '应用图标.bat', '更新功能说明.md', '注意事项1-----使用前必看！！！.txt',
+    '更新功能说明.md', '注意事项.pdf',
+    # v26.09.7 起：Verlog + 教学视频也跟着入包（用户私维护，不要 gitignore）
+    'Verlog.xlsx',
+    '重要教学！！使用软件打开游戏并设定游戏分辨率教程 .mp4',
 ]
 REQUIRED_DIRS = ['agent/', 'maafw/', 'misc/', 'tasks/', 'resource/', 'tools/']
 
@@ -85,6 +97,32 @@ def bump_interface(base, new_version):
     with open(path, 'wb') as f:
         f.write(new_data)
     return old, new_version
+
+
+def check_version_json(base):
+    """读取 version.json 并打印现状 + 格式校验。
+       这是「包内依赖指纹」（maafw/mxu），不参与 interface.json 的业务版本号 bump；
+       升级底层 DLL / mxu.exe 后必须人工同步这个文件，否则发布出去的和实际不符。
+
+       不自动改写：版本号语义不同（业务号 = interface.json.version；依赖号 = 各自上游 tag），
+       改写应由人脑拍板。本工具只在「打印发布计划」阶段做提醒 + 格式校验。"""
+    p = os.path.join(base, 'version.json')
+    if not os.path.exists(p):
+        log('[W] version.json 不存在！发布前必须创建（maafw / mxu 两个字段）')
+        return
+    try:
+        with open(p, 'rb') as f:
+            data = json.loads(f.read().decode('utf-8-sig'))
+        vs = data.get('versions') or {}
+        maafw = vs.get('maafw', '?')
+        mxu = vs.get('mxu', '?')
+        log('  version.json: maafw=%s  mxu=%s  （发布前请确认与磁盘 maafw/、mxu.exe 实际版本一致）'
+            % (maafw, mxu))
+        for k, v in (('maafw', maafw), ('mxu', mxu)):
+            if v == '?' or not VERSION_RE.match(v):
+                log('[W] version.json.versions.%s 格式不规范: %r（应为 v<主>.<次>.<修订>，例 v5.13.0）' % (k, v))
+    except Exception as e:
+        log('[W] version.json 解析失败: %s' % e)
 
 
 def prompt_version(current, head_v):
@@ -262,6 +300,7 @@ def main():
         log('  将改    :  interface.json  不动（--no-bump）')
     else:
         log('  将改    :  interface.json  不动（已是 %s）' % version)
+    check_version_json(BASE)
 
     if args.dry_run:
         log('[dry-run] 已打印计划，未执行任何写入')

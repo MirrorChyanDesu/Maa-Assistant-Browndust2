@@ -4,7 +4,7 @@
 #
 # 功能：
 #   1. 软件开启时自动检测 GitHub Releases 是否有新版本。
-#   2. 发现新版本弹出选择对话框（含版本号与更新日志）。
+#   2. 发现新版本弹出选择对话框（含版本号与更新日志）。20 秒无操作自动跳过更新并进入软件，防止无人值守时卡在窗口。
 #   3. 用户选“一键更新”：前台显示下载进度 -> 下载 -> 自动覆盖旧版本。
 #      （更新时会保留用户的 config/ 配置：已有配置不覆盖，仅新增缺失的默认配置）
 #   4. 用户选“暂不更新”、或已是最新、或检测失败：直接启动 mxu.exe。
@@ -180,8 +180,12 @@ function Find-ProjectRoot($base) {
 
 # ----------------------------------------------------------------------------
 # UI：发现新版本对话框（返回 $true=更新, $false=暂不更新）
+# 20 秒无任何操作 → 自动视为「暂不更新」→ DialogResult=Cancel → caller 走 Launch-Mxu
+#   设计动机：无人值守场景（挂机 / 远程启动 / 用户离开）不应被卡在更新窗口。
 # ----------------------------------------------------------------------------
 function Show-UpdateDialog($release, $current) {
+    $TIMEOUT_SEC = 20   # 自动跳过倒计时（秒）；用户主动点按钮立即终止倒计时
+
     $form = New-Object System.Windows.Forms.Form
     $form.Text = 'BD2MAA · 发现新版本'
     $form.Size = New-Object System.Drawing.Size(580, 480)
@@ -221,6 +225,14 @@ function Show-UpdateDialog($release, $current) {
     $box.Text = if ($release.body) { $release.body } else { '（无更新说明）' }
     $form.Controls.Add($box)
 
+    # 倒计时提示（位于日志框与按钮之间）
+    $lblTimer = New-Object System.Windows.Forms.Label
+    $lblTimer.Location = New-Object System.Drawing.Point(16, 372)
+    $lblTimer.Size = New-Object System.Drawing.Size(280, 24)
+    $lblTimer.ForeColor = [System.Drawing.Color]::FromArgb(120, 120, 120)
+    $lblTimer.Text = "无操作 ${TIMEOUT_SEC} 秒后自动跳过更新"
+    $form.Controls.Add($lblTimer)
+
     $btnUpdate = New-Object System.Windows.Forms.Button
     $btnUpdate.Text = '⬇ 一键更新'
     $btnUpdate.Location = New-Object System.Drawing.Point(310, 408)
@@ -240,7 +252,33 @@ function Show-UpdateDialog($release, $current) {
     $form.AcceptButton = $btnUpdate
     $form.CancelButton = $btnLater
 
-    $result = $form.ShowDialog()
+    # 倒计时计时器（WinForms Timer：自动在 UI 线程跑，无需 Invoke；form 关闭后自动停）
+    # 用 $script: 让 Tick handler 在自己的子作用域也能读到当前秒数
+    $script:countdown = $TIMEOUT_SEC
+    $timer = New-Object System.Windows.Forms.Timer
+    $timer.Interval = 1000   # ms
+    $timer.Add_Tick({
+        $script:countdown--
+        if ($script:countdown -le 0) {
+            $timer.Stop()
+            $form.DialogResult = 'Cancel'   # 与「暂不更新」按钮等价 → caller 走 Launch-Mxu
+            $form.Close()
+            return
+        }
+        $lblTimer.Text = "无操作 $script:countdown 秒后自动跳过更新"
+    })
+
+    # 用户主动点按钮 → 立即停 timer，避免关闭瞬间的尾随 tick 又触发 Close
+    $stopTimer = { $timer.Stop() }
+    $btnUpdate.Add_Click($stopTimer)
+    $btnLater.Add_Click($stopTimer)
+
+    $timer.Start()
+    try {
+        $result = $form.ShowDialog()
+    } finally {
+        $timer.Stop()    # 兜底：正常点击 / X 关 / 自动到时 三条路径都覆盖
+    }
     return ($result -eq 'OK')
 }
 

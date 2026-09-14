@@ -1,6 +1,6 @@
 {
     "versions": {
-        "maafw": "v5.7.0-alpha.2",
-        "mxu": "v1.13.1"
+        "maafw": "v5.13.0",
+        "mxu": "v2.5.3"
     }
 }

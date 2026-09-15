@@ -20,12 +20,12 @@ _✨ 《棕色尘埃2》PC 端日常自动化小助手 ✨_
 
 > ⚠️ **启动方式（重要）**：请通过根目录的 **`launcher.bat`** 启动本软件，**不要直接双击 `mxu.exe`**。
 > 首次启动时，launcher 会自动在根目录生成带图标的 **`MaaBd2.lnk`** 快捷方式（指向 launcher.bat）。之后你可以双击这个 lnk，或把它拖到桌面。
-> 该启动器会在软件开启时**自动检测 GitHub 新版本**，发现更新时弹出提示窗口，并支持一键下载最新版。
+> 该启动器会在软件开启时**自动检测 GitHub 新版本**，发现更新时弹出提示窗口，并支持一键下载最新版；**弹窗 20 秒无操作会自动跳过更新、直接进入软件**，挂机 / 无人值守时不会卡在更新窗口。
 > 更新检测基于 GitHub Releases；选择「一键更新」后会**自动下载并自动覆盖旧版本文件**（`resource/` 等软件文件随版本一并更新），**不会冲掉你的 `config/mxu-MaaBrownDust2.json` 用户配置**——新用户由 MXU 自动生成默认实例；老用户的真实任务实例100% 保留。
 > 详细说明见 [更新功能说明](更新功能说明.md)。
 
 - 游戏内语言请使用**简体中文**，并以**窗口化 16:9、1920×1080** 运行（分辨率、方向键等前置设置详见 [注意事项](重要！注意事项！！使用前必看！！！.pdf)）。
-- MXU 运行时会在根目录写出一个 0 字节的乱码标记文件（中文“启动”经系统编码后的产物），属上游行为、无害；本项目已自动将其**隐藏并对 git 忽略**
+- 根目录可能出现一个 0 字节的隐藏文件「启动」：它来自**旧版 `launcher.bat`** 注释里的 `->`（被 cmd 当成重定向符而生成的），v26.09.7 已去掉这个来源；启动器仍会顺手清理 / 隐藏这类残留文件，`.gitignore` 也已忽略该文件名，对使用无影响。
 
 ## 📦 项目简介
 
@@ -111,6 +111,9 @@ git clone https://github.com/alkaidjin/Maa-Assistant-Browndust2.git
 # 具体编译步骤请参考 MaaFramework / MXU 官方文档
 ```
 
+> 说明：仓库**不包含**预编译的 `mxu.exe`、`maafw/*.dll` 与 OCR 模型（体积大，已在 `.gitignore` 中排除），它们随 [Releases](https://github.com/alkaidjin/Maa-Assistant-Browndust2/releases) 的 zip 派发。
+> 需要自行补齐运行时，请按 [NOTICE](NOTICE.md) 附录的「复现 / 重新链接清单」下载对应版本并覆盖到对应目录。
+
 ### 自动更新（启动即检测 GitHub 新版本）
 
 本项目的启动器（`launcher.bat` / `BD2MAA-Updater.ps1`）内置 **GitHub Releases 自动更新检测**：
@@ -125,7 +128,8 @@ git clone https://github.com/alkaidjin/Maa-Assistant-Browndust2.git
 1. **下载/解压后，双击根目录的 `launcher.bat` 启动**（首次启动会自动在根目录生成带图标的 `MaaBd2.lnk`；之后可以双击这个 lnk，或把它拖到桌面）。也可以右键 `launcher.bat` → 发送到桌面快捷方式。
 2. 想**预览更新弹窗效果**（即使当前已是最新），用 `launcher.bat -Demo` 运行。
 3. 想**强制重新检测**（忽略缓存），用 `launcher.bat -Force` 运行。
-4. 仓库地址、检测间隔等可在 `updater_config.json` 中修改。
-5. **程序图标**：图标源文件为 `mxu.ico`。MXU 自更新替换 `mxu.exe` 后，`launcher.bat` 下次启动会自动重新写入图标（无需手动操作）。详见 [更新功能说明](更新功能说明.md)。
+4. 只想看检测结果、不弹窗不下载不启动软件，用 `launcher.bat -Test` 运行（会打印当前版本、GitHub 最新版本、选中的资源与是否需更新）。
+5. 仓库地址、检测间隔、镜像源等可在 `updater_config.json` 中修改。
+6. **程序图标**：图标源文件为 `mxu.ico`。MXU 自更新替换 `mxu.exe` 后，`launcher.bat` 下次启动会自动重新写入图标（无需手动操作）。详见 [更新功能说明](更新功能说明.md)。
 
 > 说明：启动器为**纯 PowerShell 实现，零依赖、无需 Python**，详见 [更新功能说明](更新功能说明.md)。

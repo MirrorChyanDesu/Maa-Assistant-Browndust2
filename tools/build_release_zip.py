@@ -33,7 +33,8 @@ EXCLUDE_DIRS  = {'.git', '.workbuddy', 'cache', 'config', 'debug', 'updates', '_
 # 按包内相对路径匹配
 EXCLUDE_FILES = {
     'MaaBd2.lnk', 'updater_cache.json', 'tools/build_release_zip.py',
-    # 注意事项 1/2/3/4 已合并为注意事项.pdf（v26.09.7 起）；保留原文件不打包以避免内容走样
+    # 注意事项 1/2/3/4 已合并为「重要！注意事项！！使用前必看！！！.pdf」（v26.09.7 起）；
+    # 旧文件名保留在排除表，避免 collect() 把它们重复收进包
     '注意事项1-----使用前必看！！！.txt',
     '注意事项2-----任务流程推荐排序.png',
     '注意事项3——地图吸收召集的天赋技能配置图示.png',
@@ -44,7 +45,7 @@ EXCLUDE_EXT   = {'.lnk', '.tmp', '.pyc'}
 REQUIRED_FILES = [
     'interface.json', 'updater_config.json', 'version.json', 'launcher.bat',
     'BD2MAA-Updater.ps1', 'mxu.exe', 'mxu.ico', 'mxu_icon.png', 'LICENSE', 'README.md',
-    '更新功能说明.md', '注意事项.pdf',
+    '更新功能说明.md', '重要！注意事项！！使用前必看！！！.pdf',
     # v26.09.7 起：Verlog + 教学视频也跟着入包（用户私维护，不要 gitignore）
     'Verlog.xlsx',
     '重要教学！！使用软件打开游戏并设定游戏分辨率教程 .mp4',
@@ -125,6 +126,56 @@ def check_version_json(base):
         log('[W] version.json 解析失败: %s' % e)
 
 
+def normalize_crlf(data):
+    """把 LF-only 行尾规范化为 CRLF（输入已是 CRLF 时幂等）。
+
+    cmd 逐字节解析 .bat/.cmd：LF-only 行尾 + 非 ASCII 字节时，它按 GBK 解码
+    UTF-8 多字节会切错命令边界，把注释的后半段当成新命令执行 —— 用户双击时
+    报「'<乱码>' 不是内部或外部命令」。2026-09-15 实测矩阵：
+        LF   + 纯 ASCII -> 正常
+        LF   + 中文     -> 报错
+        CRLF + 中文     -> 正常
+    因此打包时对批处理文件强制 CRLF，保证发布包在任何机器上都能双击。"""
+    return data.replace(b'\r\n', b'\n').replace(b'\n', b'\r\n')
+
+
+def check_bat_crlf(base):
+    """校验 .bat/.cmd 的行尾 / 编码，异常时打 [W] 提醒修磁盘源文件。
+       （打包时 build() 会自动规范化，这里只是让开发者知道源头有问题。）"""
+    bad = []
+    for root, dirs, files in os.walk(base):
+        dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
+        for name in files:
+            if not name.lower().endswith(('.bat', '.cmd')):
+                continue
+            p = os.path.join(root, name)
+            with open(p, 'rb') as f:
+                data = f.read()
+            crlf = data.count(b'\r\n')
+            lf = data.count(b'\n') - crlf
+            nonascii = sum(1 for b in data if b > 127)
+            if crlf == 0 and lf > 0:
+                bad.append((os.path.relpath(p, base),
+                            'LF-only 行尾（%d 个 \\n / 0 个 \\r\\n）' % lf))
+            elif nonascii:
+                bad.append((os.path.relpath(p, base),
+                            '含 %d 个非 ASCII 字节' % nonascii))
+            # REM 注释里的 ">" 是隐患：行尾一旦退化成 LF，cmd 会把它当重定向符，
+            # 既报「不是内部或外部命令」又会在当前目录建出乱码名的 0 字节垃圾文件
+            for line in data.split(b'\n'):
+                s = line.strip()
+                if s.upper().startswith(b'REM') and b'>' in s:
+                    bad.append((os.path.relpath(p, base),
+                                'REM 注释含 ">"：%r' % s[:48]))
+                    break
+    if not bad:
+        log('  .bat/.cmd 行尾: 全部 CRLF + 纯 ASCII  OK')
+        return
+    for rel, why in bad:
+        log('[W] %s: %s —— 双击可能报「不是内部或外部命令」，请改为 CRLF + 纯 ASCII'
+            % (rel, why))
+
+
 def prompt_version(current, head_v):
     """交互式询问版本号（仅在 stdin 是 TTY 时调用）。
        无效输入会循环追问；空回车返回 None（视为取消）。"""
@@ -196,6 +247,8 @@ def build(base, out_path, version):
     with zipfile.ZipFile(out_path, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as z:
         for full, rel in files:
             data = open(full, 'rb').read()
+            if rel.lower().endswith(('.bat', '.cmd')):
+                data = normalize_crlf(data)   # 批处理强制 CRLF，见 normalize_crlf 注释
             zi = zipfile.ZipInfo(rel, date_time=dt)
             zi.compress_type = zipfile.ZIP_DEFLATED
             zi.external_attr = 0o644 << 16
@@ -301,6 +354,7 @@ def main():
     else:
         log('  将改    :  interface.json  不动（已是 %s）' % version)
     check_version_json(BASE)
+    check_bat_crlf(BASE)
 
     if args.dry_run:
         log('[dry-run] 已打印计划，未执行任何写入')

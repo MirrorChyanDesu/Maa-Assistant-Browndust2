@@ -1,1 +1,6 @@
 *.json text eol=lf
+# cmd 逐字节解析 .bat：LF 行尾 + 非 ASCII 字节会让它切错命令边界，
+# 把中文注释的后半段当命令执行 → 双击报「不是内部或外部命令」。
+# 强制 CRLF 行尾（2026-09-15 修）
+*.bat text eol=crlf
+*.cmd text eol=crlf

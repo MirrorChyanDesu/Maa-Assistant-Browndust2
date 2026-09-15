@@ -9,6 +9,10 @@
 #      （更新时会保留用户的 config/ 配置：已有配置不覆盖，仅新增缺失的默认配置）
 #   4. 用户选“暂不更新”、或已是最新、或检测失败：直接启动 mxu.exe。
 #
+# 启动时的“家务”（都在 Launch-Mxu 里，失败静默、不阻断启动）：
+#   隐藏 MXU 写出的乱码标记 / 自愈 launcher.bat 的编码 / 恢复 mxu.exe 图标 /
+#   重建 MaaBd2.lnk / 精简并清理 debug 日志。
+#
 # 用法：
 #   .\BD2MAA-Updater.ps1            # 正常启动（检测更新 -> 弹窗 -> 启动 mxu）
 #   .\BD2MAA-Updater.ps1 -Force     # 忽略缓存，强制重新检测
@@ -669,10 +673,46 @@ function Repair-LauncherShortcut {
     } catch { }
 }
 
+function Repair-LauncherBat {
+    # ---- 自愈 launcher.bat 的编码（v26.09.7 事故后的运行时兜底）----
+    # 背景：cmd 逐字节解析 .bat，遇到非 ASCII 字节（中文注释）会错位解码，把注释后半段
+    #   当成命令执行 -> 刷「不是内部或外部命令，也不是可运行的程序或批处理文件」；
+    #   严重时整行边界被打乱，脚本被截断，后面的行（含真正的 PowerShell 调用）根本不执行。
+    #   LF 行尾会显著加剧（实测 LF+长中文注释可导致 rc=1 + 调用被吞）。
+    #   根治 = 文件 100% ASCII + CRLF。打包器 tools\build_release_zip.py 有
+    #   check_bat_crlf() 预警 + normalize_crlf() 强制规范；这里是包外的第二道防线：
+    #   只在检测到「含非 ASCII 字节」时重写（这是真正的杀伤源），
+    #   不因行尾问题改写 —— 避免误伤用户自己加过自定义行的 launcher.bat。
+    try {
+        $bat = Join-Path $BASE 'launcher.bat'
+        if (-not (Test-Path -LiteralPath $bat)) { return }
+
+        $bytes = [System.IO.File]::ReadAllBytes($bat)
+        $bad = $false
+        foreach ($b in $bytes) {
+            if ($b -gt 127) { $bad = $true; break }
+        }
+        if (-not $bad) { return }
+
+        $canon = @(
+            '@echo off',
+            'REM ============================================================',
+            'REM  BD2MAA launcher  (recommended entry / zero dependency / no Python)',
+            'REM  Check GitHub release, show dialog, download and overwrite, then run mxu.exe',
+            'REM  Args: -Force force check / -Demo demo dialog / -Test dry-run only',
+            'REM ============================================================',
+            'cd /d "%~dp0"',
+            'powershell -NoProfile -ExecutionPolicy Bypass -File "BD2MAA-Updater.ps1" %*'
+        ) -join "`r`n"
+        [System.IO.File]::WriteAllBytes($bat, [System.Text.Encoding]::ASCII.GetBytes($canon + "`r`n"))
+    } catch { }
+}
+
 function Launch-Mxu {
     if (-not (Test-Path $MXU)) { return }
 
     Protect-Marker          # 隐藏 MXU 写出的乱码标记（用户不可见 + 不入 git）
+    Repair-LauncherBat      # 自愈被中文注释/编码污染过的 launcher.bat（幂等，纯 ASCII 时直接返回）
     Apply-ExeIcon           # MXU 自更新后自动恢复程序图标
     Repair-LauncherShortcut # 重建 MaaBd2.lnk（zip 不打包，按当前 $BASE 自动生成；幂等）
     Invoke-LogCleanup       # 清理 debug/ 下超过保留天数的日志与调试截图

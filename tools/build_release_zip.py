@@ -49,6 +49,8 @@ REQUIRED_FILES = [
     # v26.09.7 起：Verlog + 教学视频也跟着入包（用户私维护，不要 gitignore）
     'Verlog.xlsx',
     '重要教学！！使用软件打开游戏并设定游戏分辨率教程 .mp4',
+    # LGPL-3.0 履约：MaaFramework 的许可证全文必须随包派发（源自上游 release zip 的 LICENSE.md）
+    'maafw/LICENSE.md',
 ]
 REQUIRED_DIRS = ['agent/', 'maafw/', 'misc/', 'tasks/', 'resource/', 'tools/']
 
@@ -241,7 +243,7 @@ def build(base, out_path, version):
         os.remove(out_path)
     os.makedirs(os.path.dirname(out_path) or '.', exist_ok=True)
 
-    dt = time.localtime()[:6]          # 固定时间戳：同一天构建结果一致
+    dt = time.localtime()[:6]          # 条目时间戳 = 打包时刻（秒级）：同源两次构建 sha256 必然不同，校验请比条目内容
     raw = 0
     t0 = time.time()
     with zipfile.ZipFile(out_path, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as z:

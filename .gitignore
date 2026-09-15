@@ -45,7 +45,8 @@ updates/
 # Agent 工作区记忆（不属于软件本身）
 .workbuddy/
 
-# MXU 启动时的临时运行标记（中文“启动”经系统 GBK 编码后变成乱码，0 字节，退出时自动删除）
+# 防御性忽略：这个 0 字节文件由旧版 launcher.bat 注释里的 ">" 重定向产生（不是 MXU 的编码 bug）。
+# v26.09.7 起 launcher.bat 已改为纯 ASCII 且不含 ">"，源头已消除；规则保留，以防老目录里的残留被误提交。
 鑚姩
 
 # local, machine-specific files (shortcuts created by tools/apply_icon.ps1)

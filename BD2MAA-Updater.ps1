@@ -10,7 +10,7 @@
 #   4. 用户选“暂不更新”、或已是最新、或检测失败：直接启动 mxu.exe。
 #
 # 启动时的“家务”（都在 Launch-Mxu 里，失败静默、不阻断启动）：
-#   隐藏 MXU 写出的乱码标记 / 自愈 launcher.bat 的编码 / 恢复 mxu.exe 图标 /
+#   自愈 launcher.bat 的编码 / 恢复 mxu.exe 图标 /
 #   重建 MaaBd2.lnk / 精简并清理 debug 日志。
 #
 # 用法：
@@ -541,31 +541,6 @@ function ReInject-XLaunch($base) {
     } catch { }
 }
 
-function Protect-Marker {
-    # ---- 乱码标记「启动」= MXU 的 ANSI 文件名编码 bug（UTF-8「启动」经 GBK 写盘，0 字节）----
-    # 该标记由 MXU 自身写出，无法从启动方式上根除（改名等方式真机实测无效），故改为“隐藏”：
-    #   1) 预先创建一个同名【隐藏+系统】空文件：MXU 复用时属性保留（CREATE_ALWAYS 不重置属性）；
-    #      若 MXU 改用 CREATE_NEW，则创建直接失败 -> 从源头避免。
-    #   2) 后台守护进程 tools\hide_marker.ps1 在启动后 120s 内持续监视：出现即删除；
-    #      删不掉（句柄被 MXU 占用）则强制设置 隐藏+系统 属性 -> Explorer 默认不显示。
-    #   3) .gitignore 已忽略该文件名 -> 绝不会进入 git 仓库。
-    try {
-        $exact = [string][char]0x945A + [char]0xE21A + [char]0x59E9
-        $p = Join-Path $BASE $exact
-        if (-not (Test-Path -LiteralPath $p)) { New-Item -ItemType File -Path $p -Force | Out-Null }
-        $fi = Get-Item -LiteralPath $p -Force
-        $fi.Attributes = $fi.Attributes -bor [System.IO.FileAttributes]::Hidden -bor [System.IO.FileAttributes]::System
-    } catch { }
-
-    try {
-        $guard = Join-Path $BASE 'tools\hide_marker.ps1'
-        if (Test-Path -LiteralPath $guard) {
-            $a = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$guard`" -Root `"$BASE`""
-            Start-Process -FilePath 'powershell.exe' -ArgumentList $a -WindowStyle Hidden -ErrorAction SilentlyContinue
-        }
-    } catch { }
-}
-
 function Apply-ExeIcon {
     # 让 mxu.exe 常驻本项目的程序图标。MXU 自更新会替换 exe，这里用“文件尺寸+时间戳”指纹
     # 判断是否需要重新打补丁（依赖 tools\rcedit-x64.exe + mxu.ico）。任何失败都静默、不阻断启动。
@@ -711,7 +686,6 @@ function Repair-LauncherBat {
 function Launch-Mxu {
     if (-not (Test-Path $MXU)) { return }
 
-    Protect-Marker          # 隐藏 MXU 写出的乱码标记（用户不可见 + 不入 git）
     Repair-LauncherBat      # 自愈被中文注释/编码污染过的 launcher.bat（幂等，纯 ASCII 时直接返回）
     Apply-ExeIcon           # MXU 自更新后自动恢复程序图标
     Repair-LauncherShortcut # 重建 MaaBd2.lnk（zip 不打包，按当前 $BASE 自动生成；幂等）

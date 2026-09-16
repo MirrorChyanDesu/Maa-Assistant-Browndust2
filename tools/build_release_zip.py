@@ -17,8 +17,14 @@ BD2MAA 发布包构建工具
   3. 排除 config/ → MXU 首次启动自动生成默认实例，避免覆盖用户已有配置。
   4. 排除 MaaBd2.lnk → 写死路径的快捷方式在别人机器上无效，首次启动自动重建。
   5. 排除 updater_cache.json / cache / debug / updates / tools/build_release_zip.py 自身。
+     v26.09.8 起额外排除「非维护者不需要」的开发脚本与仓库元数据 —— 见 EXCLUDE_FILES 注释。
   6. 中文文件名必须带 UTF-8 标志位（0x800），否则 Windows 解压乱码。
-  7. zip 内条目用固定时间戳 → 同一天重复构建得到完全相同的字节（可复现）。
+  7. zip 内条目时间戳 = **打包时刻（秒级）**，不是固定值 → 同源两次构建 sha256 必然不同。
+     校验请比「条目内容 / 条目数 / interface.json 版本号」，**不要比 zip 整体 hash、也不要复用旧 zip**。
+  8. 批处理（.bat/.cmd）入包前强制规范化为 CRLF 行尾（见 normalize_crlf 注释）。
+  9. verify() 逐项校验 REQUIRED_FILES / REQUIRED_DIRS。v26.09.8 起把「启动器硬依赖」
+     与「MXU 直接读取的配置 / 资源」也列进 REQUIRED_FILES —— 缺一项就在打包阶段报错，
+     不再像原先那样只查目录非空、缺文件却静默通过。
 
 需要修改的"业务版本号文件"只有 interface.json。
 - version.json 放的是依赖版本（maafw/mxu），是「包内依赖指纹」，本工具**不自动改写**——
@@ -30,9 +36,20 @@ import os, sys, json, time, re, zipfile, hashlib, argparse, subprocess
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 EXCLUDE_DIRS  = {'.git', '.workbuddy', 'cache', 'config', 'debug', 'updates', '_stage'}
+# 注意：EXCLUDE_DIRS 是**按目录名**（不是按相对路径）匹配的 —— 任何层级下叫这些名字的
+# 目录都会被整体跳过。当前无副作用；但若将来在 resource/ 等目录下新建名为 config / cache /
+# debug 的**合法**子目录，会被静默吞掉、不进包。新增此类目录名时请先确认这里。
 # 按包内相对路径匹配
 EXCLUDE_FILES = {
     'MaaBd2.lnk', 'updater_cache.json', 'tools/build_release_zip.py',
+    # ---- v26.09.8 起：非维护者不需要的文件（用户侧无用，且 start.py 写死了作者本机游戏路径）----
+    'agent/start.bat', 'agent/start.py',   # agent 开发辅助脚本（写死 C:\Neowiz\... 本机游戏路径）
+    'tools/make_icon.py',                  # 生成 mxu.ico / mxu_icon.png 的开发脚本
+    'tools/apply_icon.ps1',                # 手动打图标工具（启动器内联 Apply-ExeIcon，不依赖它）
+    # 仓库元数据：collect() 对 EXCLUDE_FILES 是「相对路径 或 文件名」双匹配，
+    # 所以这两项会连同嵌套的 git 元数据一起排除（如 resource/model/.gitignore，
+    # 其内容只是 "ocr"，与根 .gitignore:29 重复）。这是预期行为 —— 用户包里不该有 git 元数据。
+    '.gitattributes', '.gitignore',
     # 注意事项 1/2/3/4 已合并为「重要！注意事项！！使用前必看！！！.pdf」（v26.09.7 起）；
     # 旧文件名保留在排除表，避免 collect() 把它们重复收进包
     '注意事项1-----使用前必看！！！.txt',
@@ -42,7 +59,11 @@ EXCLUDE_FILES = {
 }
 EXCLUDE_EXT   = {'.lnk', '.tmp', '.pyc'}
 
+# ---- 必备清单（verify 逐项检查，缺一项即打包失败）----
+# 原则：凡是「启动器运行时硬依赖」或「MXU 直接按路径读取」的文件，都必须在这里。
+# 只靠 REQUIRED_DIRS 的目录级检查是不够的 —— 目录非空就算过，缺具体文件不会被发现。
 REQUIRED_FILES = [
+    # 基础入口 / 版本 / 授权
     'interface.json', 'updater_config.json', 'version.json', 'launcher.bat',
     'BD2MAA-Updater.ps1', 'mxu.exe', 'mxu.ico', 'mxu_icon.png', 'LICENSE', 'README.md',
     '更新功能说明.md', '重要！注意事项！！使用前必看！！！.pdf',
@@ -51,8 +72,29 @@ REQUIRED_FILES = [
     '重要教学！！使用软件打开游戏并设定游戏分辨率教程 .mp4',
     # LGPL-3.0 履约：MaaFramework 的许可证全文必须随包派发（源自上游 release zip 的 LICENSE.md）
     'maafw/LICENSE.md',
+
+    # ---- v26.09.8 起新增：运行时硬依赖，缺了包就是坏的 ----
+    # 启动器家务链（BD2MAA-Updater.ps1）
+    'tools/rcedit-x64.exe',     # Apply-ExeIcon：给 mxu.exe 写图标（:548）
+    'tools/compact_log.ps1',    # Invoke-LogCleanup：把 maa.log 压成任务时间线（:603）
+    'tools/clean_logs.ps1',     # README 推荐用户手动执行的日志清理工具
+    # agent：周门禁 / 自定义识别 / 自定义动作全靠它，agent.child_exec = agent/go-service
+    'agent/go-service.exe',
+    # MXU 直接按 interface.json 的路径读取：icon / license / languages
+    'misc/MaaEnd-Tiny.png',
+    'misc/LICENSE_SHORT.md',
+    'misc/locales/zh_cn.json', 'misc/locales/zh_tw.json', 'misc/locales/en_us.json',
+    'misc/locales/ja_jp.json', 'misc/locales/ko_kr.json',
+    # agent(go-service) 的 i18n 文案：缺失时 MXU 焦点提示会显示原始 key
+    'locales/go-service/zh_cn.json', 'locales/go-service/zh_tw.json',
+    'locales/go-service/en_us.json', 'locales/go-service/ja_jp.json',
+    'locales/go-service/ko_kr.json',
+    # OCR 推理模型（README 第 4 节声明随 release zip 派发；仓库因体积不追踪）
+    'resource/model/ocr/det.onnx', 'resource/model/ocr/rec.onnx', 'resource/model/ocr/keys.txt',
+    # 核心运行库（mxu.exe 依赖；整目录 maafw/ 其余文件由 REQUIRED_DIRS 兜底）
+    'maafw/MaaFramework.dll',
 ]
-REQUIRED_DIRS = ['agent/', 'maafw/', 'misc/', 'tasks/', 'resource/', 'tools/']
+REQUIRED_DIRS = ['agent/', 'maafw/', 'misc/', 'tasks/', 'resource/', 'tools/', 'locales/']
 
 VERSION_RE = re.compile(r'^v\d+\.\d+\.\d+$')
 
@@ -287,7 +329,7 @@ def verify(path, version):
 
         leaked = [x for x in names
                   if x.split('/')[0] in ('config', 'cache', 'debug', 'updates', '.git', '.workbuddy')
-                  or x.endswith('.lnk') or x == 'updater_cache.json']
+                  or x.endswith('.lnk') or x in EXCLUDE_FILES]
         log('[V5] 排除项泄漏 = %s' % (leaked[:5] if leaked else '无'))
         if leaked:
             ok = False

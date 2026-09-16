@@ -8,6 +8,7 @@
 | 2 | [MistEO/MXU](https://github.com/MistEO/MXU)（v2.5.3） | **AGPL-3.0** | GUI 前端 + Go Agent 子进程 + 实例/设置/自动更新 |
 | 3 | [MaaEnd/MaaEnd](https://github.com/MaaEnd/MaaEnd) | **AGPL-3.0** | 本项目起点的「棕色尘埃」适配工程；本仓库 fork 自此 |
 | 4 | [PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)（PP-OCRv5 移动端）| **Apache-2.0** | OCR 模型（`resource/model/ocr/det.onnx`、`rec.onnx`、`keys.txt`） |
+| 5 | [electron/rcedit](https://github.com/electron/rcedit)（v2.0.0）| **MIT** | 启动器给 `mxu.exe` 写图标的附加工具（`tools/rcedit-x64.exe`） |
 
 ---
 
@@ -90,6 +91,22 @@ MXU 与本项目**均为 AGPL-3.0**，因此在 §13 「Remote Network Interacti
 2. **`NOTICE` 文件**（Notice for PaddleOCR）：如果你在 Apache-2.0 §4(d) 要求的 NOTICE 文件由 PaddleOCR 项目提供，请参阅 [PaddleOCR NOTICE](https://github.com/PaddlePaddle/PaddleOCR/blob/develop/NOTICE)；本项目不创建衍生 NOTICE 文件，只在本文件中汇总
 3. **使用方式**：本项目不修改模型权重，仅通过 MaaFramework 的 `MaaOCR` 节点调用推理结果，使用方式见 `resource/pipeline/*.json` 中 type 为 `OCR` 的节点
 4. **可替换性**：若要换用其他 OCR 模型（如 PaddleOCR 更新版本或其他 OCR 框架），把新导出的 `det.onnx` / `rec.onnx` / `keys.txt` 覆盖到 `resource/model/ocr/` 即可（保持文件名一致——MaaFramework 的 `OCR` 节点按固定路径加载）。注意这三个文件体积较大、已在 `.gitignore` 中排除，仓库不追踪它们，替换后需要重新打包才会生效。
+
+---
+
+## 5. electron/rcedit — MIT
+
+### 用途
+启动器在启动时给 `mxu.exe` 写入图标（`launcher.bat` → `BD2MAA-Updater.ps1` 的 `Apply-ExeIcon`），
+使快捷方式与任务栏显示 `mxu.ico`；MXU 自更新替换 `mxu.exe` 后由启动器自动补写，无需用户手动操作。
+
+### 在本项目中的位置
+- 二进制：`tools/rcedit-x64.exe`（v2.0.0，GitHub, Inc 官方预编译 x64 构建）
+- 随仓库跟踪，并随 release zip 派发；调用点为 `BD2MAA-Updater.ps1` 的 `Apply-ExeIcon`
+
+### MIT 履约
+MIT 许可要求保留版权声明与许可声明。本项目以**未经修改**的官方预编译二进制形式再分发，
+版权归其原作者所有；上游源码与 `LICENSE` 全文见 [electron/rcedit](https://github.com/electron/rcedit)。
 
 ---
 

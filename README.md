@@ -111,7 +111,8 @@ git clone https://github.com/alkaidjin/Maa-Assistant-Browndust2.git
 # 具体编译步骤请参考 MaaFramework / MXU 官方文档
 ```
 
-> 说明：仓库**不包含**预编译的 `mxu.exe`、`maafw/*.dll` 与 OCR 模型（体积大，已在 `.gitignore` 中排除），它们随 [Releases](https://github.com/alkaidjin/Maa-Assistant-Browndust2/releases) 的 zip 派发。
+> 说明：仓库**不包含**体积最大的两样——预编译的 `mxu.exe` 与 OCR 模型 `resource/model/ocr/`（已在 `.gitignore` 中排除），它们随 [Releases](https://github.com/alkaidjin/Maa-Assistant-Browndust2/releases) 的 zip 派发。
+> `maafw/` 下的 MaaFramework 运行时、`agent/go-service.exe`、`tools/rcedit-x64.exe` 等其余运行时**均已随仓库跟踪**，clone 后可直接打包。
 > 需要自行补齐运行时，请按 [NOTICE](NOTICE.md) 附录的「复现 / 重新链接清单」下载对应版本并覆盖到对应目录。
 
 ### 自动更新（启动即检测 GitHub 新版本）

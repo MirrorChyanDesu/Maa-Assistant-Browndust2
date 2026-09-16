@@ -22,8 +22,9 @@ cache/
 .DS_Store
 Thumbs.db
 
-# 用户配置（MXU 首次启动会自动生成；不要入仓，否则会冲掉每个用户的真实实例）
-config/mxu-MaaBrownDust2.json
+# 用户配置（MXU / MaaPiCli 首次启动会自动生成；整个目录不入仓，
+# 否则会冲掉每个用户的真实实例 —— maa_option.json / maa_pi_config.json 曾漏网）
+config/
 
 # 大模型文件（如果用 Git LFS 或单独下载）
 resource/model/ocr/
@@ -32,7 +33,6 @@ resource/model/ocr/
 *.log
 *.pdb
 *.tmp
-config/mxu-MaaBrownDust.json
 
 # Python 字节码缓存
 __pycache__/
@@ -49,5 +49,11 @@ updates/
 # v26.09.7 起 launcher.bat 已改为纯 ASCII 且不含 ">"，源头已消除；规则保留，以防老目录里的残留被误提交。
 鑚姩
 
-# local, machine-specific files (shortcuts created by tools/apply_icon.ps1)
+# local, machine-specific files
 *.lnk
+
+# 本机开发 / 调试辅助脚本（不入仓库，也不入发布包；与 tools/build_release_zip.py 的 EXCLUDE_FILES 对应）
+agent/start.bat
+agent/start.py
+tools/make_icon.py
+tools/apply_icon.ps1

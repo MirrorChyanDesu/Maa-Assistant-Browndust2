@@ -2,7 +2,7 @@
     "interface_version": 2,
     "name": "MaaBrownDust2",
     "description": "MaaBrownDust2",
-    "version": "v26.09.7",
+    "version": "v26.09.8",
     "license": "misc/LICENSE_SHORT.md",
     "welcome": "README.md",
     "icon": "misc/MaaEnd-Tiny.png",
@@ -58,14 +58,6 @@
             "permission_required": true
         },
         {
-            "name": "ADB",
-            "label": "$controller.ADB.label",
-            "type": "Adb",
-            "attach_resource_path": [
-                "./resource_adb"
-            ]
-        },
-        {
             "name": "PlayCover",
             "type": "PlayCover",
             "playcover": {
@@ -85,8 +77,8 @@
     "agent": {
         "child_exec": "agent/go-service",
         "child_args": [],
-        "timeout":15000,
-        "identifier":"mxu_browndust",
+        "timeout": 15000,
+        "identifier": "mxu_browndust",
         "auto_reconnect": true
     },
     "task": [],
@@ -103,8 +95,9 @@
         "tasks/EvilCastle.json",
         "tasks/EventReward.json",
         "tasks/Dailyrewards.json",
-        "tasks/AbsorpAssemble.json"
-],
+        "tasks/AbsorpAssemble.json",
+        "tasks/WarcraftShop.json"
+    ],
     "x_launch": {
         "launcher": "launcher.bat",
         "auto_update": "软件启动时通过 launcher.bat 检测 GitHub 新版本并弹窗提示（20 秒无操作自动跳过更新并启动软件，防止无人值守卡窗），支持一键下载（仅下载、不覆盖本地 config/resource 配置）",

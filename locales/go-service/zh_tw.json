@@ -1,0 +1,10 @@
+{
+    "schedule.skip_today": "現在遊戲時間是%s，根據執行週期跳過任務",
+    "schedule.weekday_monday": "週一",
+    "schedule.weekday_tuesday": "週二",
+    "schedule.weekday_wednesday": "週三",
+    "schedule.weekday_thursday": "週四",
+    "schedule.weekday_friday": "週五",
+    "schedule.weekday_saturday": "週六",
+    "schedule.weekday_sunday": "週日"
+}

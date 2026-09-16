@@ -3,17 +3,17 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1789264986833,
+            "lastSyncTime": 1789522178109,
             "isModifiedExternally": false,
             "isDeleted": false,
             "filePath": "F:\\MABd2v26.09.5\\resource\\pipeline\\Warcraft.json",
             "savedViewport": {
-                "x": 616,
-                "y": 147,
-                "zoom": 0.5
+                "x": -1814,
+                "y": -330,
+                "zoom": 1
             },
             "filename": "Warcraft",
-            "version": "v1.10.0"
+            "version": "v1.10.1"
         }
     },
     "$__mpe_external_StartGame_Warcraft": {
@@ -113,7 +113,7 @@
             }
         }
     },
-    "FiendHunter": {
+    "FiendHunter_1": {
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -133,13 +133,7 @@
             }
         },
         "action": {
-            "type": "Click",
-            "param": {
-                "target": [
-                    701,
-                    580
-                ]
-            }
+            "type": "Click"
         },
         "post_delay": 3500,
         "next": [
@@ -175,7 +169,7 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2971,
+                "x": 2994,
                 "y": 557
             }
         }
@@ -206,8 +200,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2700,
-                "y": 560
+                "x": 2697,
+                "y": 564
             }
         }
     },
@@ -823,13 +817,14 @@
         },
         "post_delay": 1500,
         "next": [
-            "FiendHunter",
+            "FiendHunter_1",
+            "FiendHunter_2",
             "StartGame"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2151,
-                "y": 469
+                "x": 2136,
+                "y": 468
             }
         }
     },
@@ -870,6 +865,40 @@
             "position": {
                 "x": 251,
                 "y": -159
+            }
+        }
+    },
+    "FiendHunter_2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    570,
+                    534,
+                    27,
+                    29
+                ],
+                "template": [
+                    "Warcraft/FH2.png"
+                ],
+                "green_mask": true,
+                "threshold": [
+                    0.4
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 3500,
+        "next": [
+            "QuickFiendHunter",
+            "StartGame"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 2422,
+                "y": 923
             }
         }
     }

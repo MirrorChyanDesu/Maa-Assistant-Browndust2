@@ -1,0 +1,273 @@
+{
+    "task": [
+        {
+            "name": "赛季活动商店",
+            "label": "赛季活动商店购买",
+            "entry": "WarcraftShopSchedule",
+            "description": "魔兽追踪者活动的商店购买。",
+            "controller": [
+                "Win32",
+                "Win32-Window",
+                "Win32-Front"
+            ],
+            "option": [
+                "WarcraftShopSchedule",
+                "WarcraftShopBuyItems",
+                "WarcraftShopBuyLeft"
+            ]
+        }
+    ],
+    "option": {
+        "WarcraftShopSchedule": {
+            "type": "checkbox",
+            "label": "执行周期(游戏时间)",
+            "description": "勾选这个任务要在哪几天执行（可多选），默认周三。\n游戏日以本地时间 04:00 为分界（04:00 之后即算新的一天）。",
+            "default_case": [
+                "WarcraftShopScheduleWednesday"
+            ],
+            "cases": [
+                {
+                    "name": "WarcraftShopScheduleMonday",
+                    "label": "周一",
+                    "pipeline_override": {
+                        "WarcraftShopScheduleEnabled": {
+                            "attach": {
+                                "monday": true
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopScheduleTuesday",
+                    "label": "周二",
+                    "pipeline_override": {
+                        "WarcraftShopScheduleEnabled": {
+                            "attach": {
+                                "tuesday": true
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopScheduleWednesday",
+                    "label": "周三",
+                    "pipeline_override": {
+                        "WarcraftShopScheduleEnabled": {
+                            "attach": {
+                                "wednesday": true
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopScheduleThursday",
+                    "label": "周四",
+                    "pipeline_override": {
+                        "WarcraftShopScheduleEnabled": {
+                            "attach": {
+                                "thursday": true
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopScheduleFriday",
+                    "label": "周五",
+                    "pipeline_override": {
+                        "WarcraftShopScheduleEnabled": {
+                            "attach": {
+                                "friday": true
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopScheduleSaturday",
+                    "label": "周六",
+                    "pipeline_override": {
+                        "WarcraftShopScheduleEnabled": {
+                            "attach": {
+                                "saturday": true
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopScheduleSunday",
+                    "label": "周日",
+                    "pipeline_override": {
+                        "WarcraftShopScheduleEnabled": {
+                            "attach": {
+                                "sunday": true
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "WarcraftShopBuyItems": {
+            "type": "checkbox",
+            "label": "购买商品",
+            "description": "勾选要购买的商品（可多选）\n注意：魔兽装备及其强化道具请自行购买！！！",
+            "default_case": [
+                "WarcraftShopBuyGodTear",
+                "WarcraftShopBuyDrawCard",
+                "WarcraftShopBuyFireSeed"
+            ],
+            "cases": [
+                {
+                    "name": "WarcraftShopBuyGodTear",
+                    "label": "女神之泪",
+                    "pipeline_override": {
+                        "godTear_MS": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopBuyDrawCard",
+                    "label": "抽抽乐券",
+                    "pipeline_override": {
+                        "DrawCard_MS": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopBuyFireSeed",
+                    "label": "狂暴火种",
+                    "pipeline_override": {
+                        "FireSeed_MS": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopBuyRefinedCrystal",
+                    "label": "精炼水晶",
+                    "pipeline_override": {
+                        "RefinedCrystal_MS": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopBuyAncientCrystal",
+                    "label": "远古水晶",
+                    "pipeline_override": {
+                        "AncientCrystal_MS": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopBuy4UpStar",
+                    "label": "4★升星之星",
+                    "pipeline_override": {
+                        "4UpStar": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopBuyEssenceStrength",
+                    "label": "力量精髓",
+                    "pipeline_override": {
+                        "EssenceStrength_MS": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopBuyEssenceLife",
+                    "label": "生命精髓",
+                    "pipeline_override": {
+                        "EssenceLife_MS": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopBuyEssenceEndurance",
+                    "label": "忍耐精髓",
+                    "pipeline_override": {
+                        "EssenceEndurance_MS": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopBuyGold",
+                    "label": "金币",
+                    "pipeline_override": {
+                        "Gold_MS": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopBuyRedSlime",
+                    "label": "红色史莱姆",
+                    "pipeline_override": {
+                        "RedSlime_MS": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopBuyElixirTalent",
+                    "label": "天赋神药",
+                    "pipeline_override": {
+                        "ElixirTalent_MS": {
+                            "enabled": true
+                        }
+                    }
+                }
+            ]
+        },
+        "WarcraftShopBuyLeft": {
+            "type": "select",
+            "label": "剩余代币购买商品",
+            "description": "自选剩余代币要购买的不限量商品，默认不使用剩余代币",
+            "default_case": "WarcraftShopLeftNone",
+            "cases": [
+                {
+                    "name": "WarcraftShopLeftRefinedDust",
+                    "label": "精炼粉末",
+                    "pipeline_override": {
+                        "LeftRefinedDust_MS": {
+                            "enabled": true
+                        },
+                        "LeftGold_MS": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopLeftGold",
+                    "label": "金币",
+                    "pipeline_override": {
+                        "LeftRefinedDust_MS": {
+                            "enabled": false
+                        },
+                        "LeftGold_MS": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "WarcraftShopLeftNone",
+                    "label": "不使用剩余代币",
+                    "pipeline_override": {
+                        "LeftRefinedDust_MS": {
+                            "enabled": false
+                        },
+                        "LeftGold_MS": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

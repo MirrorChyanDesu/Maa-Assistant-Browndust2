@@ -3,24 +3,24 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1789042824843,
+            "lastSyncTime": 1789468266506,
             "isModifiedExternally": false,
             "isDeleted": false,
-            "filePath": "F:\\BD2MAA\\resource\\pipeline\\EventReward.json",
+            "filePath": "F:\\MABd2v26.09.5\\resource\\pipeline\\EventReward.json",
             "savedViewport": {
-                "x": 366,
-                "y": -534,
-                "zoom": 0.99
+                "x": 624,
+                "y": -157,
+                "zoom": 0.65
             },
             "filename": "EventReward",
-            "version": "v1.9.3"
+            "version": "v1.10.0"
         }
     },
     "$__mpe_external_StartGame_EventReward": {
         "$__mpe_code": {
             "position": {
-                "x": 1314,
-                "y": 121
+                "x": 1590,
+                "y": 787
             }
         }
     },
@@ -42,11 +42,13 @@
         "post_delay": 1500,
         "next": [
             "EventTip",
-            "StartGame"
+            "EVENTSWIPE",
+            "StartGame",
+            "转盘活动"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 126,
+                "x": 121,
                 "y": 556
             }
         }
@@ -68,10 +70,10 @@
             "type": "TemplateMatch",
             "param": {
                 "roi": [
-                    327,
-                    173,
-                    30,
-                    380
+                    332,
+                    177,
+                    17,
+                    342
                 ],
                 "template": [
                     "Event/ERTIP.png"
@@ -102,8 +104,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 430,
-                "y": 655
+                "x": 403,
+                "y": 454
             }
         }
     },
@@ -131,14 +133,14 @@
         "repeat_delay": 200,
         "post_delay": 2000,
         "next": [
-            "RewardSure",
+            "RewardSure_1",
             "EventTip",
             "StartGame"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 722,
-                "y": 824
+                "x": 709,
+                "y": 610
             }
         }
     },
@@ -201,7 +203,7 @@
             }
         }
     },
-    "RewardSure": {
+    "RewardSure_1": {
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -235,8 +237,186 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1009,
-                "y": 633
+                "x": 1008,
+                "y": 580
+            }
+        }
+    },
+    "EVENTSWIPE": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    142,
+                    2,
+                    105,
+                    67
+                ],
+                "template": [
+                    "Event/EventMain.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    280,
+                    496
+                ],
+                "end": [
+                    [
+                        280,
+                        200
+                    ]
+                ],
+                "end_hold": [
+                    1000
+                ]
+            }
+        },
+        "next": [
+            "EventTip",
+            "转盘活动",
+            "EVENTSWIPE"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 121,
+                "y": 916
+            }
+        }
+    },
+    "转盘活动": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    205,
+                    238,
+                    70,
+                    303
+                ],
+                "expected": [
+                    "转",
+                    "盘"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1500,
+        "next": [
+            "免费次数",
+            "代币次数"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 410,
+                "y": 1047
+            }
+        }
+    },
+    "免费次数": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    819,
+                    513,
+                    59,
+                    21
+                ],
+                "expected": [
+                    "1次免费"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 5000,
+        "next": [
+            "RewardSure_2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 674,
+                "y": 1047
+            }
+        }
+    },
+    "代币次数": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    945,
+                    490,
+                    97,
+                    49
+                ],
+                "expected": [
+                    "旋转",
+                    "7次",
+                    "10次"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 5000,
+        "next": [
+            "RewardSure_2",
+            "EventMain"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 1208,
+                "y": 1030
+            }
+        }
+    },
+    "RewardSure_2": {
+        "max_hit": 2,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    561,
+                    185,
+                    160,
+                    89
+                ],
+                "template": [
+                    "Hunt/REWARD.png"
+                ]
+            }
+        },
+        "pre_delay": 1500,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    62,
+                    384,
+                    -116,
+                    -40
+                ]
+            }
+        },
+        "post_delay": 1500,
+        "next": [
+            "代币次数"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 927,
+                "y": 1043
             }
         }
     }

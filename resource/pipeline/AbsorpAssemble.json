@@ -20,6 +20,66 @@
             }
         }
     },
+    "AbsorpSchedule": {
+        "$__mpe_code": {
+            "position": {
+                "x": -2150,
+                "y": -563
+            }
+        },
+        "desc": "资源吸收和召集 执行周期门禁入口",
+        "pre_delay": 0,
+        "post_delay": 0,
+        "rate_limit": 0,
+        "next": [
+            "AbsorpScheduleEnabled",
+            "AbsorpScheduleEnd"
+        ]
+    },
+    "AbsorpScheduleEnabled": {
+        "$__mpe_code": {
+            "position": {
+                "x": -1900,
+                "y": -563
+            }
+        },
+        "desc": "命中执行周期（Custom: ScheduleRecognition 读取 attach 的周几开关）",
+        "recognition": {
+            "type": "Custom",
+            "param": {
+                "custom_recognition": "ScheduleRecognition",
+                "custom_recognition_param": {}
+            }
+        },
+        "pre_delay": 0,
+        "post_delay": 0,
+        "rate_limit": 0,
+        "next": [
+            "StartAbsorpAssemble"
+        ],
+        "attach": {
+            "monday": false,
+            "tuesday": false,
+            "wednesday": false,
+            "thursday": false,
+            "friday": false,
+            "saturday": false,
+            "sunday": false
+        }
+    },
+    "AbsorpScheduleEnd": {
+        "$__mpe_code": {
+            "position": {
+                "x": -1900,
+                "y": -300
+            }
+        },
+        "desc": "未命中执行周期，直接结束（自动跳过）",
+        "pre_delay": 0,
+        "post_delay": 0,
+        "rate_limit": 0,
+        "action": "DoNothing"
+    },
     "13章": {
         "$__mpe_code": {
             "position": {

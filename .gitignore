@@ -57,3 +57,6 @@ agent/start.bat
 agent/start.py
 tools/make_icon.py
 tools/apply_icon.ps1
+# 打包器的双击入口：写死「本机解释器候选路径」，只对作者这台机器有意义。
+# 工具本体 tools/build_release_zip.py 是入仓库的，任何维护者 clone 后都能直接 python 跑它。
+打包发布包.bat

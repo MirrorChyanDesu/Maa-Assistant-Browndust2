@@ -4,15 +4,25 @@ BD2MAA 发布包构建工具
 
 用法：
     python tools/build_release_zip.py                 # 无参 → 交互式询问版本号
-    python tools/build_release_zip.py v26.09.6        # 显式指定版本号
+    python tools/build_release_zip.py v26.09.9        # 显式指定版本号
     python tools/build_release_zip.py --dry-run       # 只打印要做什么，不动磁盘也不出包
-    python tools/build_release_zip.py --no-bump       # 不改 interface.json，按磁盘当前版本打包
+    python tools/build_release_zip.py --no-bump       # 不改任何版本号文件，按磁盘现状打包
     python tools/build_release_zip.py --out D:\\x.zip  # 指定输出 zip 路径
     python tools/build_release_zip.py --verify        # 只校验已有 zip
 
+双击入口：**项目根目录的 `打包发布包.bat`**（纯 ASCII + CRLF，只是本脚本的包装）。
+  为什么需要它：本机 `.py` 的双击关联是 `C:\\Windows\\py.exe`，而 py launcher 里
+  没有注册任何 Python（系统 Python 3.10 已卸载、venv / uv 环境不向它注册）→
+  直接双击 `.py` 会「窗口闪一下就没了」，看起来毫无反应。
+  该 .bat 会依次在 PATH / 本机 venv / 托管解释器里找可用 Python，跑完 pause 不闪退。
+  它是维护者工具，**不进发布包**（见 EXCLUDE_FILES）。
+
 约定：
-  1. **默认会把 interface.json 的 version 字段改为目标版本号**，再开始打包。
-     这样 git 提交记录里自带版本号变更，发版 PR 语义清晰。
+  1. **默认会把所有「版本锚点」同步改写为目标版本号**（见 VERSION_ANCHORS），
+     即 interface.json 的 version 字段 + 更新功能说明.md 里内嵌的那份 interface.json 片段。
+     不必再一个个打开文件手改版本号；git 提交记录里也自带版本号变更。
+     ⚠️ 锚点带 `expect` 防呆：某文件里这类 version 字段的处数与预期不符时**整体跳过**
+     并告警（宁可漏改也不误改），文档正文里的历史叙述（如「v26.09.7 修掉了 X」）**永不被改写**。
   2. 直接读磁盘 → **未提交的改动也会进包**（所以发版前先确认工作区状态）。
   3. 排除 config/ → MXU 首次启动自动生成默认实例，避免覆盖用户已有配置。
   4. 排除 MaaBd2.lnk → 写死路径的快捷方式在别人机器上无效，首次启动自动重建。
@@ -25,11 +35,16 @@ BD2MAA 发布包构建工具
   9. verify() 逐项校验 REQUIRED_FILES / REQUIRED_DIRS。v26.09.8 起把「启动器硬依赖」
      与「MXU 直接读取的配置 / 资源」也列进 REQUIRED_FILES —— 缺一项就在打包阶段报错，
      不再像原先那样只查目录非空、缺文件却静默通过。
+ 10. verify() 还会**在产出的 zip 里**逐个锚点复核版本号（[V3]）——磁盘改对了、
+     但包内文件是旧的这种情况也会被抓到。
 
-需要修改的"业务版本号文件"只有 interface.json。
-- version.json 放的是依赖版本（maafw/mxu），是「包内依赖指纹」，本工具**不自动改写**——
-  升级底层 DLL / mxu.exe 后必须**人工同步**这个文件（见下方 check_version_json）。
-- updater_config.json 是用户配置，不参与本工具。
+关于「还有哪些文件带版本号」——本工具的处理分三档：
+  ✅ 自动改写：VERSION_ANCHORS 列出的（interface.json、更新功能说明.md）
+  🔔 只提示：  Verlog.xlsx（版本发布日志表）——本版没有记录时提醒你补一条。
+              它记的是「这一版改了什么」，内容必须由人写，工具不去猜。
+  ⛔ 刻意不碰：version.json（依赖指纹 maafw/mxu，不是业务版本号，升级底层后人工同步，
+               见下方 check_version_json）；updater_cache.json（运行时缓存）；
+               各文档正文里的历史叙述（v26.09.7 / v26.09.6 … 是事实，改了就是篡改历史）。
 """
 import os, sys, json, time, re, zipfile, hashlib, argparse, subprocess
 
@@ -42,6 +57,8 @@ EXCLUDE_DIRS  = {'.git', '.workbuddy', 'cache', 'config', 'debug', 'updates', '_
 # 按包内相对路径匹配
 EXCLUDE_FILES = {
     'MaaBd2.lnk', 'updater_cache.json', 'tools/build_release_zip.py',
+    # 打包器自身的双击入口：纯维护者工具，用户侧毫无用处（还会暴露本机解释器路径）
+    '打包发布包.bat',
     # ---- v26.09.8 起：非维护者不需要的文件（用户侧无用，且 start.py 写死了作者本机游戏路径）----
     'agent/start.bat', 'agent/start.py',   # agent 开发辅助脚本（写死 C:\Neowiz\... 本机游戏路径）
     'tools/make_icon.py',                  # 生成 mxu.ico / mxu_icon.png 的开发脚本
@@ -98,6 +115,22 @@ REQUIRED_DIRS = ['agent/', 'maafw/', 'misc/', 'tasks/', 'resource/', 'tools/', '
 
 VERSION_RE = re.compile(r'^v\d+\.\d+\.\d+$')
 
+# ---- 版本锚点：一次版本 bump 需要同步改写的位置 ----
+# 每项 = (相对路径, 说明, expect)；expect = 该文件里「version 字段」必须恰好出现的处数。
+# 只列「表示当前版本」的地方；文档正文里的历史叙述（「v26.09.7 修掉了 X」）不在此列。
+# expect 是防呆闸：处数不符 → 该文件**整体跳过**并告警，逼人看一眼再决定，
+# 避免文档结构变动后把历史引用的版本号一起改掉。
+VERSION_ANCHORS = [
+    ('interface.json',
+     'PI 主版本号（MXU 界面 / 启动器 / GitHub 更新比对都读它）', 1),
+    ('更新功能说明.md',
+     '第六节内嵌的 interface.json 片段（当前状态副本，须与主版本号一致）', 1),
+]
+
+# 只匹配「被引号包住的 JSON 字段」形态：  "version": "v26.09.8"
+# 用 bytes 正则 → 正文里裸露的 v26.09.7 一个都不碰，且原样保留编码 / BOM / 缩进 / 换行。
+VERSION_FIELD_RE = re.compile(rb'("version"\s*:\s*")(v\d+\.\d+\.\d+)(")')
+
 
 def log(msg):
     sys.stdout.write(str(msg) + '\n')
@@ -124,24 +157,90 @@ def disk_version(base):
         return None
 
 
-def bump_interface(base, new_version):
-    """就地更新 interface.json 的 version 字段，保留编码 / BOM / 缩进 / 换行。
-       返回 (old, new)；已是目标版本时 old == new 且磁盘不写。"""
-    path = os.path.join(base, 'interface.json')
-    with open(path, 'rb') as f:
-        data = f.read()
-    marker = b'"version": "'
-    i = data.find(marker)
-    if i < 0:
-        raise RuntimeError('interface.json 找不到 "version" 字段')
-    j = data.find(b'"', i + len(marker))
-    old = data[i + len(marker):j].decode('utf-8')
-    if old == new_version:
-        return old, new_version     # 已是目标版本，不写盘
-    new_data = data[:i + len(marker)] + new_version.encode('utf-8') + data[j:]
-    with open(path, 'wb') as f:
-        f.write(new_data)
-    return old, new_version
+def scan_version_anchors(base):
+    """只读扫描所有版本锚点。返回 {rel: {'desc':…, 'expect':…, 'hits':[(行号, 旧版本)]}}。
+       不做任何写入 —— 用于「发布计划」展示与改后复核。"""
+    sites = {}
+    for rel, desc, expect in VERSION_ANCHORS:
+        path = os.path.join(base, rel)
+        hits = []
+        if os.path.exists(path):
+            data = open(path, 'rb').read()
+            for m in VERSION_FIELD_RE.finditer(data):
+                hits.append((data.count(b'\n', 0, m.start()) + 1,
+                             m.group(2).decode('ascii')))
+        sites[rel] = {'desc': desc, 'expect': expect, 'hits': hits}
+    return sites
+
+
+def sync_version_anchors(base, new_version, apply=True):
+    """把所有锚点里的 `"version": "vX.Y.Z"` 改写成 new_version。
+
+        - 逐锚点做 expect 防呆：命中处数 != 期望 → **该文件整体跳过**（不改一行），
+          并在 problems 里说明原因。宁可漏改让人看见，也不误改历史引用。
+        - apply=False 时只算不写，返回同样的报告（供 --dry-run 使用）。
+        - 已是目标版本的文件判为「未变」，不写盘 → mtime 不被动，git 里不产生空 diff。
+
+       返回 (report, problems)：
+         report   = [(rel, 行号, 旧版本, 新版本, 动作)]  动作 ∈ {已改写, 待改写, 未变, 跳过}
+         problems = [(rel, 原因)]"""
+    report, problems = [], []
+    for rel, desc, expect in VERSION_ANCHORS:
+        path = os.path.join(base, rel)
+        if not os.path.exists(path):
+            problems.append((rel, '文件不存在'))
+            continue
+        data = open(path, 'rb').read()
+        hits = list(VERSION_FIELD_RE.finditer(data))
+        if len(hits) != expect:
+            problems.append((rel, '该类 version 字段命中 %d 处，期望 %d 处 → 整体跳过不改；'
+                                   '请人工确认后同步修改 VERSION_ANCHORS 的 expect'
+                             % (len(hits), expect)))
+            for m in hits:
+                report.append((rel, data.count(b'\n', 0, m.start()) + 1,
+                               m.group(2).decode('ascii'), None, '跳过'))
+            continue
+
+        olds = [m.group(2).decode('ascii') for m in hits]
+        if all(o == new_version for o in olds):
+            for m, o in zip(hits, olds):
+                report.append((rel, data.count(b'\n', 0, m.start()) + 1, o, new_version, '未变'))
+            continue
+
+        if apply:
+            new_data = data
+            for m in reversed(hits):        # 从后往前替换，避免偏移错乱
+                new_data = (new_data[:m.start(2)] + new_version.encode('ascii')
+                            + new_data[m.end(2):])
+            with open(path, 'wb') as f:
+                f.write(new_data)
+        for m, o in zip(hits, olds):
+            report.append((rel, data.count(b'\n', 0, m.start()) + 1, o, new_version,
+                           '已改写' if apply else '待改写'))
+    return report, problems
+
+
+def check_verlog(base, version):
+    """只读检查 Verlog.xlsx 里有没有「本版」的记录，有就报最新一条、没有就提醒补。
+       xlsx 本身就是个 zip，直接读 xl/sharedStrings.xml 取文本，
+       不引入 openpyxl 依赖，也**绝不改写**这个文件（更新内容是人的活，工具不猜）。"""
+    p = os.path.join(base, 'Verlog.xlsx')
+    if not os.path.exists(p):
+        log('[W] Verlog.xlsx 不存在（版本发布日志表）；发布前建议补上')
+        return
+    try:
+        with zipfile.ZipFile(p) as z:
+            xml = z.read('xl/sharedStrings.xml').decode('utf-8', 'replace')
+        vals = re.findall(r'<t[^>]*>(.*?)</t>', xml, re.S)
+        vers = [v.strip() for v in vals if re.match(r'^v\d+\.\d+\.\d+', v.strip(), re.I)]
+        latest = vers[-1] if vers else '（无）'
+        if any(re.match(r'^v%s\b' % re.escape(version[1:]), v, re.I) for v in vers):
+            log('  Verlog.xlsx: 已有 %s 的记录  OK' % version)
+        else:
+            log('  Verlog.xlsx: 最新记录 = %s，**尚无 %s 的记录** ← 记得补一条更新说明（本工具不改 xlsx）'
+                % (latest, version))
+    except Exception as e:
+        log('[W] Verlog.xlsx 读取失败: %s' % e)
 
 
 def check_version_json(base):
@@ -277,7 +376,7 @@ def collect(base):
 
 
 def build(base, out_path, version):
-    """按磁盘状态打包。版本号已在上游通过 bump_interface 写进 interface.json。"""
+    """按磁盘状态打包。版本号已在上游通过 sync_version_anchors 写进各锚点文件。"""
     files = collect(base)
     log('[1] 待打包文件 = %d' % len(files))
 
@@ -315,10 +414,19 @@ def verify(path, version):
             ok = False
         log('[V2] 条目数 = %d' % len(names))
 
-        v = json.loads(z.read('interface.json').decode('utf-8-sig')).get('version')
-        log('[V3] interface.json 版本 = %s %s' % (v, 'OK' if v == version else '<= 不符预期'))
-        if v != version:
-            ok = False
+        # 在**产出的 zip 内**逐个锚点复核版本号：磁盘改对了但包内是旧文件的情况也会被抓到
+        for rel, desc, expect in VERSION_ANCHORS:
+            if rel not in names:
+                log('[V3] %-16s 不在包里！' % rel)
+                ok = False
+                continue
+            hits = [m.group(2).decode('ascii')
+                    for m in VERSION_FIELD_RE.finditer(z.read(rel))]
+            good = (len(hits) == expect and all(h == version for h in hits))
+            log('[V3] %-16s 版本 = %s  期望 %s  %s'
+                % (rel, hits, version, 'OK' if good else '<= 不符预期'))
+            if not good:
+                ok = False
 
         miss = [k for k in REQUIRED_FILES if k not in names]
         miss += ['%s(%d)' % (d, sum(1 for x in names if x.startswith(d)))
@@ -353,11 +461,12 @@ def verify(path, version):
 
 def main():
     ap = argparse.ArgumentParser(add_help=True)
-    ap.add_argument('version', nargs='?', help='目标版本号，如 v26.09.6；不传则交互询问')
+    ap.add_argument('version', nargs='?', help='目标版本号，如 v26.09.9；不传则交互询问')
     ap.add_argument('--out', help='输出 zip 路径，默认 updates/MABd2<version>.zip')
     ap.add_argument('--verify', action='store_true', help='只校验已有 zip')
     ap.add_argument('--no-verify', action='store_true', help='只构建不校验')
-    ap.add_argument('--no-bump', action='store_true', help='不改 interface.json，按磁盘当前版本打包')
+    ap.add_argument('--no-bump', action='store_true',
+                    help='不改任何版本号文件（跳过锚点同步），按磁盘现状打包')
     ap.add_argument('--dry-run', action='store_true', help='只打印发布计划，不动磁盘也不出包')
     args = ap.parse_args()
 
@@ -373,13 +482,13 @@ def main():
                 log('已取消（无输入）')
                 return 1
         else:
-            log('无版本号且 stdin 非 TTY，无法交互询问。请显式传入，例如 v26.09.6')
+            log('无版本号且 stdin 非 TTY，无法交互询问。请显式传入，例如 v26.09.9')
             return 2
 
     if not version.startswith('v'):
         version = 'v' + version
     if not VERSION_RE.match(version):
-        log('版本号格式不对：%r（应为 v<主>.<次>.<修订>，例 v26.09.6）' % version)
+        log('版本号格式不对：%r（应为 v<主>.<次>.<修订>，例 v26.09.9）' % version)
         return 2
 
     out = args.out or os.path.join(BASE, 'updates', 'MABd2%s.zip' % version)
@@ -389,15 +498,32 @@ def main():
     log('  目标版本: %s' % version)
     log('  HEAD   :  %s' % (head_v or '?'))
     log('  磁盘    :  %s' % (cur_v or '?'))
+
+    sites = scan_version_anchors(BASE)
+    pending = []          # 需要改写的 (rel, 行号, 旧版本)
+    log('  版本锚点:')
+    for rel, desc, expect in VERSION_ANCHORS:
+        info = sites[rel]
+        if not info['hits']:
+            log('    %-16s (无 version 字段 —— %s)' % (rel, desc))
+            continue
+        for lineno, old in info['hits']:
+            if args.no_bump:
+                mark = '保持（--no-bump）'
+            elif old == version:
+                mark = '已是目标版本'
+            else:
+                mark = '-> %s' % version
+                pending.append((rel, lineno, old))
+            log('    %-16s :%-4d %s  %s' % (rel, lineno, old, mark))
+
+    will_bump = (not args.no_bump) and bool(pending)
+    if pending and args.no_bump:
+        log('[!] --no-bump：包内这 %d 处版本号将不是 %s，发布前请确认这是你要的' % (len(pending), version))
+
     log('  输出    :  %s' % out)
-    will_bump = (not args.no_bump) and (cur_v != version)
-    if will_bump:
-        log('  将改    :  interface.json  %s -> %s' % (cur_v, version))
-    elif args.no_bump:
-        log('  将改    :  interface.json  不动（--no-bump）')
-    else:
-        log('  将改    :  interface.json  不动（已是 %s）' % version)
     check_version_json(BASE)
+    check_verlog(BASE, version)
     check_bat_crlf(BASE)
 
     if args.dry_run:
@@ -412,16 +538,21 @@ def main():
         return 0 if verify(out, version) else 1
 
     # ---- 4. 改动前确认 ----
-    if will_bump and not confirm('将 interface.json 从 %s 改为 %s 并开始打包？' % (cur_v, version)):
+    if will_bump and not confirm('将同步改写 %d 处版本号（%s）为 %s 并开始打包？'
+                                 % (len(pending), '、'.join(sorted({r for r, _, _ in pending})), version)):
         log('已取消')
         return 1
 
-    # ---- 5. 写盘 ----
-    if will_bump:
-        old, new = bump_interface(BASE, version)
-        log('[0] interface.json: %s -> %s' % (old, new))
-    else:
-        log('[0] interface.json: 保持 %s' % version)
+    # ---- 5. 写盘：同步所有版本锚点 ----
+    report, problems = sync_version_anchors(BASE, version, apply=will_bump)
+    for rel, lineno, old, new, act in report:
+        if act == '未变':
+            continue
+        log('[0] %s:%-4d  %s -> %s  (%s)' % (rel, lineno, old, new or '-', act))
+    for rel, why in problems:
+        log('[W] 版本锚点异常 %s：%s' % (rel, why))
+    if not will_bump:
+        log('[0] 版本号未改动（%s）' % ('--no-bump' if args.no_bump else '已是目标版本'))
 
     # ---- 6. 打包 + 校验 ----
     build(BASE, out, version)

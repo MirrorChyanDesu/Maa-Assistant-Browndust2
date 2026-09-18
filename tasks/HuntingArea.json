@@ -61,13 +61,13 @@
                     "name":"WoodHunt",
                     "label":"第九章原木",
                     "pipeline_override":{
-                        "ChooseWorO":{
+                        "ChooseWorO_Swipe":{
                             "next":["WoodHunt"]}}},
                 {
                     "name":"OreHunt",
                     "label":"第七章矿石",
                     "pipeline_override":{
-                        "ChooseWorO":{
+                        "ChooseWorO_Swipe":{
                             "next":["OreHunt"]}}}
                     ]
                      },

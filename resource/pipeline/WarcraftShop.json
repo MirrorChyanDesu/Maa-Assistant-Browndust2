@@ -3,14 +3,14 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1789543656516,
+            "lastSyncTime": 1789620043660,
             "isModifiedExternally": false,
             "isDeleted": false,
             "filePath": "F:\\MABd2v26.09.5\\resource\\pipeline\\WarcraftShop.json",
             "savedViewport": {
-                "x": -1465,
-                "y": 83,
-                "zoom": 0.5
+                "x": -5705,
+                "y": -1920,
+                "zoom": 1.31
             },
             "filename": "WarcraftShop",
             "version": "v1.10.1"
@@ -19,8 +19,8 @@
     "$__mpe_external_StartGame_WarcraftShop": {
         "$__mpe_code": {
             "position": {
-                "x": 3791,
-                "y": -34
+                "x": 3263,
+                "y": -66
             }
         }
     },
@@ -49,19 +49,18 @@
             "param": {
                 "target_offset": [
                     36,
-                    35,
-                    -83,
-                    -120
+                    35
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 5455,
-                "y": 1095
+                "x": 5047,
+                "y": 869
             }
         }
     },
@@ -87,13 +86,12 @@
             "param": {
                 "target_offset": [
                     26,
-                    27,
-                    -66,
-                    -116
+                    27
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
@@ -118,13 +116,13 @@
                 ]
             }
         },
-        "next": [
-            "WarcraftShopBuyLoop"
-        ],
+        "action": {
+            "type": "Click"
+        },
         "$__mpe_code": {
             "position": {
-                "x": 5223,
-                "y": 123
+                "x": 5948,
+                "y": 217
             }
         }
     },
@@ -143,10 +141,16 @@
                 ]
             }
         },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "WarcraftShopDone"
+        ],
         "$__mpe_code": {
             "position": {
-                "x": 5125,
-                "y": 1746
+                "x": 5165,
+                "y": 1641
             }
         }
     },
@@ -170,13 +174,12 @@
         },
         "post_delay": 1000,
         "next": [
-            "BuySure_MS_1",
-            "BuyError_MS_1"
+            "BuySure_MS_1"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 5214,
-                "y": 408
+                "x": 5867,
+                "y": 564
             }
         }
     },
@@ -200,13 +203,12 @@
         },
         "post_delay": 1000,
         "next": [
-            "BuySure_MS_2",
-            "BuyError_MS_2"
+            "BuySure_MS_2"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 5135,
-                "y": 2040
+                "x": 5156,
+                "y": 2037
             }
         }
     },
@@ -234,13 +236,10 @@
             }
         },
         "post_delay": 1000,
-        "next": [
-            "WarcraftShopBuyLoop"
-        ],
         "$__mpe_code": {
             "position": {
-                "x": 5544,
-                "y": 205
+                "x": 6119,
+                "y": 564
             }
         }
     },
@@ -261,17 +260,18 @@
             "param": {
                 "target_offset": [
                     57,
-                    76,
-                    -117,
-                    -95
+                    76
                 ]
             }
         },
         "post_delay": 1000,
+        "next": [
+            "WarcraftShopDone"
+        ],
         "$__mpe_code": {
             "position": {
-                "x": 5414,
-                "y": 1852
+                "x": 5430,
+                "y": 2041
             }
         }
     },
@@ -300,13 +300,12 @@
             "param": {
                 "target_offset": [
                     24,
-                    23,
-                    -64,
-                    -114
+                    23
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
@@ -341,19 +340,18 @@
             "param": {
                 "target_offset": [
                     28,
-                    28,
-                    -67,
-                    -115
+                    28
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 5762,
-                "y": 1089
+                "x": 5317,
+                "y": 879
             }
         }
     },
@@ -386,8 +384,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 3656,
-                "y": 536
+                "x": 3485,
+                "y": 473
             }
         }
     },
@@ -419,8 +417,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 3656,
-                "y": 198
+                "x": 3488,
+                "y": 93
             }
         }
     },
@@ -449,19 +447,18 @@
             "param": {
                 "target_offset": [
                     24,
-                    24,
-                    -68,
-                    -114
+                    24
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4651,
-                "y": 1086
+                "x": 4254,
+                "y": 847
             }
         }
     },
@@ -490,19 +487,18 @@
             "param": {
                 "target_offset": [
                     28,
-                    28,
-                    -68,
-                    -115
+                    28
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4911,
-                "y": 1085
+                "x": 4526,
+                "y": 855
             }
         }
     },
@@ -531,19 +527,18 @@
             "param": {
                 "target_offset": [
                     24,
-                    20,
-                    -71,
-                    -117
+                    20
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 5186,
-                "y": 1087
+                "x": 4779,
+                "y": 865
             }
         }
     },
@@ -572,13 +567,12 @@
             "param": {
                 "target_offset": [
                     33,
-                    33,
-                    -69,
-                    -118
+                    33
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
@@ -613,13 +607,12 @@
             "param": {
                 "target_offset": [
                     30,
-                    23,
-                    -89,
-                    -113
+                    23
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
@@ -655,13 +648,12 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 3970,
-                "y": 459
+                "x": 3747,
+                "y": 354
             }
         }
     },
     "LeftGold_MS": {
-        "enabled": false,
         "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
@@ -685,39 +677,37 @@
             "param": {
                 "target_offset": [
                     23,
-                    18,
-                    -77,
-                    -124
+                    18
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_1",
             "SetBuyMax_MS_2"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4460,
-                "y": 1988
+                "x": 4447,
+                "y": 1951
             }
         }
     },
     "LeftRefinedDust_MS": {
-        "enabled": false,
         "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
                 "roi": [
-                    162,
-                    76,
-                    1002,
-                    333
+                    159,
+                    267,
+                    891,
+                    144
                 ],
                 "template": [
                     "SHOP/LeftRefinedDust_MS.png"
                 ],
                 "threshold": [
-                    0.8
+                    0.9
                 ]
             }
         },
@@ -726,19 +716,68 @@
             "param": {
                 "target_offset": [
                     25,
-                    24,
-                    -72,
-                    -126
+                    28
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_1",
             "SetBuyMax_MS_2"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4462,
-                "y": 1564
+                "x": 4445,
+                "y": 1528
+            }
+        }
+    },
+    "RedNumber_MS_1": {
+        "desc": "【代币不足判定·找色】购买页价格数字变红即命中。非模板比对，纯 ROI 颜色捕捉。method=40 走 HSV（OpenCV 色轮 H 为 0-179）；红色跨在色轮首尾，所以用两组区间取并集：H 0-10 与 H 170-179。S/V 下限 80 用于排掉灰白底与暗色描边。connected=false → 整个 roi 内的红色像素合并成一个结果，[count] 即「至少命中多少红色像素才算数」。需要自己调的两个旋钮：① roi 收紧到红色数字那一小块（别把红点/红图标圈进来）；② count 按实机红色像素量校准，调大了会漏、调小了会误报。",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": [
+                    491,
+                    399,
+                    48,
+                    23
+                ],
+                "method": 40,
+                "lower": [
+                    [
+                        0,
+                        80,
+                        80
+                    ],
+                    [
+                        170,
+                        80,
+                        80
+                    ]
+                ],
+                "upper": [
+                    [
+                        10,
+                        255,
+                        255
+                    ],
+                    [
+                        179,
+                        255,
+                        255
+                    ]
+                ],
+                "connected": false,
+                "count": 80
+            }
+        },
+        "next": [
+            "BuyError_MS_2"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 4874,
+                "y": 1642
             }
         }
     },
@@ -767,19 +806,18 @@
             "param": {
                 "target_offset": [
                     35,
-                    35,
-                    -76,
-                    -116
+                    35
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4327,
-                "y": 1088
+                "x": 3950,
+                "y": 855
             }
         }
     },
@@ -808,49 +846,18 @@
             "param": {
                 "target_offset": [
                     27,
-                    27,
-                    -65,
-                    -118
+                    27
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4691,
-                "y": -518
-            }
-        }
-    },
-    "SetBuyMax_MS_1": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    574,
-                    463,
-                    56,
-                    39
-                ],
-                "expected": [
-                    "MAX"
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_delay": 1000,
-        "next": [
-            "BuyIt_MS_1",
-            "BuyError_MS_1"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 4933,
-                "y": 209
+                "x": 4699,
+                "y": -520
             }
         }
     },
@@ -874,13 +881,12 @@
         },
         "post_delay": 1000,
         "next": [
-            "BuyIt_MS_2",
-            "BuyError_MS_2"
+            "BuyIt_MS_2"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4824,
-                "y": 1883
+                "x": 4877,
+                "y": 2062
             }
         }
     },
@@ -893,8 +899,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 3314,
-                "y": 232
+                "x": 3241,
+                "y": 322
             }
         }
     },
@@ -902,16 +908,12 @@
         "desc": "剩余代币购买不限量物品选择",
         "timeout": 10000,
         "next": [
-            "LeftRefinedDust_MS",
-            "LeftGold_MS"
-        ],
-        "on_error": [
             "WarcraftShopDone"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4052,
-                "y": 1510
+                "x": 4111,
+                "y": 1425
             }
         }
     },
@@ -920,26 +922,24 @@
         "pre_delay": 0,
         "post_delay": 0,
         "next": [
-            "DrawCard_MS",
-            "FireSeed_MS",
-            "godTear_MS",
-            "RefinedCrystal_MS",
-            "AncientCrystal_MS",
-            "4UpStar",
-            "EssenceStrength_MS",
-            "EssenceLife_MS",
-            "EssenceEndurance_MS",
-            "Gold_MS",
-            "RedSlime_MS",
-            "ElixirTalent_MS"
-        ],
-        "on_error": [
+            "[JumpBack]DrawCard_MS",
+            "[JumpBack]FireSeed_MS",
+            "[JumpBack]godTear_MS",
+            "[JumpBack]RefinedCrystal_MS",
+            "[JumpBack]AncientCrystal_MS",
+            "[JumpBack]4UpStar",
+            "[JumpBack]EssenceStrength_MS",
+            "[JumpBack]EssenceLife_MS",
+            "[JumpBack]EssenceEndurance_MS",
+            "[JumpBack]Gold_MS",
+            "[JumpBack]RedSlime_MS",
+            "[JumpBack]ElixirTalent_MS",
             "WarcraftShopBuyLeft"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 3860,
-                "y": 900
+                "x": 3991,
+                "y": 321
             }
         }
     },
@@ -950,8 +950,8 @@
         "rate_limit": 0,
         "$__mpe_code": {
             "position": {
-                "x": 4045,
-                "y": 1854
+                "x": 5487,
+                "y": 1425
             }
         }
     },
@@ -1039,19 +1039,97 @@
             "param": {
                 "target_offset": [
                     30,
-                    32,
-                    -68,
-                    -119
+                    32
                 ]
             }
         },
         "next": [
+            "RedNumber_MS_2",
             "SetBuyMax_MS_1"
         ],
         "$__mpe_code": {
             "position": {
                 "x": 3893,
                 "y": -511
+            }
+        }
+    },
+    "RedNumber_MS_2": {
+        "desc": "【代币不足判定·找色】购买页价格数字变红即命中。非模板比对，纯 ROI 颜色捕捉。method=40 走 HSV（OpenCV 色轮 H 为 0-179）；红色跨在色轮首尾，所以用两组区间取并集：H 0-10 与 H 170-179。S/V 下限 80 用于排掉灰白底与暗色描边。connected=false → 整个 roi 内的红色像素合并成一个结果，[count] 即「至少命中多少红色像素才算数」。需要自己调的两个旋钮：① roi 收紧到红色数字那一小块（别把红点/红图标圈进来）；② count 按实机红色像素量校准，调大了会漏、调小了会误报。",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": [
+                    491,
+                    399,
+                    48,
+                    23
+                ],
+                "method": 40,
+                "lower": [
+                    [
+                        0,
+                        80,
+                        80
+                    ],
+                    [
+                        170,
+                        80,
+                        80
+                    ]
+                ],
+                "upper": [
+                    [
+                        10,
+                        255,
+                        255
+                    ],
+                    [
+                        179,
+                        255,
+                        255
+                    ]
+                ],
+                "connected": false,
+                "count": 80
+            }
+        },
+        "next": [
+            "BuyError_MS_1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 5619,
+                "y": 196
+            }
+        }
+    },
+    "SetBuyMax_MS_1": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    574,
+                    463,
+                    56,
+                    39
+                ],
+                "expected": [
+                    "MAX"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "BuyIt_MS_1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 5614,
+                "y": 596
             }
         }
     }

@@ -235,38 +235,22 @@
                     "name": "WarcraftShopLeftRefinedDust",
                     "label": "精炼粉末",
                     "pipeline_override": {
-                        "LeftRefinedDust_MS": {
-                            "enabled": true
-                        },
-                        "LeftGold_MS": {
-                            "enabled": false
-                        }
+                        "WarcraftShopBuyLeft": {
+                            "next":["LeftRefinedDust_MS"]}
                     }
                 },
                 {
                     "name": "WarcraftShopLeftGold",
                     "label": "金币",
                     "pipeline_override": {
-                        "LeftRefinedDust_MS": {
-                            "enabled": false
-                        },
-                        "LeftGold_MS": {
-                            "enabled": true
-                        }
-                    }
-                },
+                        "WarcraftShopBuyLeft": {
+                            "next":["LeftGold_MS"]}}},
                 {
                     "name": "WarcraftShopLeftNone",
                     "label": "不使用剩余代币",
                     "pipeline_override": {
-                        "LeftRefinedDust_MS": {
-                            "enabled": false
-                        },
-                        "LeftGold_MS": {
-                            "enabled": false
-                        }
-                    }
-                }
+                        "WarcraftShopBuyLeft": {
+                            "next":["WarcraftShopDone"]}}}
             ]
         }
     }

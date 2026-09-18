@@ -3,17 +3,46 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1789309914179,
+            "lastSyncTime": 1789639877402,
             "isModifiedExternally": false,
             "isDeleted": false,
             "filePath": "F:\\MABd2v26.09.5\\resource\\pipeline\\HuntingArea.json",
             "savedViewport": {
-                "x": -3679,
-                "y": 149,
-                "zoom": 0.87
+                "x": -3634,
+                "y": 246,
+                "zoom": 0.95
             },
             "filename": "HuntingArea",
-            "version": "v1.10.0"
+            "version": "v1.10.1"
+        }
+    },
+    "ChooseWorO_Swipe": {
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    589,
+                    193
+                ],
+                "end": [
+                    [
+                        589,
+                        595
+                    ]
+                ],
+                "end_hold": [
+                    1000
+                ]
+            }
+        },
+        "next": [
+            "WoodHunt"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 4689,
+                "y": 97
+            }
         }
     },
     "$__mpe_external_StartGame_HuntingArea": {
@@ -62,12 +91,12 @@
     "ChooseWorO": {
         "post_delay": 1500,
         "next": [
-            "WoodHunt"
+            "ChooseWorO_Swipe"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4488,
-                "y": 340
+                "x": 4576,
+                "y": -207
             }
         }
     },
@@ -127,13 +156,12 @@
         "post_delay": 3000,
         "next": [
             "GetRock",
-            "EnterHunt",
-            "[JumpBack]StartGame"
+            "EnterHunt"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2826,
-                "y": 104
+                "x": 2793,
+                "y": 96
             }
         }
     },
@@ -281,8 +309,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 3107,
-                "y": 96
+                "x": 3082,
+                "y": 84
             }
         }
     },
@@ -453,6 +481,7 @@
         "action": {
             "type": "Click"
         },
+        "post_delay": 1500,
         "next": [
             "REWARD_4",
             "StartGame"
@@ -481,6 +510,7 @@
         "action": {
             "type": "Click"
         },
+        "post_delay": 1500,
         "next": [
             "REWARD",
             "ChooseGorS"
@@ -538,64 +568,47 @@
         "action": {
             "type": "Click"
         },
-        "post_delay": 1000,
+        "post_delay": 1500,
         "next": [
             "REWARD_2",
             "ChooseWorO"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4237,
-                "y": 91
+                "x": 4213,
+                "y": 54
             }
         }
     },
     "OreHunt": {
-        "action": {
-            "type": "Click",
-            "param": {
-                "target": [
-                    318,
-                    36
-                ]
-            }
-        },
-        "repeat": 2,
-        "repeat_delay": 1000,
-        "post_delay": 1000,
-        "next": [
-            "OreHunt2"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 4778,
-                "y": 387
-            }
-        }
-    },
-    "OreHunt2": {
         "recognition": {
             "type": "OCR",
             "param": {
                 "roi": [
-                    166,
-                    7,
-                    108,
-                    51
+                    252,
+                    402,
+                    102,
+                    30
                 ],
                 "expected": [
-                    "蜥蜴人"
-                ],
-                "threshold": 0.6
+                    "7.蜥锡人祭坛",
+                    "蜥锡人",
+                    "祭坛"
+                ]
             }
         },
+        "action": {
+            "type": "Click"
+        },
+        "repeat": 2,
+        "repeat_delay": 500,
         "next": [
             "FastHunt1"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 5072,
-                "y": 331
+                "x": 4946,
+                "y": 245
             }
         }
     },
@@ -670,8 +683,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4491,
-                "y": -100
+                "x": 4447,
+                "y": 173
             }
         }
     },
@@ -795,7 +808,6 @@
         "action": {
             "type": "Click"
         },
-        "post_delay": 1500,
         "next": [
             "MainHunt3"
         ],
@@ -877,8 +889,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2531,
-                "y": 102
+                "x": 2517,
+                "y": 84
             }
         }
     },
@@ -941,52 +953,34 @@
         }
     },
     "WoodHunt": {
-        "action": {
-            "type": "Click",
-            "param": {
-                "target": [
-                    1080,
-                    66
-                ]
-            }
-        },
-        "repeat": 2,
-        "repeat_delay": 1000,
-        "post_delay": 1000,
-        "next": [
-            "WoodHunt2",
-            "WoodHunt"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 4783,
-                "y": 57
-            }
-        }
-    },
-    "WoodHunt2": {
         "recognition": {
             "type": "OCR",
             "param": {
                 "roi": [
-                    175,
-                    12,
-                    77,
-                    42
+                    1047,
+                    430,
+                    103,
+                    33
                 ],
                 "expected": [
-                    "守山人"
-                ],
-                "threshold": 0.6
+                    "9.守山人休息处",
+                    "守山人",
+                    "休息处"
+                ]
             }
         },
+        "action": {
+            "type": "Click"
+        },
+        "repeat": 2,
+        "repeat_delay": 500,
         "next": [
             "FastHunt1"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 5063,
-                "y": 80
+                "x": 4941,
+                "y": -79
             }
         }
     },

@@ -1,0 +1,38 @@
+name: mirrorchyan_release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        default: ''
+        required: false
+  release:
+    types: [published]
+
+jobs:
+  mirrorchyan:
+    if: ${{ github.repository_owner == 'alkaidjin' }}
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: win
+            arch: x64
+            filename: 'MABd2v*.zip'
+
+    steps:
+      - uses: MirrorChyan/uploading-action@v1
+        with:
+          filetype: latest-release
+          filename: ${{ matrix.filename }}
+          mirrorchyan_rid: Maa-Assistant-Browndust2
+          tag: ${{ inputs.tag }}
+
+          os: ${{ matrix.os }}
+          arch: ${{ matrix.arch }}
+
+          owner: alkaidjin
+          repo: Maa-Assistant-Browndust2
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          upload_token: ${{ secrets.MirrorChyanUploadToken }}

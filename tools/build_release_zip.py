@@ -26,7 +26,8 @@ BD2MAA 发布包构建工具
   2. 直接读磁盘 → **未提交的改动也会进包**（所以发版前先确认工作区状态）。
   3. 排除 config/ → MXU 首次启动自动生成默认实例，避免覆盖用户已有配置。
   4. 排除 MaaBd2.lnk → 写死路径的快捷方式在别人机器上无效，首次启动自动重建。
-  5. 排除 updater_cache.json / cache / debug / updates / tools/build_release_zip.py 自身。
+  5. 排除 updater_cache.json / cache / debug / updates / tools/build_release_zip.py 自身，
+     以及 Office 临时锁文件 `~$*`（打开 Verlog.xlsx 时会生成 `~$Verlog.xlsx`）。
      v26.09.8 起额外排除「非维护者不需要」的开发脚本与仓库元数据 —— 见 EXCLUDE_FILES 注释。
   6. 中文文件名必须带 UTF-8 标志位（0x800），否则 Windows 解压乱码。
   7. zip 内条目时间戳 = **打包时刻（秒级）**，不是固定值 → 同源两次构建 sha256 必然不同。
@@ -367,6 +368,12 @@ def collect(base):
             if rel.split('/')[0] in EXCLUDE_DIRS:
                 continue
             if rel in EXCLUDE_FILES or fn in EXCLUDE_FILES:
+                continue
+            # Office 临时锁文件：Excel/Word/PPT 打开文档时在同目录生成 `~$<原名>`
+            # （例：用户开着 Verlog.xlsx 时会出现 `~$Verlog.xlsx`）。它是 0 字节左右的
+            # 隐藏状态文件，用户侧毫无用处；写死的名字清单挡不住它（打开哪个文档就生成哪个），
+            # 所以按前缀统一排除。
+            if fn.startswith('~$'):
                 continue
             if os.path.splitext(fn)[1].lower() in EXCLUDE_EXT:
                 continue

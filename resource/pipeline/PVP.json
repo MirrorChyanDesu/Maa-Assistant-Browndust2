@@ -3,17 +3,17 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1788575506997,
+            "lastSyncTime": 1789717847919,
             "isModifiedExternally": false,
             "isDeleted": false,
-            "filePath": "F:\\BD2MAA\\resource\\pipeline\\PVP.json",
+            "filePath": "F:\\MABd2v26.09.5\\resource\\pipeline\\PVP.json",
             "savedViewport": {
-                "x": -5178,
-                "y": -314,
-                "zoom": 0.99
+                "x": 45,
+                "y": 308,
+                "zoom": 0.5
             },
             "filename": "PVP",
-            "version": "v1.9.3"
+            "version": "v1.10.1"
         }
     },
     "$__mpe_external_StartGame_PVP": {
@@ -216,7 +216,7 @@
         "action": {
             "type": "Click"
         },
-        "post_delay": 1500,
+        "post_delay": 2000,
         "next": [
             "CorrectFirst",
             "GetDaily",
@@ -224,8 +224,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1612,
-                "y": 82
+                "x": 1644,
+                "y": -18
             }
         }
     },
@@ -254,8 +254,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 5132,
-                "y": 597
+                "x": 5050,
+                "y": 758
             }
         }
     },
@@ -485,13 +485,14 @@
         "action": {
             "type": "Click"
         },
+        "post_delay": 2000,
         "next": [
             "MovePVP"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1932,
-                "y": 78
+                "x": 2140,
+                "y": -64
             }
         }
     },
@@ -521,8 +522,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4812,
-                "y": 496
+                "x": 4797,
+                "y": 476
             }
         }
     },
@@ -563,8 +564,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2252,
-                "y": 258
+                "x": 2216,
+                "y": 481
             }
         }
     },
@@ -712,8 +713,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 1292,
-                "y": 241
+                "x": 1296,
+                "y": 323
             }
         }
     },
@@ -799,8 +800,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 4172,
-                "y": 471
+                "x": 4201,
+                "y": 438
             }
         }
     },
@@ -824,8 +825,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 5452,
-                "y": 777
+                "x": 5442,
+                "y": 828
             }
         }
     },

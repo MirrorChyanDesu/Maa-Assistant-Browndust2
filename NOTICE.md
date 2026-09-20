@@ -6,9 +6,10 @@
 |---|---|---|---|
 | 1 | [MaaXYZ/MaaFramework](https://github.com/MaaXYZ/MaaFramework)（v5.13.0）| **LGPL-3.0** | 运行时核心（C++ 库 + Node 绑定） |
 | 2 | [MistEO/MXU](https://github.com/MistEO/MXU)（v2.5.3） | **AGPL-3.0** | GUI 前端 + Go Agent 子进程 + 实例/设置/自动更新 |
-| 3 | [MaaEnd/MaaEnd](https://github.com/MaaEnd/MaaEnd) | **AGPL-3.0** | 本项目起点的「棕色尘埃」适配工程；本仓库 fork 自此 |
-| 4 | [PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)（PP-OCRv5 移动端）| **Apache-2.0** | OCR 模型（`resource/model/ocr/det.onnx`、`rec.onnx`、`keys.txt`） |
-| 5 | [electron/rcedit](https://github.com/electron/rcedit)（v2.0.0）| **MIT** | 启动器给 `mxu.exe` 写图标的附加工具（`tools/rcedit-x64.exe`） |
+| 3 | [MaaEnd/MaaEnd](https://github.com/MaaEnd/MaaEnd) | **AGPL-3.0** | 最初提供**工程骨架**（目录约定、`interface.json` 结构、多语言键）；该仓库是《明日方舟：终末地》工具，**不含《棕色尘埃2》任何内容** |
+| 4 | [essinn-1/maa-assistant](https://github.com/essinn-1/maa-assistant) | **AGPL-3.0** | **本项目的直接上游**：《棕色尘埃2》PC 端早期适配、最初一批 pipeline 编排与图像素材 |
+| 5 | [PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)（PP-OCRv5 移动端）| **Apache-2.0** | OCR 模型（`resource/model/ocr/det.onnx`、`rec.onnx`、`keys.txt`） |
+| 6 | [electron/rcedit](https://github.com/electron/rcedit)（v2.0.0）| **MIT** | 启动器给 `mxu.exe` 写图标的附加工具（`tools/rcedit-x64.exe`） |
 
 ---
 
@@ -69,15 +70,60 @@ MXU 与本项目**均为 AGPL-3.0**，因此在 §13 「Remote Network Interacti
 ## 3. MaaEnd/MaaEnd — AGPL-3.0
 
 ### 用途
-本仓库为 MaaEnd/MaaEnd 的 fork。最初的任务定义、`interface.json` 框架、`tasks/*.json` 中的 pipeline 编排均来自 MaaEnd 的早期快照。自本仓库创建起，**task-level JSON、resource 下的图像与 OCR pipeline、PaddleOCR 模型副本**均经过大幅改造以适配《棕色尘埃2》特有界面与玩法（如「资源吸收」「召集」「PVP 入口」「EvilCastle 塔」），但**工程骨架与目录约定保留 MaaEnd 原状**。
+MaaEnd 是《明日方舟：终末地》的自动化工程。**它本身不包含《棕色尘埃2》的任何任务定义、pipeline 或图像素材**；
+本项目的棕2 内容全部来自下一节 `essinn-1/maa-assistant`。
+
+本项目从 MaaEnd 继承的是**工程骨架**：目录约定（`resource/pipeline/`、`tasks/`）、`interface.json` 的
+ProjectInterface v2 结构、多语言键的组织方式，以及 `misc/MaaEnd-Tiny.png` 等少量占位资源。
+
+### 继承路径
+
+```
+MaaEnd（工程骨架）
+   └─ essinn-1/maa-assistant（《棕色尘埃2》PC 端适配，AGPL-3.0）
+         └─ 本项目 Maa-Assistant-Browndust2（AGPL-3.0）
+```
+
+严格说，本项目**不是** GitHub 意义上的 fork 关系，而是直接承接 `essinn-1/maa-assistant` 的 Git 历史继续开发，
+因此仓库页不显示 `forked from` 标记；真实的来源关系以本节与下一节的文字说明为准。
 
 ### AGPL 履约
-- 本项目的 AGPL-3.0 许可证与 MaaEnd 同源，**已完成合规继承**：所有 fork 自 MaaEnd 的文件与本项目后续添加的文件统一适用 AGPL-3.0
-- MaaEnd 仓库的 commit 历史可通过 `git log --follow <path>` 追溯单个文件的起源
+- 本项目的 AGPL-3.0 许可证与 MaaEnd 同源，**合规继承无缺口**：继承文件与本项目新增文件统一适用 AGPL-3.0
+- MaaEnd 上游仍在活跃更新（与本项目无关）；本项目**不跟踪**其后续变更，骨架之外的改动均为自研
 
 ---
 
-## 4. PaddlePaddle/PaddleOCR — Apache-2.0
+## 4. essinn-1/maa-assistant — AGPL-3.0
+
+### 用途
+**本项目最直接的上游。** `essinn-1/maa-assistant` 是把 MaaEnd 骨架改造成「《棕色尘埃2》PC 端自动化」的早期工程。
+本项目使用的**最初一批任务定义与 pipeline 编排**（`resource/pipeline/*.json` 的早期形态、`tasks/*.json`，
+以及「资源吸收 / 召集」「PVP 入口」「EvilCastle 塔」「快速狩猎」「魔兽追踪者」等棕2 各系统入口）
+与**初始图像素材**，均来自该仓库。
+
+### 许可与授权
+- 该仓库以 **AGPL-3.0** 发布（其首次提交即包含完整的 AGPL-3.0 条款文本）。
+- AGPL-3.0 授予任何人**不可撤回**的复制、修改与再分发权利（§2「irrevocable」）——
+  上游是否继续维护、是否停更，均**不影响**该授权的有效性。
+- 本项目在其成果之上继续开发并公开发布，属**许可证明确授权的行为**。
+
+### AGPL 履约与署名
+本仓库的 Git 历史**完整保留**上游作者的提交记录与署名，未作 squash、未重写历史：
+
+- 作者：`essinn-1 <3181517909@qq.com>`
+- 提交区间：`feaaeb1`（2026-03-24，本仓库首个提交）… `eaa63ad`（2026-04-26）
+- 本仓库自 2026-08-24 起由维护者 `alkaidjin` 接续提交
+
+衍生作品整体仍以 **AGPL-3.0** 发布，源码完整公开于
+[alkaidjin/Maa-Assistant-Browndust2](https://github.com/alkaidjin/Maa-Assistant-Browndust2)；
+源代码的修改说明与日期见仓库根目录 [`更新功能说明.md`](更新功能说明.md) 与 Git 提交历史。
+
+### 致谢
+感谢 `essinn-1` 把《棕色尘埃2》PC 端从零跑通并开源——本项目正是站在这份工作的基础上继续维护的。
+
+---
+
+## 5. PaddlePaddle/PaddleOCR — Apache-2.0
 
 ### 用途
 提供 OCR 文本检测与识别模型。PP-OCRv5 移动端模型基于 PaddleOCR 训练并导出，**模型文件以二进制形式跟随本 release zip 派发**：
@@ -94,7 +140,7 @@ MXU 与本项目**均为 AGPL-3.0**，因此在 §13 「Remote Network Interacti
 
 ---
 
-## 5. electron/rcedit — MIT
+## 6. electron/rcedit — MIT
 
 ### 用途
 启动器在启动时给 `mxu.exe` 写入图标（`launcher.bat` → `BD2MAA-Updater.ps1` 的 `Apply-ExeIcon`），
@@ -137,4 +183,4 @@ git clone https://github.com/MistEO/MXU.git
 
 ---
 
-最后更新：2026-09-15
+最后更新：2026-09-20

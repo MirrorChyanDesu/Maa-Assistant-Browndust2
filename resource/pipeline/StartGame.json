@@ -3,17 +3,17 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1789034433188,
+            "lastSyncTime": 1789719476658,
             "isModifiedExternally": false,
             "isDeleted": false,
-            "filePath": "F:\\BD2MAA\\resource\\pipeline\\StartGame.json",
+            "filePath": "F:\\MABd2v26.09.5\\resource\\pipeline\\StartGame.json",
             "savedViewport": {
-                "x": 468,
-                "y": -5575,
-                "zoom": 1.15
+                "x": 883,
+                "y": -121,
+                "zoom": 0.22
             },
             "filename": "StartGame",
-            "version": "v1.9.3"
+            "version": "v1.10.1"
         }
     },
     "$__mpe_external_CorrectPVP_StartGame": {
@@ -98,7 +98,7 @@
         "action": {
             "type": "Click"
         },
-        "post_delay": 1000,
+        "post_delay": 2000,
         "$__mpe_code": {
             "position": {
                 "x": 342,
@@ -269,7 +269,7 @@
         "action": {
             "type": "Click"
         },
-        "post_delay": 1000,
+        "post_delay": 2000,
         "$__mpe_code": {
             "position": {
                 "x": 342,
@@ -365,7 +365,7 @@
         "action": {
             "type": "Click"
         },
-        "post_delay": 1500,
+        "post_delay": 2000,
         "$__mpe_code": {
             "position": {
                 "x": 342,
@@ -387,11 +387,10 @@
                 "threshold": 0.5
             }
         },
-        "pre_delay": 0,
         "action": {
             "type": "Click"
         },
-        "post_delay": 1000,
+        "post_delay": 2000,
         "$__mpe_code": {
             "position": {
                 "x": 342,
@@ -416,7 +415,7 @@
         "action": {
             "type": "Click"
         },
-        "post_delay": 1000,
+        "post_delay": 2000,
         "$__mpe_code": {
             "position": {
                 "x": 342,
@@ -499,6 +498,7 @@
         "action": {
             "type": "Click"
         },
+        "post_delay": 1000,
         "next": [
             "Reset_Control",
             "ToImage"
@@ -533,7 +533,7 @@
                 ]
             }
         },
-        "post_delay": 1500,
+        "post_delay": 2000,
         "next": [
             "WhetherSevenDaysTick",
             "SevenDays"
@@ -645,14 +645,15 @@
         "action": {
             "type": "Click"
         },
+        "post_delay": 1000,
         "next": [
             "ImageMove",
             "ToImage"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 958,
-                "y": 3546
+                "x": 948,
+                "y": 3513
             }
         }
     },

@@ -3,14 +3,14 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1789620043660,
+            "lastSyncTime": 1789718922082,
             "isModifiedExternally": false,
             "isDeleted": false,
             "filePath": "F:\\MABd2v26.09.5\\resource\\pipeline\\WarcraftShop.json",
             "savedViewport": {
-                "x": -5705,
-                "y": -1920,
-                "zoom": 1.31
+                "x": -2467,
+                "y": 63,
+                "zoom": 0.87
             },
             "filename": "WarcraftShop",
             "version": "v1.10.1"
@@ -19,8 +19,8 @@
     "$__mpe_external_StartGame_WarcraftShop": {
         "$__mpe_code": {
             "position": {
-                "x": 3263,
-                "y": -66
+                "x": 3488,
+                "y": -67
             }
         }
     },
@@ -781,6 +781,56 @@
             }
         }
     },
+    "RedNumber_MS_2": {
+        "desc": "【代币不足判定·找色】购买页价格数字变红即命中。非模板比对，纯 ROI 颜色捕捉。method=40 走 HSV（OpenCV 色轮 H 为 0-179）；红色跨在色轮首尾，所以用两组区间取并集：H 0-10 与 H 170-179。S/V 下限 80 用于排掉灰白底与暗色描边。connected=false → 整个 roi 内的红色像素合并成一个结果，[count] 即「至少命中多少红色像素才算数」。需要自己调的两个旋钮：① roi 收紧到红色数字那一小块（别把红点/红图标圈进来）；② count 按实机红色像素量校准，调大了会漏、调小了会误报。",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": [
+                    491,
+                    399,
+                    48,
+                    23
+                ],
+                "method": 40,
+                "lower": [
+                    [
+                        0,
+                        80,
+                        80
+                    ],
+                    [
+                        170,
+                        80,
+                        80
+                    ]
+                ],
+                "upper": [
+                    [
+                        10,
+                        255,
+                        255
+                    ],
+                    [
+                        179,
+                        255,
+                        255
+                    ]
+                ],
+                "connected": false,
+                "count": 80
+            }
+        },
+        "next": [
+            "BuyError_MS_1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 5619,
+                "y": 196
+            }
+        }
+    },
     "RedSlime_MS": {
         "enabled": false,
         "max_hit": 1,
@@ -861,6 +911,35 @@
             }
         }
     },
+    "SetBuyMax_MS_1": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    574,
+                    463,
+                    56,
+                    39
+                ],
+                "expected": [
+                    "MAX"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_delay": 1000,
+        "next": [
+            "BuyIt_MS_1"
+        ],
+        "$__mpe_code": {
+            "position": {
+                "x": 5614,
+                "y": 596
+            }
+        }
+    },
     "SetBuyMax_MS_2": {
         "recognition": {
             "type": "OCR",
@@ -894,13 +973,12 @@
         "next": [
             "EnterWarcraft_3",
             "EnterWarcraft_4",
-            "WarcraftShopBuyLoop",
             "[JumpBack]StartGame"
         ],
         "$__mpe_code": {
             "position": {
-                "x": 3241,
-                "y": 322
+                "x": 3206,
+                "y": 271
             }
         }
     },
@@ -966,8 +1044,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2680,
-                "y": -430
+                "x": 2320,
+                "y": -278
             }
         }
     },
@@ -997,8 +1075,8 @@
         ],
         "$__mpe_code": {
             "position": {
-                "x": 2950,
-                "y": -430
+                "x": 2916,
+                "y": -434
             }
         }
     },
@@ -1009,8 +1087,8 @@
         "rate_limit": 0,
         "$__mpe_code": {
             "position": {
-                "x": 2945,
-                "y": -6
+                "x": 2941,
+                "y": 28
             }
         }
     },
@@ -1051,85 +1129,6 @@
             "position": {
                 "x": 3893,
                 "y": -511
-            }
-        }
-    },
-    "RedNumber_MS_2": {
-        "desc": "【代币不足判定·找色】购买页价格数字变红即命中。非模板比对，纯 ROI 颜色捕捉。method=40 走 HSV（OpenCV 色轮 H 为 0-179）；红色跨在色轮首尾，所以用两组区间取并集：H 0-10 与 H 170-179。S/V 下限 80 用于排掉灰白底与暗色描边。connected=false → 整个 roi 内的红色像素合并成一个结果，[count] 即「至少命中多少红色像素才算数」。需要自己调的两个旋钮：① roi 收紧到红色数字那一小块（别把红点/红图标圈进来）；② count 按实机红色像素量校准，调大了会漏、调小了会误报。",
-        "recognition": {
-            "type": "ColorMatch",
-            "param": {
-                "roi": [
-                    491,
-                    399,
-                    48,
-                    23
-                ],
-                "method": 40,
-                "lower": [
-                    [
-                        0,
-                        80,
-                        80
-                    ],
-                    [
-                        170,
-                        80,
-                        80
-                    ]
-                ],
-                "upper": [
-                    [
-                        10,
-                        255,
-                        255
-                    ],
-                    [
-                        179,
-                        255,
-                        255
-                    ]
-                ],
-                "connected": false,
-                "count": 80
-            }
-        },
-        "next": [
-            "BuyError_MS_1"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 5619,
-                "y": 196
-            }
-        }
-    },
-    "SetBuyMax_MS_1": {
-        "recognition": {
-            "type": "OCR",
-            "param": {
-                "roi": [
-                    574,
-                    463,
-                    56,
-                    39
-                ],
-                "expected": [
-                    "MAX"
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "post_delay": 1000,
-        "next": [
-            "BuyIt_MS_1"
-        ],
-        "$__mpe_code": {
-            "position": {
-                "x": 5614,
-                "y": 596
             }
         }
     }

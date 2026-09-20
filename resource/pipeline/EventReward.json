@@ -3,14 +3,14 @@
         "$__mpe_code": {
             "prefix": "",
             "coordinateMode": "absolute-v1",
-            "lastSyncTime": 1789692823884,
+            "lastSyncTime": 1789695189770,
             "isModifiedExternally": false,
             "isDeleted": false,
             "filePath": "F:\\MABd2v26.09.5\\resource\\pipeline\\EventReward.json",
             "savedViewport": {
-                "x": 280,
-                "y": -439,
-                "zoom": 1.15
+                "x": 172,
+                "y": -185,
+                "zoom": 0.87
             },
             "filename": "EventReward",
             "version": "v1.10.1"
@@ -441,6 +441,7 @@
         }
     },
     "转盘": {
+        "max_hit": 1,
         "recognition": {
             "type": "OCR",
             "param": {

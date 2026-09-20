@@ -29,7 +29,10 @@ _✨ 《棕色尘埃2》PC 端日常自动化小助手 ✨_
 
 ## 📦 项目简介
 
-本项目是基于 [MaaEnd](https://github.com/MaaEnd/MaaEnd) 改造的《棕色尘埃2》PC 端日常自动化工具，运行在 [MaaFramework](https://github.com/MaaXYZ/MaaFramework)（v5.13）运行时之上、由 [MXU](https://github.com/MistEO/MXU)（v2.5）作为 GUI 前端，支持自动日常任务、资源收集、战斗循环等功能。
+本项目承接 [essinn-1/maa-assistant](https://github.com/essinn-1/maa-assistant)（把 [MaaEnd](https://github.com/MaaEnd/MaaEnd) 骨架改造为《棕色尘埃2》PC 端自动化的早期工程）继续开发，运行在 [MaaFramework](https://github.com/MaaXYZ/MaaFramework)（v5.13）运行时之上、由 [MXU](https://github.com/MistEO/MXU)（v2.5）作为 GUI 前端，支持自动日常任务、资源收集、战斗循环等功能。
+
+> **来源与致谢**：本项目建立在两层上游工作之上 —— **MaaEnd** 提供了工程骨架（目录约定、`interface.json` 结构、多语言键），**`essinn-1/maa-assistant`** 完成了《棕色尘埃2》PC 端的早期适配与最初的 pipeline / 图像素材，两者均为 AGPL-3.0。
+> 本仓库的 Git 历史**完整保留**了上游全部提交与作者署名，未作 squash、未重写历史；完整来源链与许可履约说明见 [NOTICE](NOTICE.md) 第 3、4 节。
 
 ## ✨ 部分功能说明
 
@@ -71,12 +74,19 @@ _✨ 《棕色尘埃2》PC 端日常自动化小助手 ✨_
 - **用途**: 本项目的起点仓库（BD2MAA fork 自 MaaEnd）；保留其工程骨架、目录约定与 AGPL §13 合规继承
 - **使用方式**: 继承其任务框架；task-level JSON / pipeline / 图像资源均为本项目重写与扩充
 
-#### 4. PaddlePaddle/PaddleOCR（PP-OCRv5）
+#### 4. essinn-1/maa-assistant
+
+- **项目地址**: https://github.com/essinn-1/maa-assistant
+- **许可证**: **AGPL-3.0**
+- **用途**: **本项目的直接上游** —— 把 MaaEnd 骨架改造为《棕色尘埃2》PC 端自动化的早期工程；本项目最初的 `resource/pipeline/*.json`、`tasks/*.json` 与图像素材均源自此处
+- **使用方式**: 承接其 Git 历史继续开发（上游提交与作者署名完整保留），衍生作品整体仍以 AGPL-3.0 发布；详见 [NOTICE](NOTICE.md) 第 4 节
+
+#### 5. PaddlePaddle/PaddleOCR（PP-OCRv5）
 
 - **项目地址**: https://github.com/PaddlePaddle/PaddleOCR
 - **许可证**: Apache License 2.0
 - **用途**: 游戏内文字识别（OCR）模型
-- **使用方式**: 静态模型文件 `resource/model/ocr/{det,rec}.onnx + keys.txt` 随 release zip 派发；由 MaaFramework 的 `OCR` 节点调用推理结果。详见 [NOTICE](NOTICE.md) 第 4 节
+- **使用方式**: 静态模型文件 `resource/model/ocr/{det,rec}.onnx + keys.txt` 随 release zip 派发；由 MaaFramework 的 `OCR` 节点调用推理结果。详见 [NOTICE](NOTICE.md) 第 5 节
 
 ## 📜 声明
 
@@ -94,7 +104,17 @@ _✨ 《棕色尘埃2》PC 端日常自动化小助手 ✨_
 
 根据 Apache License 2.0 要求：
 
-- 本项目使用了 PaddleOCR 训练的 PP-OCRv5 模型，保留其版权声明于 [NOTICE](NOTICE.md) 第 4 节
+- 本项目使用了 PaddleOCR 训练的 PP-OCRv5 模型，保留其版权声明于 [NOTICE](NOTICE.md) 第 5 节
+
+### 关于 Mirror酱（MirrorChyan）
+
+**本项目未接入 [Mirror酱](https://mirrorchyan.com)，软件内不提供「更新 / CDK」填写入口，本项目不通过 Mirror酱分发、无需购买任何 CDK。**
+
+- 本项目的唯一分发渠道是 [GitHub Releases](https://github.com/alkaidjin/Maa-Assistant-Browndust2/releases)；版本检测与更新由 `launcher.bat` / `BD2MAA-Updater.ps1` 完成，与 Mirror酱无关。
+- `interface.json` 中**未配置 `mirrorchyan_rid` 字段**，因此 MXU 的「设置 → 更新」分区不会渲染 —— 正常安装的本软件里**不存在 CDK 输入框**。
+- ⚠️ **请勿误购同名项目的 CDK**：Mirror酱上另有一个与本项目**名称相似、但毫无关系**的第三方项目 —— 名称 `MaaBD2`、资源 ID `MFABD2`、仓库 [sunyink/MFABD2](https://github.com/sunyink/MFABD2)。
+  它**不是本项目**（本项目仓库为 `alkaidjin/Maa-Assistant-Browndust2`），为其支付的 CDK 与本项目无关，也无法用于本项目。
+- 若本项目日后正式接入 Mirror酱，本节将**更新为接入声明并标注正式资源 ID**；在此之前，一切以本节为准。
 
 ## 📥 下载与使用
 
